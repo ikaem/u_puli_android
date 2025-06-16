@@ -7,10 +7,18 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.imkaem.android.upuli.events.presentation.screens.EventScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventsScreen
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
@@ -20,33 +28,51 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             UPuliTheme {
-                EventsScreen()
-
-
-                /* came with bootsrapped project */
-//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-//                    Greeting(
-//                        name = "Android",
-//                        modifier = Modifier.padding(innerPadding)
-//                    )
-//                }
+                Surface(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    UPuliApp()
+                }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
-@Preview(showBackground = true)
+/* TODO extract this to its own file */
+
 @Composable
-fun GreetingPreview() {
-    UPuliTheme {
-        Greeting("Android")
+fun UPuliApp() {
+    val navController: NavHostController = rememberNavController()
+
+    NavHost(
+        startDestination = "events",
+        navController = navController,
+    ) {
+        composable(
+            route = "events"
+        ) {
+            EventsScreen(
+                onNavigateToEvent = { id ->
+                    navController.navigate("events/$id")
+                }
+            )
+        }
+
+        composable(
+            route = "events/{event_id}",
+            arguments = listOf(
+                navArgument("event_id") {
+                    type = NavType.IntType
+                }
+            )
+        ) {
+            EventScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
+
 }
