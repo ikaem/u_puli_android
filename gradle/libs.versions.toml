@@ -10,8 +10,11 @@ activityCompose = "1.10.1"
 composeBom = "2025.06.00"
 navigationCompose = "2.9.0"
 materialIconsExtended = "1.7.8"
+coil = "3.2.0"
 
 [libraries]
+coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
+coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
 material-icons-extended = { group = "androidx.compose.material", name="material-icons-extended", version.ref = "materialIconsExtended"}
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

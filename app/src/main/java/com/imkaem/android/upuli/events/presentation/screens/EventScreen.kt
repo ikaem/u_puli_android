@@ -1,5 +1,7 @@
 package com.imkaem.android.upuli.events.presentation.screens
 
+import EventScreenContent
+import UPuliTopAppBar
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -37,81 +39,19 @@ fun EventScreen(
     val event = viewModel.state.value
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         topBar = {
-//            TopAppBar(
-//            CenterAlignedTopAppBar(
-            CenterAlignedTopAppBar(
-                title = {
-                    Text("Detalji")
-                },
-                navigationIcon = {
-                    IconButton(
-                        onClick = {
-                            onNavigateBack()
-                        }
-                    ) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back to previous screen"
-                        )
-                    }
-                }
-
+            UPuliTopAppBar(
+                onNavigateBack = onNavigateBack
             )
         },
         content = { it ->
-//            Text(
-//                "Event details will be displayed here.",
-//                modifier = Modifier.padding(it)
-//            )
             EventScreenContent(padding = it, event = event)
         }
     )
 }
 
-@Composable
-private fun EventScreenContent(
-    padding: PaddingValues,
-    event: EventModel?,
-    modifier: Modifier = Modifier,
-) {
 
-    if (event == null) {
-
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(padding),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Text(
-                "There was an issue finding the event you are looking for.",
-                textAlign = TextAlign.Center
-            )
-        }
-        return
-    }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(padding)
-    ) {
-        Text(event.title)
-        Spacer(Modifier.height(4.dp))
-        Text("This is some description")
-        Spacer(Modifier.height(8.dp))
-        Text(event.location)
-        Spacer(Modifier.height(8.dp))
-        Text(
-            SimpleDateFormat(
-                "dd.MM.yyyy. HH:mm",
-                Locale.getDefault()
-            ).format(event.date)
-        )
-    }
-}
 
 
 @Composable

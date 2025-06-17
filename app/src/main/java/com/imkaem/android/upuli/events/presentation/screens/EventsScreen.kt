@@ -1,6 +1,7 @@
 package com.imkaem.android.upuli.events.presentation.screens
 
 import EventBriefItem
+import UPuliTopAppBar
 import android.media.metrics.Event
 import android.widget.Space
 import androidx.compose.foundation.background
@@ -88,39 +89,7 @@ fun EventsScreen(
     )
 }
 
-@Composable
-@OptIn(ExperimentalMaterial3Api::class)
-private fun UPuliTopAppBar() {
-    CenterAlignedTopAppBar(
-        title = {
-            Text("")
-        },
-        actions = {
-            IconButton(
-                onClick = {
 
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Favorite,
-                    contentDescription = "Favorites",
-                )
-            }
-            IconButton(
-                onClick = {
-
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = "Settings",
-                )
-            }
-
-
-        }
-    )
-}
 
 @Composable
 private fun TomorrowEventContent() {

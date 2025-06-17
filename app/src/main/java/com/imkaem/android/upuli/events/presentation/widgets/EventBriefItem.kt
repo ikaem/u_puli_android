@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -33,16 +34,15 @@ fun EventBriefItem(
 
     /* TODO this should be done in view model - all UI stuff should be already preparred - maybe as an */
     val dateFormatter = SimpleDateFormat("dd.MM.yyyy.", Locale.getDefault())
-//        val formatter = DateFormat.getDateTimeInstance()
-//        val me = Date().getDate
     val formattedDate = dateFormatter.format(event.date)
-//        formatter.get
 
     val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
     val formattedTime = timeFormatter.format(event.date)
 
     Column(
-        modifier = modifier,
+        modifier = modifier.clickable {
+            onNavigateToEvent(event.id)
+        }
     ) {
 
         Text(

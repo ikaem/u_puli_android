@@ -40,6 +40,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.coil)
+    implementation(libs.coil.network.okhttp)
     implementation(libs.material.icons.extended)
     implementation(libs.navigation.compose)
     implementation(libs.androidx.core.ktx)
