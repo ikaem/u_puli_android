@@ -48,7 +48,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.presentation.view_models.EventsViewModel
 import com.imkaem.android.upuli.events.utils.DummyData
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 import java.text.DateFormat
@@ -64,7 +66,8 @@ fun EventsScreen(
     onNavigateToEvent: (id: Int) -> Unit,
 ) {
 
-    val events = DummyData.dummyEvents
+    val viewModel: EventsViewModel = viewModel()
+    val events = viewModel.state.value
 
     Scaffold(
         /* TODO not sure if this contributes to anything in this particular case */
