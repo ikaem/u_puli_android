@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @Composable
@@ -33,11 +34,11 @@ fun EventBriefItem(
 
 
     /* TODO this should be done in view model - all UI stuff should be already preparred - maybe as an */
-    val dateFormatter = SimpleDateFormat("dd.MM.yyyy.", Locale.getDefault())
-    val formattedDate = dateFormatter.format(event.date)
+    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+    val formattedDate = event.date.format(formatter)
 
-    val timeFormatter = SimpleDateFormat("HH:mm", Locale.getDefault())
-    val formattedTime = timeFormatter.format(event.date)
+    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+    val formattedTime = event.date.format(timeFormatter)
 
     Column(
         modifier = modifier.clickable {
