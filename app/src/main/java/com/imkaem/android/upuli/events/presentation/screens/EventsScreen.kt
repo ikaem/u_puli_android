@@ -67,7 +67,7 @@ fun EventsScreen(
 ) {
 
     val viewModel: EventsViewModel = viewModel()
-    val events = viewModel.state.value
+    val eventsState = viewModel.state.value
 
     Scaffold(
         /* TODO not sure if this contributes to anything in this particular case */
@@ -78,10 +78,9 @@ fun EventsScreen(
         content = { padding ->
 
             EventsScreenContent(
-                padding = padding,
-                events = events,
+                eventsState = eventsState,
                 onNavigateToEvent = onNavigateToEvent,
-
+                padding = padding,
             )
         }
 
