@@ -75,7 +75,7 @@ private fun EventScreenEventContent(
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
-                "Some title that sometimes might be too long yes it is very long",
+                event.title,
                 overflow = TextOverflow.Visible,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,

@@ -8,7 +8,7 @@ class GetEventUseCase(
 ) {
 
     suspend operator fun invoke(id: Int): EventModel? {
-        val event = eventsRepository.getDummyModelEvent(id)
+        val event = eventsRepository.getEvent(id)
 
         return event
     }

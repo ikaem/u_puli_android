@@ -48,7 +48,8 @@ class EventViewModel(
         /* TODO some error handler, and explicit IO dispatcher should be passed in */
 
         viewModelScope.launch {
-            val event = getEventUseCase(stateHandle.get<Int>("event_id") ?: 0)
+            val id = stateHandle.get<Int>("event_id") ?: 0
+            val event = getEventUseCase(id)
 
             val updatedState = _state.value.copy(
                 event = event,

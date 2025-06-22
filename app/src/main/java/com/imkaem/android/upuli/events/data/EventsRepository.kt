@@ -11,6 +11,17 @@ class EventsRepository(
     private val eventsRemoteDataSource: EventsRemoteDataSource
 ) {
 
+    suspend fun getEvent(
+        id: Int,
+    ): EventModel? {
+
+        val remoteEventEntity = eventsRemoteDataSource.getEvent(id)
+            ?: return null
+
+        val model = EventConverters.modelFromRemoteEntity(remoteEventEntity)
+        return model
+    }
+
     /* TODO in future, this will actually get data from database */
     suspend fun getEvents(
         filter: GetEventsFilter,
@@ -79,18 +90,18 @@ class EventsRepository(
 
     /* TODO below is temp only */
 
-    suspend fun getDummyModelEvent(
-        id: Int
-    ): EventModel? {
-        val remoteEvent = DummyData.dummyRemoteEvents.firstOrNull {
-            it.id == id
-        }
-
-        /* THIS IS COOL SYNTAX - pass event if it exist - if not, return from the function */
-        val model = EventConverters.modelFromRemoteEntity(remoteEvent ?: return null)
-
-        return model
-    }
+//    suspend fun getDummyModelEvent(
+//        id: Int
+//    ): EventModel? {
+//        val remoteEvent = DummyData.dummyRemoteEvents.firstOrNull {
+//            it.id == id
+//        }
+//
+//        /* THIS IS COOL SYNTAX - pass event if it exist - if not, return from the function */
+//        val model = EventConverters.modelFromRemoteEntity(remoteEvent ?: return null)
+//
+//        return model
+//    }
 
 
 }
