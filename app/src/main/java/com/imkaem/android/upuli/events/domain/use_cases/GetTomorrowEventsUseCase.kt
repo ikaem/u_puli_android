@@ -1,0 +1,33 @@
+package com.imkaem.android.upuli.events.domain.use_cases
+
+import com.imkaem.android.upuli.events.data.EventsRepository
+import com.imkaem.android.upuli.events.domain.GetEventsFilter
+import com.imkaem.android.upuli.events.domain.models.EventModel
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
+
+class GetTomorrowEventsUseCase(
+    private val eventsRepository: EventsRepository,
+) {
+
+
+    suspend operator fun invoke(): List<EventModel> {
+        /* TODO iam really not sure about which zone i should use - maybe this? - ZoneOffset.UTC */
+        val startOfDay = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault())
+        val startOfNextDay = LocalDate.now().plusDays(2).atStartOfDay(ZoneId.systemDefault())
+
+        val startOfTodayInMilliseconds = startOfDay.toInstant().toEpochMilli()
+        val startOfTomorrowInMilliseconds = startOfNextDay.toInstant().toEpochMilli()
+
+        val filter = GetEventsFilter(
+            fromDateMilliseconds = startOfTodayInMilliseconds,
+            toDateMilliseconds = startOfTomorrowInMilliseconds,
+        )
+
+        val events = eventsRepository.getDummyModelEvents(filter = filter)
+
+        return events
+    }
+}

@@ -40,8 +40,15 @@ android {
 }
 
 dependencies {
+    /* retrofit starts */
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.converter.gson)
+    /* retrofit ends */
+    /* coil starts */
     implementation(libs.coil)
     implementation(libs.coil.network.okhttp)
+    /* coil ends */
     implementation(libs.material.icons.extended)
     implementation(libs.navigation.compose)
     implementation(libs.androidx.core.ktx)

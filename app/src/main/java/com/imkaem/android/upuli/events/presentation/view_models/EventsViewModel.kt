@@ -3,82 +3,63 @@ package com.imkaem.android.upuli.events.presentation.view_models
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import com.imkaem.android.upuli.events.utils.DummyData
-import java.time.LocalDate
-import java.time.LocalDateTime
+import androidx.lifecycle.viewModelScope
+import com.imkaem.android.upuli.events.data.di.DummyDI
+import kotlinx.coroutines.launch
 
 class EventsViewModel : ViewModel() {
+
+    /* TODO later, this will be provided by hilt probably */
+    val getTodayEventsUseCase = DummyDI.getTodayEventsUseCase
+    val getTomorrowEventsUseCase = DummyDI.getTomorrowEventsUseCase
+    val getUpcomingEventsUseCase = DummyDI.getUpcomingEventsUseCase
 
     private val _state = mutableStateOf<EventsScreenState>(generateInitialState())
     val state: State<EventsScreenState>
         get() = _state
 
-    /*    private val _state = mutableStateOf<List<EventModel>>(emptyList())
-        val state: State<List<EventModel>>
-            get() = _state;*/
-
 
     init {
-        val events = DummyData.dummyEvents
-        val todayEvents = events.filter { it ->
+        loadEvents()
+    }
 
-            val todayLocalDate = LocalDate.now()
-            val eventLocalDate = it.date.toLocalDate()
+    private fun loadEvents() {
+        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+        viewModelScope.launch {
+            /* get today events */
+            val todayEvents = getTodayEventsUseCase()
+            val todayFeaturedEvent = todayEvents.firstOrNull()
+            val todayEventsCount = todayEvents.size
 
-            return@filter eventLocalDate.isEqual(todayLocalDate);
+            /* get tomorrow events */
+            val tomorrowEvents = getTomorrowEventsUseCase()
+            val tomorrowFeaturedEvent = tomorrowEvents.firstOrNull()
+            val tomorrowEventsCount = tomorrowEvents.size
+
+            /* get upcoming events */
+            val upcomingEvents = getUpcomingEventsUseCase()
+
+
+            val updatedState = _state.value.copy(
+                todayEventsState = todayFeaturedEvent?.let {
+                    EventsScreenDayState(
+                        featuredEvent = it,
+                        dayEventsCount = todayEventsCount
+                    )
+                },
+                tomorrowEventsState = tomorrowFeaturedEvent?.let {
+                    EventsScreenDayState(
+                        featuredEvent = it,
+                        dayEventsCount = tomorrowEventsCount
+                    )
+                },
+                allUpcomingEvents = upcomingEvents,
+                isLoading = false,
+                error = null
+            )
+
+            _state.value = updatedState
         }
-
-        val todayFeaturedEvent = todayEvents.firstOrNull()
-        val todayEventsCount = todayEvents.size
-
-        val tomorrowEvents = events.filter { it ->
-            val tomorrowLocalDate = LocalDate.now().plusDays(1)
-            val eventLocalDate = it.date.toLocalDate()
-
-            return@filter eventLocalDate.isEqual(tomorrowLocalDate);
-        }
-
-        val tomorrowFeaturedEvent = tomorrowEvents.firstOrNull()
-        val tomorrowEventsCount = tomorrowEvents.size
-
-        val allUpcomingEvents = events.filter { it.date.isAfter(LocalDateTime.now()) }
-
-        val temp = EventsScreenState(
-//            todayEventsState = EventsScreenDayDayState(
-//                featuredEvent = todayFeaturedEvent,
-//                dayEventsCount = todayEventsCount,
-//            ),
-            todayEventsState = todayFeaturedEvent?.let {
-                EventsScreenDayState(
-                    featuredEvent = it,
-                    dayEventsCount = todayEventsCount,
-                )
-            },
-//            tomorrowEventsState = EventsScreenDayDayState(
-//                featuredEvent = tomorrowFeaturedEvent,
-//                dayEventsCount = tomorrowEventsCount,
-//            ),
-            tomorrowEventsState = tomorrowFeaturedEvent?.let {
-                EventsScreenDayState(
-                    featuredEvent = it,
-                    dayEventsCount = tomorrowEventsCount,
-                )
-            },
-//            allUpcomingEvents = events.filter { it.date.isAfter(LocalDateTime.now()) },
-            allUpcomingEvents = allUpcomingEvents,
-            isLoading = false,
-            error = null
-        )
-
-        val something = _state.value.copy(
-            todayEventsState = temp.todayEventsState,
-            tomorrowEventsState = temp.tomorrowEventsState,
-            allUpcomingEvents = temp.allUpcomingEvents,
-            isLoading = temp.isLoading,
-            error = temp.error
-        )
-
-        _state.value = something
     }
 }
 
@@ -97,7 +78,7 @@ private fun generateInitialState(): EventsScreenState {
 //            ),
             tomorrowEventsState = null,
             allUpcomingEvents = emptyList(),
-            isLoading = false,
+            isLoading = true,
             error = null
         )
     )

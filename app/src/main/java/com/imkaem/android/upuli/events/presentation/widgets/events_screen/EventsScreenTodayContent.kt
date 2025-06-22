@@ -76,11 +76,11 @@ private fun EventsScreenTodayEventContent(
 ) {
 
     /* TODO TODAY date and time formatting should be done in view model later */
-    val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    val timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
-
-    val dateString = dateFormat.format(featuredEvent.date)
-    val timeString = timeFormat.format(featuredEvent.date)
+//    val dateFormat = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+//    val timeFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+//
+//    val dateString = dateFormat.format(featuredEvent.date)
+//    val timeString = timeFormat.format(featuredEvent.date)
 
     Row(
         verticalAlignment = Alignment.CenterVertically
@@ -109,7 +109,7 @@ private fun EventsScreenTodayEventContent(
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            dateString,
+            featuredEvent.date,
             fontSize = 14.sp,
         )
         Icon(
@@ -121,7 +121,7 @@ private fun EventsScreenTodayEventContent(
         )
         Spacer(Modifier.width(30.dp))
         Text(
-            timeString,
+            featuredEvent.time,
             fontSize = 14.sp,
         )
         Icon(
@@ -132,7 +132,7 @@ private fun EventsScreenTodayEventContent(
                 .padding(start = 5.dp)
         )
     }
-    Spacer(Modifier.height(20.dp))
+    Spacer(Modifier.height(10.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {

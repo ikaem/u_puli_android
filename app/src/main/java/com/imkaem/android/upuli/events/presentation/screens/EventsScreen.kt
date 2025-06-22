@@ -83,18 +83,8 @@ fun EventsScreen(
                 padding = padding,
             )
         }
-
     )
 }
-
-
-
-
-
-
-
-
-
 
 @Composable
 @Preview(showBackground = true)

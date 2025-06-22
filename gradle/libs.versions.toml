@@ -11,8 +11,13 @@ composeBom = "2025.06.00"
 navigationCompose = "2.9.0"
 materialIconsExtended = "1.7.8"
 coil = "3.2.0"
+retrofit = "2.9.0"
+gson = "2.11.0"
 
 [libraries]
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
+gson = { group = "com.google.code.gson", name = "gson", version = "gson" }
 coil = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil"}
 coil-network-okhttp = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
 material-icons-extended = { group = "androidx.compose.material", name="material-icons-extended", version.ref = "materialIconsExtended"}

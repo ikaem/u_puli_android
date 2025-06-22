@@ -34,11 +34,11 @@ fun EventBriefItem(
 
 
     /* TODO this should be done in view model - all UI stuff should be already preparred - maybe as an */
-    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    val formattedDate = event.date.format(formatter)
-
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
-    val formattedTime = event.date.format(timeFormatter)
+//    val formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+//    val formattedDate = event.date.format(formatter)
+//
+//    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+//    val formattedTime = event.date.format(timeFormatter)
 
     Column(
         modifier = modifier.clickable {
@@ -69,7 +69,7 @@ fun EventBriefItem(
             verticalAlignment = Alignment.CenterVertically,
         )  {
             Text(
-                text = formattedDate,
+                text = event.date,
                 fontSize = 14.sp,
             )
             Icon(
@@ -79,7 +79,7 @@ fun EventBriefItem(
             )
             Spacer(modifier = Modifier.width(15.dp))
             Text(
-                text = formattedTime,
+                text = event.time,
                 fontSize = 14.sp,
             )
             Icon(

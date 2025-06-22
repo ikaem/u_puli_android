@@ -7,5 +7,7 @@ data class EventModel(
     val id: Int,
     val title: String,
     val location: String,
-    val date: LocalDateTime,
+//    val date: LocalDateTime,
+    val date: String,
+    val time: String,
 )

@@ -8,7 +8,7 @@ data class EventsScreenState(
     val tomorrowEventsState: EventsScreenDayState?,
     val allUpcomingEvents: List<EventModel>,
     val isLoading: Boolean,
-    val error: String? = null,
+    val error: String?,
 )
 
 data class EventsScreenDayState(

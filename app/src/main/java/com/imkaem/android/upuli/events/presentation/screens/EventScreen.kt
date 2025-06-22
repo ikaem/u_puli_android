@@ -36,7 +36,7 @@ fun EventScreen(
     onNavigateBack: () -> Unit,
 ) {
     val viewModel: EventViewModel = viewModel()
-    val event = viewModel.state.value
+    val eventState = viewModel.state.value
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -45,14 +45,11 @@ fun EventScreen(
                 onNavigateBack = onNavigateBack
             )
         },
-        content = { it ->
-            EventScreenContent(padding = it, event = event)
+        content = { padding ->
+            EventScreenContent(padding = padding, eventState = eventState)
         }
     )
 }
-
-
-
 
 @Composable
 @Preview(showBackground = true)

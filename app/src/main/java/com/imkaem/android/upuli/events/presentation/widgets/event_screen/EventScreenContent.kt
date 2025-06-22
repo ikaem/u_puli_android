@@ -3,7 +3,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -14,10 +13,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CalendarMonth
-import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
@@ -31,32 +28,30 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.presentation.view_models.EventScreenState
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 @Composable
 fun EventScreenContent(
+    eventState: EventScreenState,
     padding: PaddingValues,
-    event: EventModel?,
     modifier: Modifier = Modifier,
 ) {
 
+    val event = eventState.event
+
     Column(
         modifier = modifier
-//            .fillMaxSize()
             .padding(padding),
     ) {
 
         if (event == null) {
-            NoEventContent(
-//                padding = padding,
-                modifier = modifier
-            )
+            EventScreenNoEventContent()
             return
         }
 
-        EventContent(
-//            padding = padding,
+        EventScreenEventContent(
             event = event,
             modifier = modifier
         )
@@ -64,13 +59,15 @@ fun EventScreenContent(
 }
 
 @Composable
-private fun EventContent(
+private fun EventScreenEventContent(
     event: EventModel,
     modifier: Modifier = Modifier,
 ) {
 
     Column(
-        modifier = modifier.padding(all = 10.dp).verticalScroll(rememberScrollState())
+        modifier = modifier
+            .padding(all = 10.dp)
+            .verticalScroll(rememberScrollState())
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -104,7 +101,7 @@ private fun EventContent(
             Text(
                 event.location,
                 fontSize = 14.sp,
-                )
+            )
             Icon(
                 Icons.Filled.LocationOn,
                 contentDescription = "Location",
@@ -118,10 +115,7 @@ private fun EventContent(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                SimpleDateFormat(
-                    "dd.MM.yyyy.",
-                    Locale.getDefault()
-                ).format(event.date),
+                event.date,
                 fontSize = 14.sp,
             )
             Icon(
@@ -133,10 +127,7 @@ private fun EventContent(
             )
             Spacer(modifier = Modifier.width(15.dp))
             Text(
-                SimpleDateFormat(
-                    "HH:mm",
-                    Locale.getDefault()
-                ).format(event.date),
+                event.time,
                 fontSize = 14.sp,
             )
             Icon(
@@ -162,7 +153,7 @@ private fun EventContent(
 }
 
 @Composable
-private fun NoEventContent(
+private fun EventScreenNoEventContent(
     modifier: Modifier = Modifier,
 ) {
     Column(

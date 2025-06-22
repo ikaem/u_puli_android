@@ -69,11 +69,11 @@ private fun EventsScreenTomorrowEventContent(
 
 
     /* TODO this should be moved to view model logic */
-    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
-
-    val dateString = dateFormatter.format(featuredEvent.date)
-    val timeString = timeFormatter.format(featuredEvent.date)
+//    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+//    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+//
+//    val dateString = dateFormatter.format(featuredEvent.date)
+//    val timeString = timeFormatter.format(featuredEvent.date)
 
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -113,7 +113,7 @@ private fun EventsScreenTomorrowEventContent(
             ) {
 
                 Text(
-                    dateString,
+                    featuredEvent.date,
                     fontSize = 12.sp,
                 )
                 Icon(
@@ -131,7 +131,7 @@ private fun EventsScreenTomorrowEventContent(
             ) {
 
                 Text(
-                    timeString,
+                    featuredEvent.time,
                     fontSize = 12.sp,
                 )
                 Icon(
@@ -150,7 +150,7 @@ private fun EventsScreenTomorrowEventContent(
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
     )
-    Spacer(Modifier.height(15.dp))
+    Spacer(Modifier.height(10.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
     ) {
