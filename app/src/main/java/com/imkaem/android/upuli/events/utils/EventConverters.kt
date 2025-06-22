@@ -1,5 +1,6 @@
 package com.imkaem.android.upuli.events.utils
 
+import com.imkaem.android.upuli.events.data.local.EventLocalEntity
 import com.imkaem.android.upuli.events.data.remote.EventRemoteEntity
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import java.time.Instant
@@ -12,31 +13,60 @@ import java.util.Locale
 class EventConverters {
     companion object {
 
-        fun localEntityFromRemoteEntity() {
-            throw NotImplementedError("This method is not implemented yet.")
+        fun localEntityFromRemoteEntity(
+            remoteEntity: EventRemoteEntity
+        ): EventLocalEntity {
+            return EventLocalEntity(
+                id = remoteEntity.id,
+                title = remoteEntity.title,
+                location = remoteEntity.location,
+                dateInMilliseconds = remoteEntity.dateInMilliseconds
+            )
         }
 
-        fun modelFromLocalEntity(): EventModel {
-            throw NotImplementedError("This method is not implemented yet.")
-        }
-
-        fun modelFromRemoteEntity(
-            entity: EventRemoteEntity
+        fun modelFromLocalEntity(
+            localEntity: EventLocalEntity
         ): EventModel {
+
             val dateFormatter =
                 DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
             val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
 
-            val instant = Instant.ofEpochMilli(entity.dateInMilliseconds)
+            val instant = Instant.ofEpochMilli(localEntity.dateInMilliseconds)
             val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
 
             val formattedDate = dateTime.format(dateFormatter)
             val formattedTime = dateTime.format(timeFormatter)
 
             val model = EventModel(
-                id = entity.id,
-                title = entity.title,
-                location = entity.location,
+                id = localEntity.id,
+                title = localEntity.title,
+                location = localEntity.location,
+                date = formattedDate,
+                time = formattedTime
+            )
+
+            return model
+
+        }
+
+        fun modelFromRemoteEntity(
+           remoteEntity: EventRemoteEntity
+        ): EventModel {
+            val dateFormatter =
+                DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+
+            val instant = Instant.ofEpochMilli(remoteEntity.dateInMilliseconds)
+            val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+
+            val formattedDate = dateTime.format(dateFormatter)
+            val formattedTime = dateTime.format(timeFormatter)
+
+            val model = EventModel(
+                id = remoteEntity.id,
+                title = remoteEntity.title,
+                location = remoteEntity.location,
                 date = formattedDate,
                 time = formattedTime
             )

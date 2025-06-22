@@ -4,15 +4,19 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.imkaem.android.upuli.UPuliApplication
+import com.imkaem.android.upuli.events.data.database.EventsRoomInstance
 import com.imkaem.android.upuli.events.data.di.DummyDI
 import kotlinx.coroutines.launch
 
 class EventsViewModel : ViewModel() {
 
     /* TODO later, this will be provided by hilt probably */
+    val loadEventsUseCase = DummyDI.loadEventsUseCase
     val getTodayEventsUseCase = DummyDI.getTodayEventsUseCase
     val getTomorrowEventsUseCase = DummyDI.getTomorrowEventsUseCase
     val getUpcomingEventsUseCase = DummyDI.getUpcomingEventsUseCase
+    
 
     private val _state = mutableStateOf<EventsScreenState>(generateInitialState())
     val state: State<EventsScreenState>
@@ -20,12 +24,16 @@ class EventsViewModel : ViewModel() {
 
 
     init {
-        loadEvents()
+        getEvents()
     }
 
-    private fun loadEvents() {
+    private fun getEvents() {
         /* TODO some error handler, and explicit IO dispatcher should be passed in */
         viewModelScope.launch {
+            /* first load remote events into database */
+            loadEventsUseCase()
+
+
             /* get today events */
             val todayEvents = getTodayEventsUseCase()
             val todayFeaturedEvent = todayEvents.firstOrNull()
@@ -64,24 +72,15 @@ class EventsViewModel : ViewModel() {
 }
 
 private fun generateInitialState(): EventsScreenState {
-
     val state = (
-        EventsScreenState(
-//            todayEventsState = EventsScreenDayDayState(
-//                featuredEvent = null,
-//                dayEventsCount = 0,
-//            ),
-            todayEventsState = null,
-//            tomorrowEventsState = EventsScreenDayDayState(
-//                featuredEvent = null,
-//                dayEventsCount = 0,
-//            ),
-            tomorrowEventsState = null,
-            allUpcomingEvents = emptyList(),
-            isLoading = true,
-            error = null
-        )
-    )
+            EventsScreenState(
+                todayEventsState = null,
+                tomorrowEventsState = null,
+                allUpcomingEvents = emptyList(),
+                isLoading = true,
+                error = null,
+            )
+            )
 
     return state
 }

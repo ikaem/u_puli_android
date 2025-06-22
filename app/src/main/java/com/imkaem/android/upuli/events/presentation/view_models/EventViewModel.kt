@@ -7,9 +7,6 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
-import com.imkaem.android.upuli.events.domain.models.EventModel
-import com.imkaem.android.upuli.events.domain.use_cases.GetEventUseCase
-import com.imkaem.android.upuli.events.utils.DummyData
 import kotlinx.coroutines.launch
 
 private const val TAG = "EventViewModel"
@@ -17,25 +14,19 @@ private const val TAG = "EventViewModel"
 class EventViewModel(
 
     /* TODO later, this will be provided by hilt probably */
-
     private val stateHandle: SavedStateHandle
 
 ) : ViewModel() {
+    /* TODO temp, will later be provided by hilt */
     val getEventUseCase = DummyDI.getEventUseCase
+    val loadEventsUseCase = DummyDI.loadEventUseCase
 
     private val _state = mutableStateOf<EventScreenState>(generateInitialState())
     val state: State<EventScreenState>
         get() = _state
 
     init {
-
-//        val id = stateHandle.get<Int>("event_id") ?: 0
-//        val event = DummyData.dummyEvents.find { it ->
-//            it.id == id
-//        }
-//        _state.value = event
-
-        loadEvent()
+        getEvent()
     }
 
     override fun onCleared() {
@@ -44,11 +35,13 @@ class EventViewModel(
 
     }
 
-    private fun loadEvent() {
+    private fun getEvent() {
         /* TODO some error handler, and explicit IO dispatcher should be passed in */
 
         viewModelScope.launch {
             val id = stateHandle.get<Int>("event_id") ?: 0
+
+            loadEventsUseCase(id)
             val event = getEventUseCase(id)
 
             val updatedState = _state.value.copy(
