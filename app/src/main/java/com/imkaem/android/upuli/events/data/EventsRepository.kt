@@ -6,49 +6,75 @@ import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.utils.DummyData
 import com.imkaem.android.upuli.events.utils.EventConverters
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
 class EventsRepository(
     private val eventsRemoteDataSource: EventsRemoteDataSource
 ) {
 
     /* TODO in future, this will actually get data from database */
-    suspend fun getEvents(): List<EventModel> {
-        /* TODO make some kind of helper for this */
-        /* also, maybe creating a formatter is expensive, not sure */
-        val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-        val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+    suspend fun getEvents(
+        filter: GetEventsFilter,
+    ): List<EventModel> {
+        /* TODO remember that date and time is off becasue of timezone i guess... not sure if i shoul be handling this on server (maybe in dart, i need to specify this timezone */
+        val from = filter.fromDateMilliseconds
+        val to = filter.toDateMilliseconds
 
 
         /* TODO later, use withContext, and pass it ui dispatcher */
         val remoteEventEntities = eventsRemoteDataSource.getEvents()
 
-        val eventModels = remoteEventEntities.map { it ->
-            val dateInSeconds = it.dateInMilliseconds / 1000L
-            val localDateTime = LocalDateTime.ofEpochSecond(
-                dateInSeconds,
-                0,
-                /* TODO not sure if this will be ok - maybe we an use some lib or something */
-                ZoneOffset.UTC,
-            )
-            val formattedDate = localDateTime.format(dateFormatter)
-            val formattedTime = localDateTime.format(timeFormatter)
-            val eventModel = EventModel(
-                id = it.id,
-                title = it.title,
-                location = it.location,
-                date = formattedDate,
-                time = formattedTime,
+        val shouldFilterFromAndTo = from != null && to != null
+        if (shouldFilterFromAndTo) {
+            val filtered = filterToAndFrom(
+                remoteEventEntities,
+                from,
+                to,
             )
 
-            return@map eventModel
+            val models = filtered.map { it ->
+                val model = EventConverters.modelFromRemoteEntity(it)
+                return@map model
+            }
+
+            return models
         }
 
-        return eventModels
+        val shouldFilterOnlyFrom = from != null
+        if (shouldFilterOnlyFrom) {
+            val filtered = filterFrom(
+                remoteEventEntities,
+                from,
+            )
+
+            val models = filtered.map { it ->
+                val model = EventConverters.modelFromRemoteEntity(it)
+                return@map model
+            }
+
+            return models
+        }
+
+        val shouldFilterOnlyTo = to != null
+        if (shouldFilterOnlyTo) {
+            val filtered = filterTo(
+                remoteEventEntities,
+                to,
+            )
+
+            val models = filtered.map { it ->
+                val model = EventConverters.modelFromRemoteEntity(it)
+                return@map model
+            }
+
+            return models
+        }
+
+
+        val models = remoteEventEntities.map { it ->
+            val model = EventConverters.modelFromRemoteEntity(it)
+            return@map model
+        }
+        return models
     }
 
     /* TODO below is temp only */
@@ -67,113 +93,9 @@ class EventsRepository(
     }
 
 
-    suspend fun getDummyModelEvents(
-        filter: GetEventsFilter
-    ): List<EventModel> {
-
-        val from = filter.fromDateMilliseconds
-        val to = filter.toDateMilliseconds
-
-        val allRemoteEntityEvents = DummyData.dummyRemoteEvents
-
-        val shouldFilterFromAndTo = from != null && to != null
-        if (shouldFilterFromAndTo) {
-            val filtered = filterToAndFrom(
-                allRemoteEntityEvents,
-                from,
-                to,
-            )
-
-            val models = filtered.map { it ->
-                val model = EventConverters.modelFromRemoteEntity(it)
-                return@map model
-            }
-
-            return models
-        }
-
-        val shouldFilterOnlyFrom = from != null
-        if (shouldFilterOnlyFrom) {
-            val filtered = filterFrom(
-                allRemoteEntityEvents,
-                from,
-            )
-
-            val models = filtered.map { it ->
-                val model = EventConverters.modelFromRemoteEntity(it)
-                return@map model
-            }
-
-            return models
-        }
-
-        val shouldFilterOnlyTo = to != null
-        if (shouldFilterOnlyTo) {
-            val filtered = filterTo(
-                allRemoteEntityEvents,
-                to,
-            )
-
-            val models = filtered.map { it ->
-                val model = EventConverters.modelFromRemoteEntity(it)
-                return@map model
-            }
-
-            return models
-        }
-
-
-        val models = allRemoteEntityEvents.map { it ->
-            val model = EventConverters.modelFromRemoteEntity(it)
-            return@map model
-        }
-        return models
-    }
-
-    /* TODO this is not to be used*/
-    suspend fun getDummyRemoteEvents(
-        filter: GetEventsFilter,
-    ): List<EventRemoteEntity> {
-
-        val from = filter.fromDateMilliseconds
-        val to = filter.toDateMilliseconds
-
-        val allEvents = eventsRemoteDataSource.getEvents()
-
-        val shouldFilterFromAndTo = from != null && to != null
-        if (shouldFilterFromAndTo) {
-            return filterToAndFrom(
-                allEvents,
-                from,
-                to,
-            )
-        }
-        /* now we know something or both are null */
-        val shouldFilterOnlyFrom = from != null
-
-        if (shouldFilterOnlyFrom) {
-            return filterFrom(
-                allEvents,
-                from,
-            )
-        }
-
-        val shouldFilterOnlyTo = to != null
-        if (shouldFilterOnlyTo) {
-            return filterTo(
-                allEvents,
-                to,
-            )
-        }
-
-        /* now we know both filters are null, so we can return all events */
-        return allEvents
-    }
 }
-/* ------------ filter models --------------*/
 
 
-/* ------------ filter entities ---------------- */
 private fun filterToAndFrom(
     events: List<EventRemoteEntity>,
     from: Long,

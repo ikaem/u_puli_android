@@ -5,6 +5,7 @@ import com.imkaem.android.upuli.events.data.api_service.RetrofitInstance
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
 import com.imkaem.android.upuli.events.domain.use_cases.GetEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetTodayEventsUseCase
+import com.imkaem.android.upuli.events.domain.use_cases.GetTomorrowEventsUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetUpcomingEventsUseCase
 
 
@@ -21,7 +22,7 @@ object DummyDI {
     val getTodayEventsUseCase = GetTodayEventsUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )
-    val getTomorrowEventsUseCase = GetTodayEventsUseCase(
+    val getTomorrowEventsUseCase = GetTomorrowEventsUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )
     val getUpcomingEventsUseCase = GetUpcomingEventsUseCase(

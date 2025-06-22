@@ -26,8 +26,14 @@ class GetTomorrowEventsUseCase(
             toDateMilliseconds = startOfTomorrowInMilliseconds,
         )
 
-        val events = eventsRepository.getDummyModelEvents(filter = filter)
+        val events = eventsRepository.getEvents(
+            filter = filter,
+        )
 
         return events
+
+//        val events = eventsRepository.getDummyModelEvents(filter = filter)
+//
+//        return events
     }
 }
