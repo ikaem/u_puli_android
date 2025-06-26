@@ -20,7 +20,10 @@ class EventConverters {
                 id = remoteEntity.id,
                 title = remoteEntity.title,
                 location = remoteEntity.location,
-                dateInMilliseconds = remoteEntity.dateInMilliseconds
+                dateInMilliseconds = remoteEntity.dateInMilliseconds,
+                url = remoteEntity.url,
+                imageUrl = remoteEntity.imageUrl,
+                description = remoteEntity.description
             )
         }
 

@@ -15,7 +15,9 @@ object EventsRoomInstance {
             EventsDatabase::class.java,
             DATABASE_NAME,
         )
-//            .addMigrations()
+            .addMigrations(
+                migration_1_2,
+            )
             .build()
 
         val dao = db.dao

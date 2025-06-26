@@ -15,4 +15,11 @@ data class EventLocalEntity(
     val dateInMilliseconds: Long,
 
     val location: String,
+
+    val url: String,
+
+    @ColumnInfo(name = "image_url")
+    val imageUrl: String,
+
+    val description: String,
 )
