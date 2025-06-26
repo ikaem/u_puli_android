@@ -46,7 +46,10 @@ class EventConverters {
                 title = localEntity.title,
                 location = localEntity.location,
                 date = formattedDate,
-                time = formattedTime
+                time = formattedTime,
+                url = localEntity.url,
+                imageUrl = localEntity.imageUrl,
+                description = localEntity.description,
             )
 
             return model
@@ -71,7 +74,10 @@ class EventConverters {
                 title = remoteEntity.title,
                 location = remoteEntity.location,
                 date = formattedDate,
-                time = formattedTime
+                time = formattedTime,
+                url = remoteEntity.url,
+                imageUrl = remoteEntity.imageUrl,
+                description = remoteEntity.description,
             )
 
             return model
