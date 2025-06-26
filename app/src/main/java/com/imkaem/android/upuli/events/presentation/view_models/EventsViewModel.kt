@@ -29,7 +29,9 @@ class EventsViewModel : ViewModel() {
 
     private fun getEvents() {
         /* TODO some error handler, and explicit IO dispatcher should be passed in */
+        /* TODO missing error handling */
         viewModelScope.launch {
+
             /* first load remote events into database */
             loadEventsUseCase()
 

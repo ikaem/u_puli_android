@@ -9,4 +9,7 @@ data class EventRemoteEntity(
     @SerializedName("date")
     val dateInMilliseconds: Long,
     val location: String,
+    val url: String,
+    val imageUrl: String,
+    val description: String,
 )
