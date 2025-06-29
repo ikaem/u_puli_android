@@ -17,6 +17,7 @@ data class EventModel(
     val url: String,
     val imageUrl: String,
     val description: String,
+    val isBookmarked: Boolean,
 )
 
 

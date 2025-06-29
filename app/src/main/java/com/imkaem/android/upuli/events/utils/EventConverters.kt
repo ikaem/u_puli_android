@@ -50,37 +50,40 @@ class EventConverters {
                 url = localEntity.url,
                 imageUrl = localEntity.imageUrl,
                 description = localEntity.description,
+                isBookmarked = localEntity.isBookmarked,
             )
 
             return model
 
         }
 
-        fun modelFromRemoteEntity(
-           remoteEntity: EventRemoteEntity
-        ): EventModel {
-            val dateFormatter =
-                DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
-
-            val instant = Instant.ofEpochMilli(remoteEntity.dateInMilliseconds)
-            val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-
-            val formattedDate = dateTime.format(dateFormatter)
-            val formattedTime = dateTime.format(timeFormatter)
-
-            val model = EventModel(
-                id = remoteEntity.id,
-                title = remoteEntity.title,
-                location = remoteEntity.location,
-                date = formattedDate,
-                time = formattedTime,
-                url = remoteEntity.url,
-                imageUrl = remoteEntity.imageUrl,
-                description = remoteEntity.description,
-            )
-
-            return model
-        }
+        /* TODO not used */
+//        fun modelFromRemoteEntity(
+//           remoteEntity: EventRemoteEntity
+//        ): EventModel {
+//            val dateFormatter =
+//                DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+//            val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
+//
+//            val instant = Instant.ofEpochMilli(remoteEntity.dateInMilliseconds)
+//            val dateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+//
+//            val formattedDate = dateTime.format(dateFormatter)
+//            val formattedTime = dateTime.format(timeFormatter)
+//
+//            val model = EventModel(
+//                id = remoteEntity.id,
+//                title = remoteEntity.title,
+//                location = remoteEntity.location,
+//                date = formattedDate,
+//                time = formattedTime,
+//                url = remoteEntity.url,
+//                imageUrl = remoteEntity.imageUrl,
+//                description = remoteEntity.description,
+//                isBookmarked = false,
+//            )
+//
+//            return model
+//        }
     }
 }

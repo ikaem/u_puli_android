@@ -17,6 +17,7 @@ object EventsRoomInstance {
         )
             .addMigrations(
                 migration_1_2,
+                migration_2_3,
             )
             .build()
 

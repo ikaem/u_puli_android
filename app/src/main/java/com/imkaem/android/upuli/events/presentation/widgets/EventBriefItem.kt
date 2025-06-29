@@ -1,4 +1,5 @@
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,14 +10,18 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
@@ -46,11 +51,44 @@ fun EventBriefItem(
         }
     ) {
 
-        Text(
-            text = event.title,
+        Row(
+            verticalAlignment = Alignment.Top,
+            horizontalArrangement = Arrangement.SpaceBetween,
+        ) {
+            Text(
+                text = event.title,
                 fontWeight = FontWeight.Bold,
-            fontSize = 14.sp,
-        )
+                fontSize = 14.sp,
+                overflow = TextOverflow.Visible,
+                modifier = Modifier
+                    .weight(1f)
+                    .padding(end = 8.dp)
+            )
+            Column(
+                modifier = Modifier.clickable {
+//                   onBookmark(event.id)
+                }
+            ) {
+                Icon(
+                    imageVector = when(event.isBookmarked) {
+                        true -> Icons.Filled.Bookmark
+                        false ->Icons.Filled.BookmarkBorder
+                    },
+                    contentDescription = "Bookmark",
+                )
+            }
+            /* TODO not sure how to remove padding around it that i dont want*/
+//            IconButton(
+//                onClick = {},
+//                modifier = Modifier.padding(0.dp)
+//
+//            ) {
+//                Icon(
+//                    imageVector = Icons.Filled.BookmarkBorder,
+//                    contentDescription = "Bookmark",
+//                )
+//            }
+        }
         Spacer(modifier = Modifier.height(5.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -62,7 +100,9 @@ fun EventBriefItem(
             Icon(
                 imageVector = Icons.Filled.LocationOn,
                 contentDescription = "Location",
-                modifier = Modifier.size(20.dp).padding(start = 5.dp)
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = 5.dp)
                 )
         }
         Row(
@@ -75,7 +115,9 @@ fun EventBriefItem(
             Icon(
                 imageVector = Icons.Filled.CalendarMonth,
                 contentDescription = "Date",
-                modifier = Modifier.size(20.dp).padding(start = 5.dp)
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = 5.dp)
             )
             Spacer(modifier = Modifier.width(15.dp))
             Text(
@@ -85,7 +127,9 @@ fun EventBriefItem(
             Icon(
                 imageVector = Icons.Filled.AccessTime,
                 contentDescription = "Time",
-                modifier = Modifier.size(20.dp).padding(start = 5.dp)
+                modifier = Modifier
+                    .size(20.dp)
+                    .padding(start = 5.dp)
             )
 
         }

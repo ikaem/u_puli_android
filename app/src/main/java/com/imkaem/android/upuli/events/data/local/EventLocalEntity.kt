@@ -22,4 +22,7 @@ data class EventLocalEntity(
     val imageUrl: String,
 
     val description: String,
+
+    @ColumnInfo(name = "is_bookmarked")
+    val isBookmarked: Boolean = false,
 )
