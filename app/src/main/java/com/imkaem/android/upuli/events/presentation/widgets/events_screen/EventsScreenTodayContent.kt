@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -27,14 +28,17 @@ import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenStat
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
+import kotlin.Int
+import kotlin.Unit
 
 @Composable
 fun EventsScreenTodayContent(
     todayEventsState: EventsScreenDayState?,
+    onNavigateToEvent: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier.padding(all = 10.dp)
+        modifier = modifier.padding(all = 10.dp)
     ) {
         Text(
             "DANAS",
@@ -49,7 +53,8 @@ fun EventsScreenTodayContent(
         EventsScreenTodayEventContent(
             featuredEvent = todayEventsState.featuredEvent,
             eventsCount = todayEventsState.dayEventsCount,
-            modifier = modifier
+            onNavigateToEvent = onNavigateToEvent,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -72,6 +77,7 @@ private fun EventsScreenTodayNoEventContent() {
 private fun EventsScreenTodayEventContent(
     featuredEvent: EventModel,
     eventsCount: Int,
+    onNavigateToEvent: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -83,7 +89,10 @@ private fun EventsScreenTodayEventContent(
 //    val timeString = timeFormat.format(featuredEvent.date)
 
     Row(
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier.clickable {
+            onNavigateToEvent(featuredEvent.id)
+        }
     ) {
         Text(
             featuredEvent.location,

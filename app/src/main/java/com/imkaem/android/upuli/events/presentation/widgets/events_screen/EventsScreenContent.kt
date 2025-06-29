@@ -21,9 +21,11 @@ fun EventsScreenContent(
     ) {
         EventsScreenTodayContent(
             todayEventsState = eventsState.todayEventsState,
+            onNavigateToEvent = onNavigateToEvent,
         )
         EventsScreenTomorrowContent(
             tomorrowEventsState = eventsState.tomorrowEventsState,
+            onNavigateToEvent = onNavigateToEvent,
         )
         Spacer(Modifier.height(10.dp))
         EventsScreenUpcomingContent(

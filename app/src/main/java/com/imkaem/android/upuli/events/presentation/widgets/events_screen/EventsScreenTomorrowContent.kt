@@ -1,4 +1,5 @@
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -33,10 +34,11 @@ import java.util.Locale
 @Composable
 fun EventsScreenTomorrowContent(
     tomorrowEventsState: EventsScreenDayState?,
+    onNavigateToEvent: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .background(Color.LightGray)
             .padding(all = 10.dp)
 
@@ -55,6 +57,7 @@ fun EventsScreenTomorrowContent(
         EventsScreenTomorrowEventContent(
             featuredEvent = tomorrowEventsState.featuredEvent,
             eventsCount = tomorrowEventsState.dayEventsCount,
+            onNavigateToEvent = onNavigateToEvent,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -64,6 +67,7 @@ fun EventsScreenTomorrowContent(
 private fun EventsScreenTomorrowEventContent(
     featuredEvent: EventModel,
     eventsCount: Int,
+    onNavigateToEvent: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -76,7 +80,9 @@ private fun EventsScreenTomorrowEventContent(
 //    val timeString = timeFormatter.format(featuredEvent.date)
 
     Row(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth().clickable {
+            onNavigateToEvent(featuredEvent.id)
+        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
