@@ -33,6 +33,7 @@ import java.util.Locale
 fun EventBriefItem(
     event: EventModel,
     onNavigateToEvent: (id: Int) -> Unit,
+    onToggleEventIsBookmarked: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -67,6 +68,7 @@ fun EventBriefItem(
             Column(
                 modifier = Modifier.clickable {
 //                   onBookmark(event.id)
+                    onToggleEventIsBookmarked(event.id)
                 }
             ) {
                 Icon(

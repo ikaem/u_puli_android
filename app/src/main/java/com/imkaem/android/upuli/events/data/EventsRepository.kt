@@ -99,6 +99,16 @@ class EventsRepository(
         return model
     }
 
+    suspend fun updateEventIsBookmarked(
+        eventId: Int,
+        isBookmarked: Boolean,
+    ) {
+        eventsLocalDataSource.updateEventIsBookmarked(
+            eventId = eventId,
+            isBookmarked = isBookmarked,
+        )
+    }
+
     /* --------------- dummy data ---------------*/
     /* TODO in future, this will actually get data from database */
 //    suspend fun getEvents(

@@ -16,11 +16,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.presentation.widgets.EventBriefItems
 
 @Composable
 fun EventsScreenUpcomingContent(
     events: List<EventModel>,
     onNavigateToEvent: (Int) -> Unit,
+    onToggleEventIsBookmarked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -42,6 +44,7 @@ fun EventsScreenUpcomingContent(
         EventsScreenUpcomingEventsContent(
             events = events,
             onNavigateToEvent = onNavigateToEvent,
+            onToggleEventIsBookmarked = onToggleEventIsBookmarked,
             modifier = Modifier.fillMaxSize()
         )
     }
@@ -51,35 +54,19 @@ fun EventsScreenUpcomingContent(
 private fun EventsScreenUpcomingEventsContent(
     events: List<EventModel>,
     onNavigateToEvent: (Int) -> Unit,
+    onToggleEventIsBookmarked: (Int) -> Unit,
     modifier: Modifier,
 ) {
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-    ) {
+    EventBriefItems(
+        events = events,
+        onNavigateToEvent = onNavigateToEvent,
+        onToggleEventIsBookmarked = onToggleEventIsBookmarked,
+        modifier = modifier,
 
-        items(
-            count = events.size,
-            key = { index -> events[index].id }
-        ) { index ->
-
-            val event = events[index]
-
-            EventBriefItem(
-                event = event,
-                onNavigateToEvent = onNavigateToEvent,
-                modifier = Modifier.padding(top = 10.dp, bottom = 15.dp)
-            )
-
-            val isLast = index == events.size - 1
-            if (!isLast) {
-                HorizontalDivider()
-            }
-        }
-
-    }
+    )
 }
 
+/* TODO this could be reused probably */
 @Composable
 private fun EventsScreenUpcomingNoEventsContent() {
     Column(

@@ -12,6 +12,7 @@ import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenStat
 fun EventsScreenContent(
     eventsState: EventsScreenState,
     onNavigateToEvent: (Int) -> Unit,
+    onToggleEventIsBookmarked: (Int) -> Unit,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -31,6 +32,7 @@ fun EventsScreenContent(
         EventsScreenUpcomingContent(
             eventsState.allUpcomingEvents,
             onNavigateToEvent,
+            onToggleEventIsBookmarked,
         )
     }
 

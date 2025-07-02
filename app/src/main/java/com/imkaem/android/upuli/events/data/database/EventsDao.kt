@@ -4,7 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.imkaem.android.upuli.events.data.local.EventLocalEntity
+import com.imkaem.android.upuli.events.data.local.EventLocalEntityPartialIsBookmarked
 
 @Dao
 interface EventsDao {
@@ -27,7 +29,6 @@ interface EventsDao {
         toMillisecondsExclusive: Long
     ): List<EventLocalEntity>
 
-
     @Query("SELECT * FROM events WHERE id = :id")
     suspend fun getOne(id: Int): EventLocalEntity?
 
@@ -38,5 +39,9 @@ interface EventsDao {
     suspend fun add(event: EventLocalEntity) {
         addAll(listOf(event))
     }
+
+    /* NOTE: we dont necessarily need to use partial entity here */
+    @Update(entity = EventLocalEntity::class)
+    suspend fun updateIsBookmarked(partialEvent: EventLocalEntityPartialIsBookmarked)
 
 }

@@ -7,6 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "events")
 data class EventLocalEntity(
     @PrimaryKey()
+    /* TODO: shouldn't ids in db be Long? maybe int is enough, if we dont expect lot of events? */
     val id: Int,
 
     val title: String,

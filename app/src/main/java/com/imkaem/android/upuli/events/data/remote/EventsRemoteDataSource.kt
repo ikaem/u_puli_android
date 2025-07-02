@@ -28,5 +28,19 @@ class EventsRemoteDataSource(
         return response.data?.event
     }
 
+    suspend fun getEventsByIds(
+        ids: List<Int>
+    ): List<EventRemoteEntity> {
+        val idsString = ids.joinToString(",")
+        val response = apiService.getEventsByIds(
+            ids = idsString
+        )
+        if(!response.ok) {
+            throw Exception("Error fetching events with ids $ids: ${response.message}")
+        }
+
+        return response.data.events
+    }
+
     /* TODO later, this should probably be delegated to local data source, where we would pass */
 }

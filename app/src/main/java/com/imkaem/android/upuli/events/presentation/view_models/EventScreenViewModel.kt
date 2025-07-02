@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "EventViewModel"
 
-class EventViewModel(
+class EventScreenViewModel(
 
     /* TODO later, this will be provided by hilt probably */
     private val stateHandle: SavedStateHandle

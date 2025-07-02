@@ -12,6 +12,7 @@ import com.imkaem.android.upuli.events.domain.use_cases.GetTomorrowEventsUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetUpcomingEventsUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.LoadEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.LoadEventsUseCase
+import com.imkaem.android.upuli.events.domain.use_cases.UpdateEventIsBookmarkedUseCase
 
 
 private val EVENTS_API_SERVICE = EventsRetrofitInstance.api
@@ -49,5 +50,8 @@ object DummyDI {
     )
     val loadEventUseCase = LoadEventUseCase(
         eventsRepository = EVENTS_REPOSITORY
+    )
+    val updateEventIsBookmarkedUseCase = UpdateEventIsBookmarkedUseCase(
+        eventsRepository = EVENTS_REPOSITORY,
     )
 }

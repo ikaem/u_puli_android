@@ -48,5 +48,18 @@ class EventsLocalDataSource(
         dao.add(event)
     }
 
+    /* TODO: normally, i would use some custom wrapper that looks like entity, so if i every chnage lib, i can still depend on my on class */
+    suspend fun updateEventIsBookmarked(
+        eventId: Int,
+        isBookmarked: Boolean,
+    ) {
+        val partial = EventLocalEntityPartialIsBookmarked(
+            id = eventId,
+            isBookmarked = isBookmarked,
+        )
+
+        dao.updateIsBookmarked(partial)
+    }
+
 
 }
