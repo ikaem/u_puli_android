@@ -41,7 +41,6 @@ class MainActivity : ComponentActivity() {
 
 
 /* TODO extract this to its own file */
-
 @Composable
 fun UPuliApp() {
     val navController: NavHostController = rememberNavController()

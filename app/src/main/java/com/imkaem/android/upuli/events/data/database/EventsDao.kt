@@ -15,6 +15,9 @@ interface EventsDao {
     @Query("SELECT * FROM events")
     suspend fun getAll(): List<EventLocalEntity>
 
+    @Query("SELECT * FROM events WHERE is_bookmarked = 1 AND date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
+    suspend fun getAllBookmarkedFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
+
     @Query("SELECT * FROM events WHERE date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
     suspend fun getAllFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
 

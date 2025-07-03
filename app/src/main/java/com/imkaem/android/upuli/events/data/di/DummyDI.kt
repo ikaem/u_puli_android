@@ -6,6 +6,7 @@ import com.imkaem.android.upuli.events.data.api_service.EventsRetrofitInstance
 import com.imkaem.android.upuli.events.data.database.EventsRoomInstance
 import com.imkaem.android.upuli.events.data.local.EventsLocalDataSource
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
+import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetTodayEventsUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetTomorrowEventsUseCase
@@ -53,5 +54,8 @@ object DummyDI {
     )
     val updateEventIsBookmarkedUseCase = UpdateEventIsBookmarkedUseCase(
         eventsRepository = EVENTS_REPOSITORY,
+    )
+    val getBookmarkedEventsFromDateUseCase = GetBookmarkedEventsFromDateUseCase(
+        eventsRepository = EVENTS_REPOSITORY
     )
 }

@@ -23,8 +23,23 @@ class EventsRepository(
         )
     }
 
+    suspend fun getBookmarkedEventsFromInclusive(
+        fromMillisecondsInclusive: Long,
+    ): List<EventModel> {
+
+        val localEntities = eventsLocalDataSource.getAllBookmarkedFromInclusive(
+            fromMillisecondsInclusive = fromMillisecondsInclusive
+        )
+        val models = localEntities.map { it ->
+            EventConverters.modelFromLocalEntity(it)
+        }
+
+        return models
+    }
+
     /* TODO maybe too maby functions here, will see */
     suspend fun getEvents(
+        /* TODO this should be called GetEventsDateFilter, if we want to keep it all in one function */
         filter: GetEventsFilter,
     ): List<EventModel> {
         val fromInclusive = filter.fromDateMilliseconds;

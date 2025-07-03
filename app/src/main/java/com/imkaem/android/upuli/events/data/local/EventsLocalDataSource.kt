@@ -1,5 +1,6 @@
 package com.imkaem.android.upuli.events.data.local
 
+import android.media.metrics.Event
 import com.imkaem.android.upuli.events.data.database.EventsDao
 
 class EventsLocalDataSource(
@@ -12,6 +13,14 @@ class EventsLocalDataSource(
 
     suspend fun getOne(id: Int): EventLocalEntity? {
         return dao.getOne(id)
+    }
+
+    suspend fun getAllBookmarkedFromInclusive(
+        fromMillisecondsInclusive: Long
+    ): List<EventLocalEntity> {
+        return dao.getAllBookmarkedFromInclusive(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
     }
 
     suspend fun getAllFromInclusive(

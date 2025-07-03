@@ -66,7 +66,7 @@ class EventsScreenViewModel : ViewModel() {
 
             /* first load remote events into database */
             /* TODO maybe naming for load events is bad - because it would be greate to call other function here loadEvents */
-            loadEventsUseCase()
+            handleLoadEvents()
 
             /* then get all events from db and set into state */
             handleGetEvents()
@@ -108,7 +108,11 @@ class EventsScreenViewModel : ViewModel() {
         }
     }
 
-    suspend fun handleGetEvents() {
+    private suspend fun handleLoadEvents() {
+        loadEventsUseCase()
+    }
+
+    private suspend fun handleGetEvents() {
         /* get today events */
         val todayEvents = getTodayEventsUseCase()
         val todayFeaturedEvent = todayEvents.firstOrNull()
