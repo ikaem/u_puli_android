@@ -15,7 +15,7 @@ fun EventBriefItems(
     events: List<EventModel>,
     onNavigateToEvent: (Int) -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
 ) {
 
     LazyColumn(

@@ -4,6 +4,11 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+
+/* TODO there is some article here that puts dao on actual entity, so we can access specific entity's dao on its own instance? */
+/*
+* https://commonsware.com/Room/pages/chap-partial-003.html
+* */
 @Entity(tableName = "events")
 data class EventLocalEntity(
     @PrimaryKey()

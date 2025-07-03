@@ -1,3 +1,5 @@
+package com.imkaem.android.upuli.events.presentation.widgets.bookmarked_events_screen
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,18 +13,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefItems
 
+/* TODO should be moved to a separate file */
 @Composable
-fun EventsScreenUpcomingContent(
+fun BookmarkedEventsScreenEventsContent(
     events: List<EventModel>,
-    onNavigateToEvent: (Int) -> Unit,
+    onNavigateToEvent: (id: Int) -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -30,27 +35,28 @@ fun EventsScreenUpcomingContent(
             .padding(all = 10.dp)
     ) {
         Text(
-            "SVI NADOLAZEĆI DOGAĐAJI",
+            "SPREMLJENI DOGAĐAJI",
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
         )
         Spacer(Modifier.height(5.dp))
         if (events.isEmpty()) {
-            EventsScreenUpcomingEventsEmptyContent()
+            BookmarkedEventsScreenEventsEmptyContent()
             return
         }
-        EventsScreenUpcomingEventsPopulatedContent(
+        BookmarkedEventsScreenEventsPopulatedContent(
             events = events,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
             modifier = Modifier.fillMaxSize()
         )
     }
+
 }
 
-/* TODO this could be reused probably */
+/* TODO should be moved to same file as the above one */
 @Composable
-private fun EventsScreenUpcomingEventsEmptyContent(
+private fun BookmarkedEventsScreenEventsEmptyContent(
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -58,15 +64,18 @@ private fun EventsScreenUpcomingEventsEmptyContent(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(
-            "Nema nadolazećih događaja",
+            "Ne postoji niti jedan spremljeni događaj." +
+                    "\n" +
+                    "Spremite jedan događaj da bi ga vidjeli ovdje",
             fontSize = 16.sp,
-            modifier = Modifier.padding(10.dp)
+            modifier = Modifier.padding(10.dp),
+            textAlign = TextAlign.Center,
         )
     }
 }
 
 @Composable
-private fun EventsScreenUpcomingEventsPopulatedContent(
+private fun BookmarkedEventsScreenEventsPopulatedContent(
     events: List<EventModel>,
     onNavigateToEvent: (Int) -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
@@ -77,7 +86,5 @@ private fun EventsScreenUpcomingEventsPopulatedContent(
         onNavigateToEvent = onNavigateToEvent,
         onToggleEventIsBookmarked = onToggleEventIsBookmarked,
         modifier = modifier,
-
-        )
+    )
 }
-
