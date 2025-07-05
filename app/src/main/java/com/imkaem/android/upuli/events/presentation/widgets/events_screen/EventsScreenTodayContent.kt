@@ -93,20 +93,17 @@ private fun EventsScreenTodayEventContent(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier.clickable {
-            onNavigateToEvent(featuredEvent.id)
-        }
     ) {
-        Text(
-            featuredEvent.location,
-            fontSize = 14.sp,
-        )
         Icon(
             imageVector = Icons.Filled.LocationOn,
             contentDescription = "Venue location",
             modifier = Modifier
                 .size(20.dp)
-                .padding(start = 5.dp)
+                .padding(end = 5.dp)
+        )
+        Text(
+            featuredEvent.location,
+            fontSize = 14.sp,
         )
     }
     Spacer(Modifier.height(10.dp))
@@ -114,34 +111,37 @@ private fun EventsScreenTodayEventContent(
         featuredEvent.title,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
+        modifier = modifier.clickable {
+            onNavigateToEvent(featuredEvent.id)
+        }
     )
     Spacer(Modifier.height(15.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(
-            featuredEvent.date,
-            fontSize = 14.sp,
-        )
         Icon(
             imageVector = Icons.Filled.CalendarMonth,
             contentDescription = "Event time",
             modifier = Modifier
                 .size(20.dp)
-                .padding(start = 5.dp)
+                .padding(end = 5.dp)
         )
-        Spacer(Modifier.width(30.dp))
         Text(
-            featuredEvent.time,
+            featuredEvent.date,
             fontSize = 14.sp,
         )
+        Spacer(Modifier.width(30.dp))
         Icon(
             imageVector = Icons.Filled.AccessTime,
             contentDescription = "Event time",
             modifier = Modifier
                 .size(20.dp)
-                .padding(start = 5.dp)
+                .padding(end = 5.dp)
+        )
+        Text(
+            featuredEvent.time,
+            fontSize = 14.sp,
         )
     }
     Spacer(Modifier.height(10.dp))

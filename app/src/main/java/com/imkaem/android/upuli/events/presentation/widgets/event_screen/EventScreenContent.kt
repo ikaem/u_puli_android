@@ -1,3 +1,4 @@
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -12,6 +13,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.LocationOn
@@ -38,6 +41,7 @@ import java.util.Locale
 @Composable
 fun EventScreenContent(
     eventState: EventScreenState,
+    onToggleEventIsBookmarked: (id: Int) -> Unit,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -56,14 +60,17 @@ fun EventScreenContent(
 
         EventScreenEventContent(
             event = event,
+            onToggleEventIsBookmarked = onToggleEventIsBookmarked,
             modifier = modifier
         )
     }
 }
 
+
 @Composable
 private fun EventScreenEventContent(
     event: EventModel,
+    onToggleEventIsBookmarked: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -75,7 +82,7 @@ private fun EventScreenEventContent(
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top,
+//            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Text(
@@ -87,59 +94,70 @@ private fun EventScreenEventContent(
                     .weight(1f)
                     .padding(end = 10.dp),
             )
-            IconButton(
-                onClick = {},
+            Column(
+                modifier = Modifier.clickable {
+                    onToggleEventIsBookmarked(event.id)
+                }
             ) {
+
                 Icon(
-                    Icons.Filled.FavoriteBorder,
+                    imageVector = when (event.isBookmarked) {
+                        true -> Icons.Filled.Bookmark
+                        false -> Icons.Filled.BookmarkBorder
+                    },
                     contentDescription = "Toggle favorite",
                     modifier = Modifier.size(32.dp)
                 )
             }
+//            IconButton(
+//                onClick = {},
+//            ) {
+//            }
         }
         Spacer(Modifier.height(10.dp))
         Row(
-            verticalAlignment = Alignment.CenterVertically,
+//            verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
-            Text(
-                event.location,
-                fontSize = 14.sp,
-            )
             Icon(
                 Icons.Filled.LocationOn,
                 contentDescription = "Location",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp),
+                    .padding(end = 5.dp),
+            )
+            Text(
+                event.location,
+//                "event.location very long location year this time or some other time",
+                fontSize = 14.sp,
             )
         }
         Spacer(Modifier.height(2.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                event.date,
-                fontSize = 14.sp,
-            )
             Icon(
                 Icons.Filled.CalendarMonth,
                 contentDescription = "Date",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp),
+                    .padding(end = 5.dp),
             )
-            Spacer(modifier = Modifier.width(15.dp))
             Text(
-                event.time,
+                event.date,
                 fontSize = 14.sp,
             )
+            Spacer(modifier = Modifier.width(15.dp))
             Icon(
                 Icons.Filled.AccessTime,
                 contentDescription = "Time",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp),
+                    .padding(end = 5.dp),
+            )
+            Text(
+                event.time,
+                fontSize = 14.sp,
             )
 
         }

@@ -101,7 +101,7 @@ fun UPuliApp() {
                 },
                 onNavigateToBookmarks = {
                     onNavigateToBookmarks()
-                }
+                },
             )
         }
 

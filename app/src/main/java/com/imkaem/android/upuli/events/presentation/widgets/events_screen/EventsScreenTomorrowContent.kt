@@ -83,9 +83,9 @@ private fun EventsScreenTomorrowEventContent(
 //    val timeString = timeFormatter.format(featuredEvent.date)
 
     Row(
-        modifier = modifier.fillMaxWidth().clickable {
-            onNavigateToEvent(featuredEvent.id)
-        },
+//        modifier = modifier.fillMaxWidth().clickable {
+//            onNavigateToEvent(featuredEvent.id)
+//        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
@@ -93,6 +93,13 @@ private fun EventsScreenTomorrowEventContent(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Start,
         ) {
+            Icon(
+                imageVector = Icons.Filled.LocationOn,
+                contentDescription = "Location",
+                modifier = Modifier
+                    .size(16.dp)
+                    .padding(end = 5.dp)
+            )
 
             Text(
                 text = featuredEvent.location,
@@ -100,13 +107,6 @@ private fun EventsScreenTomorrowEventContent(
                 fontSize = 12.sp,
                 modifier = Modifier.weight(1f),
                 maxLines = 1,
-            )
-            Icon(
-                imageVector = Icons.Filled.LocationOn,
-                contentDescription = "Location",
-                modifier = Modifier
-                    .size(16.dp)
-                    .padding(start = 5.dp)
             )
         }
 
@@ -121,16 +121,16 @@ private fun EventsScreenTomorrowEventContent(
                 horizontalArrangement = Arrangement.Start,
             ) {
 
-                Text(
-                    featuredEvent.date,
-                    fontSize = 12.sp,
-                )
                 Icon(
                     imageVector = Icons.Filled.CalendarMonth,
                     contentDescription = "Tomorrow event date",
                     modifier = Modifier
                         .size(16.dp)
-                        .padding(start = 5.dp)
+                        .padding(end = 5.dp)
+                )
+                Text(
+                    featuredEvent.date,
+                    fontSize = 12.sp,
                 )
             }
             Spacer(Modifier.width(15.dp))
@@ -139,16 +139,16 @@ private fun EventsScreenTomorrowEventContent(
                 horizontalArrangement = Arrangement.Start,
             ) {
 
-                Text(
-                    featuredEvent.time,
-                    fontSize = 12.sp,
-                )
                 Icon(
                     imageVector = Icons.Filled.AccessTime,
                     contentDescription = "Tomorrow event time",
                     modifier = Modifier
                         .size(16.dp)
-                        .padding(start = 5.dp)
+                        .padding(end = 5.dp)
+                )
+                Text(
+                    featuredEvent.time,
+                    fontSize = 12.sp,
                 )
             }
         }
@@ -158,6 +158,9 @@ private fun EventsScreenTomorrowEventContent(
         featuredEvent.title,
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
+        modifier = modifier.clickable {
+            onNavigateToEvent(featuredEvent.id)
+        }
     )
     Spacer(Modifier.height(10.dp))
     Row(

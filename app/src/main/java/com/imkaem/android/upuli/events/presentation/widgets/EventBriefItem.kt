@@ -58,9 +58,12 @@ fun EventBriefItem(
         ) {
             Text(
                 text = event.title,
+//                text = "event.title very long title that what is what is what is asd asd asd  ",
                 fontWeight = FontWeight.Bold,
                 fontSize = 14.sp,
-                overflow = TextOverflow.Visible,
+//                TODO maybe this does not need to be visible - maybe we can have one line?
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
                 modifier = Modifier
                     .weight(1f)
                     .padding(end = 8.dp)
@@ -95,43 +98,47 @@ fun EventBriefItem(
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                text = event.location,
-                fontSize = 14.sp,
-            )
             Icon(
                 imageVector = Icons.Filled.LocationOn,
                 contentDescription = "Location",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp)
+                    .padding(end = 5.dp)
                 )
+            Text(
+                text = event.location,
+//                text = "event.location very long localtion very ver lomng long logn ",
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                /*TODO in this case weight is not even needed*/
+                fontSize = 14.sp,
+            )
         }
         Row(
             verticalAlignment = Alignment.CenterVertically,
         )  {
-            Text(
-                text = event.date,
-                fontSize = 14.sp,
-            )
             Icon(
                 imageVector = Icons.Filled.CalendarMonth,
                 contentDescription = "Date",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp)
+                    .padding(end = 5.dp)
             )
-            Spacer(modifier = Modifier.width(15.dp))
             Text(
-                text = event.time,
+                text = event.date,
                 fontSize = 14.sp,
             )
+            Spacer(modifier = Modifier.width(15.dp))
             Icon(
                 imageVector = Icons.Filled.AccessTime,
                 contentDescription = "Time",
                 modifier = Modifier
                     .size(20.dp)
-                    .padding(start = 5.dp)
+                    .padding(end = 5.dp)
+            )
+            Text(
+                text = event.time,
+                fontSize = 14.sp,
             )
 
         }

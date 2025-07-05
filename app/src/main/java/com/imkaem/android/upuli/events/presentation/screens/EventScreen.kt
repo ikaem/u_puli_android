@@ -16,7 +16,8 @@ import com.imkaem.android.upuli.events.presentation.view_models.EventScreenViewM
 fun EventScreen(
     onNavigateBack: () -> Unit,
     onNavigateToBookmarks: () -> Unit,
-) {
+
+    ) {
     val viewModel: EventScreenViewModel = viewModel()
     val eventState = viewModel.state.value
 
@@ -29,7 +30,11 @@ fun EventScreen(
             )
         },
         content = { padding ->
-            EventScreenContent(padding = padding, eventState = eventState)
+            EventScreenContent(
+                padding = padding,
+                eventState = eventState,
+                onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
+            )
         }
     )
 }
@@ -38,7 +43,7 @@ fun EventScreen(
 @Preview(showBackground = true)
 fun EventScreenPreview() {
     EventScreen(
-        onNavigateBack = { /* no-op */},
+        onNavigateBack = { /* no-op */ },
         onNavigateToBookmarks = { /* no-op */ }
     )
 }
