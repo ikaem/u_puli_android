@@ -15,6 +15,12 @@ interface EventsDao {
     @Query("SELECT * FROM events")
     suspend fun getAll(): List<EventLocalEntity>
 
+
+    /* TODO maybe this should be unified somehow with the one for fromMilliseconds */
+    /* TODO or maybe repository or data source should define now date */
+    @Query("SELECT * FROM events WHERE is_bookmarked = 1 ORDER BY date_in_milliseconds ASC")
+    suspend fun getAllBookmarked(): List<EventLocalEntity>
+
     @Query("SELECT * FROM events WHERE is_bookmarked = 1 AND date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
     suspend fun getAllBookmarkedFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
 
@@ -46,5 +52,9 @@ interface EventsDao {
     /* NOTE: we dont necessarily need to use partial entity here */
     @Update(entity = EventLocalEntity::class)
     suspend fun updateIsBookmarked(partialEvent: EventLocalEntityPartialIsBookmarked)
+
+
+    @Update(entity = EventLocalEntity::class)
+    suspend fun updateAllIsBookmarked(partialEvents: List<EventLocalEntityPartialIsBookmarked>)
 
 }

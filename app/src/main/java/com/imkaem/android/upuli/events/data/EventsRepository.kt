@@ -5,6 +5,7 @@ import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
 import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.utils.EventConverters
+import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
 
 class EventsRepository(
     private val eventsRemoteDataSource: EventsRemoteDataSource,
@@ -12,6 +13,22 @@ class EventsRepository(
 ) {
     /* TODO eventually, this could get filter*/
     suspend fun loadEvents() {
+
+        /*
+        * ok, lets do this then:
+        * 1. get all bookmarked events
+        * 2. get all remote events
+        * 3. store all remote events in db
+        * 4. update all db events with partialBookmarked
+        *
+        * ALSO:
+        *  - when getting events for bookmarked events, do not fetch remote events, just get from db - just get from db
+        * */
+
+        /* TODO in all of these should probably use withContenxt, and receive dispatcher in a constructor? */
+        /* TODO this could be causing issues, because we night be trying to update events that do not exist in db? */
+        /* or maybe it cannot, because it will eventually be derived form actual db events */
+        val bookmarkedEvents = eventsLocalDataSource.getAllBookmarked()
         val remoteEventEntities = eventsRemoteDataSource.getEvents()
 
         val localEventEntities = remoteEventEntities.map { it ->
@@ -21,6 +38,19 @@ class EventsRepository(
         eventsLocalDataSource.addAll(
             localEventEntities
         )
+
+        /* to make sure that correct events are update as bookmarked */
+        val values = bookmarkedEvents.map { it ->
+            UpdateEventLocalIsBookmarkedValue(
+                eventId = it.id,
+                isBookmarked = true,
+            )
+        }
+
+        eventsLocalDataSource.updateEventsIsBookmarked(
+            updateValues = values,
+        )
+
     }
 
     suspend fun getBookmarkedEventsFromInclusive(
@@ -91,6 +121,7 @@ class EventsRepository(
         return models
     }
 
+    /* TODO this is not needed - we dont want to fetch event, because it will overwrite existing event that might be bookmarked */
     suspend fun loadEvent(id: Int): Unit {
         /* TODO this could potentially return nothing */
         val remoteEventEntity = eventsRemoteDataSource.getEvent(id)
@@ -119,8 +150,12 @@ class EventsRepository(
         isBookmarked: Boolean,
     ) {
         eventsLocalDataSource.updateEventIsBookmarked(
-            eventId = eventId,
-            isBookmarked = isBookmarked,
+            UpdateEventLocalIsBookmarkedValue(
+                eventId = eventId,
+                isBookmarked = isBookmarked,
+            )
+//            eventId = eventId,
+//            isBookmarked = isBookmarked,
         )
     }
 

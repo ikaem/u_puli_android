@@ -38,9 +38,10 @@ fun EventsScreen(
             EventsScreenContent(
                 eventsState = eventsState,
                 onNavigateToEvent = onNavigateToEvent,
-                onToggleEventIsBookmarked = { it ->
-                    viewModel.onToggleEventIsBookmarked(it)
-                },
+//                onToggleEventIsBookmarked = { it ->
+//                    viewModel.onToggleEventIsBookmarked(it)
+//                },
+                onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
                 padding = padding,
             )
         }

@@ -41,7 +41,7 @@ class EventScreenViewModel(
         viewModelScope.launch {
             val id = stateHandle.get<Int>("event_id") ?: 0
 
-            loadEventsUseCase(id)
+//            loadEventsUseCase(id)
             val event = getEventUseCase(id)
 
             val updatedState = _state.value.copy(

@@ -2,6 +2,7 @@ package com.imkaem.android.upuli.events.data.local
 
 import android.media.metrics.Event
 import com.imkaem.android.upuli.events.data.database.EventsDao
+import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
 
 class EventsLocalDataSource(
     private val dao: EventsDao
@@ -13,6 +14,10 @@ class EventsLocalDataSource(
 
     suspend fun getOne(id: Int): EventLocalEntity? {
         return dao.getOne(id)
+    }
+
+    suspend fun getAllBookmarked(): List<EventLocalEntity> {
+        return dao.getAllBookmarked()
     }
 
     suspend fun getAllBookmarkedFromInclusive(
@@ -59,16 +64,28 @@ class EventsLocalDataSource(
 
     /* TODO: normally, i would use some custom wrapper that looks like entity, so if i every chnage lib, i can still depend on my on class */
     suspend fun updateEventIsBookmarked(
-        eventId: Int,
-        isBookmarked: Boolean,
+//        eventId: Int,
+//        isBookmarked: Boolean,
+        updateValue: UpdateEventLocalIsBookmarkedValue
     ) {
         val partial = EventLocalEntityPartialIsBookmarked(
-            id = eventId,
-            isBookmarked = isBookmarked,
+            id = updateValue.eventId,
+            isBookmarked = updateValue.isBookmarked,
         )
 
         dao.updateIsBookmarked(partial)
     }
 
+    suspend fun updateEventsIsBookmarked(
+        updateValues: List<UpdateEventLocalIsBookmarkedValue>
+    ) {
+        val partials = updateValues.map { updateValue ->
+            EventLocalEntityPartialIsBookmarked(
+                id = updateValue.eventId,
+                isBookmarked = updateValue.isBookmarked,
+            )
+        }
 
+        dao.updateAllIsBookmarked(partials)
+    }
 }

@@ -16,6 +16,8 @@ fun BookmarkedEventsScreen(
 
     val viewModel: BookmarkedEventsScreenViewModel = viewModel()
     val eventsState = viewModel.state.value
+    /* TODO: not sure if this shoule maybe be part */
+    val todayDateString = viewModel.fromDateString
 
     Scaffold(
         topBar = {
@@ -27,8 +29,9 @@ fun BookmarkedEventsScreen(
 
         BookmarkedEventsScreenContent(
             eventsState = eventsState,
+            fromDateString = todayDateString,
             onNavigateToEvent = onNavigateToEvent,
-            onToggleEventIsBookmarked = { /* no-op */ },
+            onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
             padding = it,
         )
     }

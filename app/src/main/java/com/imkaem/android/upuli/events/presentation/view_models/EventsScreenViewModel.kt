@@ -52,10 +52,7 @@ class EventsScreenViewModel : ViewModel() {
 
             /* reload fresh events from db */
             handleGetEvents()
-
-
         }
-
     }
 
 
