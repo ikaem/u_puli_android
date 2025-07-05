@@ -20,6 +20,8 @@ import com.imkaem.android.upuli.ui.theme.UPuliTheme
 fun EventsScreen(
     onNavigateToEvent: (id: Int) -> Unit,
     onNavigateToBookmarks: () -> Unit,
+    onNavigateToTodayEvents: () -> Unit,
+    onNavigateToTomorrowEvents: () -> Unit,
 ) {
 
     val viewModel: EventsScreenViewModel = viewModel()
@@ -34,13 +36,14 @@ fun EventsScreen(
             )
         },
         content = { padding ->
-
             EventsScreenContent(
                 eventsState = eventsState,
                 onNavigateToEvent = onNavigateToEvent,
 //                onToggleEventIsBookmarked = { it ->
 //                    viewModel.onToggleEventIsBookmarked(it)
 //                },
+                onNavigateToTodayEvents = onNavigateToTodayEvents,
+                onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
                 onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
                 padding = padding,
             )
@@ -54,7 +57,9 @@ fun EventsScreenPreview() {
     UPuliTheme {
         EventsScreen(
             onNavigateToEvent = {  /* no-op */ },
-            onNavigateToBookmarks = { /* no-op */ }
+            onNavigateToTodayEvents = { /* no-op */ },
+            onNavigateToBookmarks = { /* no-op */ },
+            onNavigateToTomorrowEvents = { /* no-op */ }
         )
     }
 }

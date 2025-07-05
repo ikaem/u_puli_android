@@ -35,6 +35,7 @@ import java.util.Locale
 fun EventsScreenTomorrowContent(
     tomorrowEventsState: EventsScreenDayState?,
     onNavigateToEvent: (Int) -> Unit,
+    onNavigateToTomorrowEvents: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -58,6 +59,7 @@ fun EventsScreenTomorrowContent(
             featuredEvent = tomorrowEventsState.featuredEvent,
             eventsCount = tomorrowEventsState.dayEventsCount,
             onNavigateToEvent = onNavigateToEvent,
+            onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -68,6 +70,7 @@ private fun EventsScreenTomorrowEventContent(
     featuredEvent: EventModel,
     eventsCount: Int,
     onNavigateToEvent: (Int) -> Unit,
+    onNavigateToTomorrowEvents: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -159,6 +162,10 @@ private fun EventsScreenTomorrowEventContent(
     Spacer(Modifier.height(10.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .clickable {
+                onNavigateToTomorrowEvents()
+            }
     ) {
         Text(
             "Ukupno $eventsCount događaja sutra",

@@ -35,6 +35,7 @@ import kotlin.Unit
 fun EventsScreenTodayContent(
     todayEventsState: EventsScreenDayState?,
     onNavigateToEvent: (Int) -> Unit,
+    onNavigateToTodayEvents: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -54,6 +55,7 @@ fun EventsScreenTodayContent(
             featuredEvent = todayEventsState.featuredEvent,
             eventsCount = todayEventsState.dayEventsCount,
             onNavigateToEvent = onNavigateToEvent,
+            onNavigateToTodayEvents = onNavigateToTodayEvents,
             modifier = Modifier.fillMaxWidth()
         )
     }
@@ -78,6 +80,7 @@ private fun EventsScreenTodayEventContent(
     featuredEvent: EventModel,
     eventsCount: Int,
     onNavigateToEvent: (Int) -> Unit,
+    onNavigateToTodayEvents: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -144,6 +147,9 @@ private fun EventsScreenTodayEventContent(
     Spacer(Modifier.height(10.dp))
     Row(
         verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.clickable {
+            onNavigateToTodayEvents()
+        }
     ) {
         Text(
             "Ukupno $eventsCount događaja danas",

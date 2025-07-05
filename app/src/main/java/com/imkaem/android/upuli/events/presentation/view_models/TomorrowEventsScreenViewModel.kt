@@ -6,52 +6,35 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.ZonedDateTime
-import java.time.format.DateTimeFormatter
-import java.util.Locale
 
-class BookmarkedEventsScreenViewModel : ViewModel() {
-    val getBookmarkedEventsFromTodayUseCase = DummyDI.getBookmarkedEventsFromDateUseCase
+/* TODO this view model is same as Today one - maybe they can be merged somehow - maybe the screenitself can accept argument*/
+class TomorrowEventsScreenViewModel: ViewModel() {
+    val getTomorrowEventsUseCase = DummyDI.getTomorrowEventsUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
 
-
-    /* TODO not sure if this should be here */
-    /* TODO this should eventually be converted to state object */
-    private val todayDate: ZonedDateTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
-    val dateFormatter: DateTimeFormatter =
-        DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    /* */
-
-
-    val fromDateString: String
-        get() =
-            todayDate.format(dateFormatter)
-
     private val _state = mutableStateOf(
-        BookmarkedEventsScreenState(
-            bookmarkedEvents = emptyList(),
+        TomorrowEventsScreenState(
+            events = emptyList(),
             isLoading = true,
-            error = null,
-//            fromDateString = "" // This can be dynamic based on the current date
+            error = null
         )
     )
-    val state: State<BookmarkedEventsScreenState>
+    val state: State<TomorrowEventsScreenState>
         get() = _state
+
 
     init {
         getEvents()
     }
 
     /* TODO we should make a view model out of this maybe? - but how to trigger events refetch then:
-    * - either in UI, afte
-    * */
+* - either in UI, afte
+* */
     fun onToggleEventIsBookmarked(
         id: Int,
     ) {
 
-        val event = state.value.bookmarkedEvents.firstOrNull { it ->
+        val event = state.value.events.firstOrNull { it ->
             it.id == id
         }
 
@@ -80,26 +63,18 @@ class BookmarkedEventsScreenViewModel : ViewModel() {
         /* TODO some error handler, and explicit IO dispatcher should be passed in */
         /* TODO missing error handling */
         viewModelScope.launch {
-//            handleLoadEvents()
-
             handleGetEvents()
         }
     }
 
 
-    private suspend fun handleLoadEvents() {
-        /* no implementation yet */
-    }
-
     private suspend fun handleGetEvents() {
-        val bookmarkedEvents = getBookmarkedEventsFromTodayUseCase(
-            startOfDateInMilliseconds = todayDate.toInstant().toEpochMilli()
-        )
+        val todayEvents = getTomorrowEventsUseCase()
 
         val updatedState = _state.value.copy(
-            bookmarkedEvents = bookmarkedEvents,
+            events = todayEvents,
             isLoading = false,
-            error = null
+            error = null,
         )
 
         _state.value = updatedState

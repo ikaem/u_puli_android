@@ -12,6 +12,8 @@ import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenStat
 fun EventsScreenContent(
     eventsState: EventsScreenState,
     onNavigateToEvent: (Int) -> Unit,
+    onNavigateToTodayEvents: () -> Unit,
+    onNavigateToTomorrowEvents: () -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
@@ -23,10 +25,12 @@ fun EventsScreenContent(
         EventsScreenTodayContent(
             todayEventsState = eventsState.todayEventsState,
             onNavigateToEvent = onNavigateToEvent,
+            onNavigateToTodayEvents = onNavigateToTodayEvents,
         )
         EventsScreenTomorrowContent(
             tomorrowEventsState = eventsState.tomorrowEventsState,
             onNavigateToEvent = onNavigateToEvent,
+            onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
         )
         Spacer(Modifier.height(10.dp))
         EventsScreenUpcomingContent(

@@ -7,6 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
 import kotlinx.coroutines.launch
 
+/* TODO there is a bug her:
+* 1. we mark event as bookmarked,
+* 2. navigate to bookmarkes or any other screen
+* 3. remove bookmark from that event on that other screen
+* 4. go back to initial screen (events screen)
+* 5. the event is still marked as bookmarked
+* - so i guess we either need to:
+* 1. reload events on every screen that has events
+* 2. of maybe flow would fix this - it would immediately reload events when the event is bookmarked or unbookmarked
+* */
 class EventsScreenViewModel : ViewModel() {
 
     /* TODO later, this will be provided by hilt probably */

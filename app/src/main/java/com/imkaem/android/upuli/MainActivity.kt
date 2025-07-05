@@ -5,13 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,8 +15,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.imkaem.android.upuli.events.presentation.screens.BookmarkedEventsScreen
+import com.imkaem.android.upuli.events.presentation.screens.TodayEventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventsScreen
+import com.imkaem.android.upuli.events.presentation.screens.TomorrowEventsScreen
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
 class MainActivity : ComponentActivity() {
@@ -57,6 +55,14 @@ fun UPuliApp() {
         navController.navigate("events/$id")
     }
 
+    fun navigateToTodayEvents() {
+        navController.navigate("today_events")
+    }
+
+    fun navigateToTomorrowEvents() {
+        navController.navigate("tomorrow_events")
+    }
+
     NavHost(
         startDestination = "events",
         navController = navController,
@@ -67,6 +73,8 @@ fun UPuliApp() {
             EventsScreen(
                 onNavigateToEvent = ::navigateToEvent,
                 onNavigateToBookmarks = ::onNavigateToBookmarks,
+                onNavigateToTodayEvents = ::navigateToTodayEvents,
+                onNavigateToTomorrowEvents = ::navigateToTomorrowEvents,
             )
         }
 
@@ -94,6 +102,26 @@ fun UPuliApp() {
                 onNavigateToBookmarks = {
                     onNavigateToBookmarks()
                 }
+            )
+        }
+
+        composable(
+            route = "today_events",
+        ) {
+            TodayEventsScreen(
+                onNavigateToEvent = ::navigateToEvent,
+                onNavigateBack = ::navigateBack,
+                onNavigateToBookmarks = ::onNavigateToBookmarks,
+            )
+        }
+
+        composable(
+            route = "tomorrow_events",
+        ) {
+            TomorrowEventsScreen(
+                onNavigateToEvent = ::navigateToEvent,
+                onNavigateBack = ::navigateBack,
+                onNavigateToBookmarks = ::onNavigateToBookmarks,
             )
         }
     }
