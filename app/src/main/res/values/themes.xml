@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.UPuli" parent="android:Theme.Material.Light.NoActionBar" />
+    <style name="Theme.UPuli" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- this colors only splash screeb -->
+<!--        <item name="android:windowBackground">@color/purple_200</item>-->
+<!--        <item name="android:background">@color/purple_200</item>-->
+    </style>
 </resources>

@@ -7,6 +7,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenViewModel
@@ -29,6 +30,7 @@ fun EventsScreen(
 
     Scaffold(
         /* TODO not sure if this contributes to anything in this particular case */
+//        containerColor = Color.Yellow,
         modifier = Modifier.fillMaxSize(),
         topBar = {
             UPuliTopAppBar(

@@ -1,3 +1,4 @@
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,12 @@ import coil3.compose.AsyncImage
 import com.imkaem.android.upuli.R
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventScreenState
+import com.imkaem.android.upuli.events.presentation.widgets.EventDetailsMetadataContainer
+import com.imkaem.android.upuli.ui.theme.ColorGrey10
+import com.imkaem.android.upuli.ui.theme.ColorGrey5
+import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
+import com.imkaem.android.upuli.ui.theme.ColorWhite
+import java.nio.file.WatchEvent
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -50,7 +57,7 @@ fun EventScreenContent(
 
     Column(
         modifier = modifier
-            .padding(padding),
+            .padding(padding)
     ) {
 
         if (event == null) {
@@ -61,8 +68,8 @@ fun EventScreenContent(
         EventScreenEventContent(
             event = event,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
-            modifier = modifier
-        )
+
+            )
     }
 }
 
@@ -76,105 +83,108 @@ private fun EventScreenEventContent(
 
     Column(
         modifier = modifier
-            .padding(all = 10.dp)
+//            .padding(all = 10.dp)
+            .padding(vertical = 10.dp)
             .verticalScroll(rememberScrollState())
 //            .fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-//            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-        ) {
-            Text(
-                event.title,
-                overflow = TextOverflow.Visible,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(end = 10.dp),
-            )
-            Column(
-                modifier = Modifier.clickable {
-                    onToggleEventIsBookmarked(event.id)
-                }
-            ) {
 
-                Icon(
-                    imageVector = when (event.isBookmarked) {
-                        true -> Icons.Filled.Bookmark
-                        false -> Icons.Filled.BookmarkBorder
-                    },
-                    contentDescription = "Toggle favorite",
-                    modifier = Modifier.size(32.dp)
+        /* TODO this might do with some widgets extraction */
+        Column(
+            modifier = Modifier.padding(horizontal = 10.dp,)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+//            verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Text(
+                    event.title,
+                    overflow = TextOverflow.Visible,
+                    color = ColorWhite,
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .weight(1f)
+                        .padding(end = 10.dp),
+                )
+                Column(
+                    modifier = Modifier.clickable {
+                        onToggleEventIsBookmarked(event.id)
+                    }
+                ) {
+
+                    Icon(
+                        imageVector = when (event.isBookmarked) {
+                            true -> Icons.Filled.Bookmark
+                            false -> Icons.Filled.BookmarkBorder
+                        },
+                        tint = ColorGreyPink100,
+                        contentDescription = "Toggle favorite",
+                        modifier = Modifier.size(28.dp)
+                    )
+                }
+            }
+            Spacer(Modifier.height(10.dp))
+            EventDetailsMetadataContainer(
+//            text = "event.location asd asd asf sdf sdg dsfg sd asd asdasdasfgasf sdfd sdf sd",
+                text = event.location,
+                iconImageVector = Icons.Filled.LocationOn,
+                iconContentDescription = "Venue location",
+            )
+            Spacer(Modifier.height(5.dp))
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                EventDetailsMetadataContainer(
+                    text = event.date,
+                    iconImageVector = Icons.Filled.CalendarMonth,
+                    iconContentDescription = "Event date",
+                )
+                Spacer(Modifier.width(5.dp))
+                EventDetailsMetadataContainer(
+                    text = event.time,
+                    iconImageVector = Icons.Filled.AccessTime,
+                    iconContentDescription = "Event time",
                 )
             }
-//            IconButton(
-//                onClick = {},
-//            ) {
-//            }
         }
-        Spacer(Modifier.height(10.dp))
-        Row(
-//            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start,
-        ) {
-            Icon(
-                Icons.Filled.LocationOn,
-                contentDescription = "Location",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp),
-            )
-            Text(
-                event.location,
-//                "event.location very long location year this time or some other time",
-                fontSize = 14.sp,
-            )
-        }
-        Spacer(Modifier.height(2.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                Icons.Filled.CalendarMonth,
-                contentDescription = "Date",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp),
-            )
-            Text(
-                event.date,
-                fontSize = 14.sp,
-            )
-            Spacer(modifier = Modifier.width(15.dp))
-            Icon(
-                Icons.Filled.AccessTime,
-                contentDescription = "Time",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp),
-            )
-            Text(
-                event.time,
-                fontSize = 14.sp,
-            )
 
-        }
         Spacer(Modifier.height(15.dp))
-        AsyncImage(
-//            "https://picsum.photos/1000/1000",
-            event.imageUrl,
-            contentDescription = "Event image",
-            contentScale = ContentScale.FillWidth,
-            modifier = Modifier.fillMaxWidth(),
-            error = painterResource(R.drawable.event)
-        )
-        Spacer(Modifier.height(20.dp))
-        Text(
-            /* TODO trim should have been done on backend*/
-            event.description.trim(),
-        )
+        Column(
+//            modifier = Modifier.background(ColorWhite)
+        ) {
+            AsyncImage(
+                //            "https://picsum.photos/1000/1000",
+                event.imageUrl,
+                contentDescription = "Event image",
+                contentScale = ContentScale.FillWidth,
+                modifier = Modifier.fillMaxWidth(),
+                error = painterResource(R.drawable.event)
+            )
+//            Spacer(Modifier.height(20.dp))
+        }
+        if (event.description.trim().isNotEmpty()) {
+            Column(
+                modifier = Modifier
+                    .background(ColorGrey5)
+                    .fillMaxWidth()
+//                    .let {
+//                        if (!event.description.trim().isEmpty()) {
+//                            it.padding(10.dp)
+//                        } else {
+//                            it
+//                        }
+//                    }
+                    .padding(horizontal = 10.dp, vertical = 10.dp)
+            ) {
+                Text(
+                    /* TODO trim should have been done on backend*/
+                    event.description.trim(),
+                    //            color = ColorWhite,
+                )
+            }
+        }
     }
 
 }

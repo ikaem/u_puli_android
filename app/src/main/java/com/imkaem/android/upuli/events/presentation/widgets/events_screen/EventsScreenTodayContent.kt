@@ -5,29 +5,27 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowRightAlt
 import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenDayState
-import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenState
-import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
-import java.util.Locale
+import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
+import com.imkaem.android.upuli.events.presentation.widgets.EventsSectionTotalPeriodCount
+import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContent
+import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContentColorVariant
+import com.imkaem.android.upuli.events.presentation.widgets.TodayEventMetadataContainer
+import com.imkaem.android.upuli.ui.theme.ColorBlue60
+import com.imkaem.android.upuli.ui.theme.ColorWhite
 import kotlin.Int
 import kotlin.Unit
 
@@ -41,14 +39,15 @@ fun EventsScreenTodayContent(
     Column(
         modifier = modifier.padding(all = 10.dp)
     ) {
-        Text(
-            "DANAS",
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
+        EventsContentTitle(
+            title = "DANAS",
+            markerColor = ColorBlue60,
         )
-        Spacer(Modifier.height(5.dp))
         if (todayEventsState == null) {
-            EventsScreenTodayNoEventContent()
+//            EventsScreenTodayNoEventContent()
+            NoEventsContent(
+                colorVariant = NoEventsContentColorVariant.LIGHT
+            )
             return
         }
         EventsScreenTodayEventContent(
@@ -57,20 +56,6 @@ fun EventsScreenTodayContent(
             onNavigateToEvent = onNavigateToEvent,
             onNavigateToTodayEvents = onNavigateToTodayEvents,
             modifier = Modifier.fillMaxWidth()
-        )
-    }
-}
-
-@Composable
-private fun EventsScreenTodayNoEventContent() {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Text(
-            "Nema događaja za danas",
-            fontSize = 16.sp,
-            modifier = Modifier.padding(10.dp)
         )
     }
 }
@@ -91,79 +76,143 @@ private fun EventsScreenTodayEventContent(
 //    val dateString = dateFormat.format(featuredEvent.date)
 //    val timeString = timeFormat.format(featuredEvent.date)
 
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
-        Icon(
-            imageVector = Icons.Filled.LocationOn,
-            contentDescription = "Venue location",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(end = 5.dp)
-        )
-        Text(
-            featuredEvent.location,
-            fontSize = 14.sp,
-        )
-    }
-    Spacer(Modifier.height(10.dp))
+//    Spacer(Modifier.height(5.dp))
     Text(
         featuredEvent.title,
         fontSize = 24.sp,
+        color = ColorWhite,
         fontWeight = FontWeight.Bold,
         modifier = modifier.clickable {
             onNavigateToEvent(featuredEvent.id)
         }
     )
     Spacer(Modifier.height(15.dp))
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Icon(
-            imageVector = Icons.Filled.CalendarMonth,
-            contentDescription = "Event time",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(end = 5.dp)
-        )
-        Text(
-            featuredEvent.date,
-            fontSize = 14.sp,
-        )
-        Spacer(Modifier.width(30.dp))
-        Icon(
-            imageVector = Icons.Filled.AccessTime,
-            contentDescription = "Event time",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(end = 5.dp)
-        )
-        Text(
-            featuredEvent.time,
-            fontSize = 14.sp,
-        )
-    }
+    TodayEventMetadataContainer(
+        text = featuredEvent.location,
+        iconImageVector = Icons.Filled.LocationOn,
+        iconContentDescription = "Venue location",
+    )
+
+//    Row(
+//        verticalAlignment = Alignment.CenterVertically,
+//        modifier = Modifier
+//            //            .border(
+//            //                BorderStroke(2.dp, SolidColor(Color.Red)),
+//            //                shape = RoundedCornerShape(10.dp)
+//            //            )
+//
+//            .clip(shape = RoundedCornerShape(5.dp))
+//            .background(
+////                    Color.Gray
+//                ColorGreyGreen60,
+//            )
+//            .padding(horizontal = 5.dp)
+//    ) {
+//        Icon(
+//            imageVector = Icons.Filled.LocationOn,
+//            contentDescription = "Venue location",
+//            tint = ColorGreyBlue60,
+//            modifier = Modifier
+//                .size(18.dp)
+//                .padding(end = 5.dp)
+//        )
+//        Text(
+//            featuredEvent.location,
+//            fontSize = 12.sp,
+////            color = ColorGrey10,
+//            color = ColorGreyGreen10
+//
+//        )
+//    }
+
     Spacer(Modifier.height(10.dp))
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier.clickable {
-            onNavigateToTodayEvents()
-        }
-    ) {
-        Text(
-            "Ukupno $eventsCount događaja danas",
-            fontSize = 12.sp,
-            style = TextStyle(
-                textDecoration = TextDecoration.Underline
-            )
+    Row {
+        /* TODO this should be unified with the one above */
+        TodayEventMetadataContainer(
+            text = featuredEvent.date,
+            iconImageVector = Icons.Filled.CalendarMonth,
+            iconContentDescription = "Event date",
         )
-        Icon(
-            imageVector = Icons.AutoMirrored.Filled.ArrowRightAlt,
-            contentDescription = "More today events",
-            modifier = Modifier
-                .size(20.dp)
-                .padding(start = 5.dp)
+//        Row(
+//            /* TODO borders here */
+//            verticalAlignment = Alignment.CenterVertically,
+//            /* TODO make a widget out of this, so we can always have the same button in simple way */
+//            modifier = Modifier
+//                //            .border(
+//                //                BorderStroke(2.dp, SolidColor(Color.Red)),
+//                //                shape = RoundedCornerShape(10.dp)
+//                //            )
+//
+//                .clip(shape = RoundedCornerShape(5.dp))
+//                .background(
+////                    Color.Gray
+//                    ColorGreyGreen60,
+//                )
+//                .padding(horizontal = 5.dp)
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.CalendarMonth,
+//                contentDescription = "Event time",
+////                tint = ColorGreyGreen10,
+//                tint = ColorGreyBlue60,
+//                modifier = Modifier
+//                    .size(20.dp)
+//                    .padding(end = 5.dp)
+//            )
+//            Text(
+//                featuredEvent.date,
+//                fontSize = 12.sp,
+//                color = ColorGreyGreen10
+//                //            modifier = Modifier.padding(5.dp)
+//            )
+//        }
+
+        Spacer(Modifier.width(10.dp))
+        TodayEventMetadataContainer(
+            text = featuredEvent.time,
+            iconImageVector = Icons.Filled.AccessTime,
+            iconContentDescription = "Event time",
+//            modifier = Modifier.weight(1f, true),
+//            textMaxLines = 1,
+//            textOverflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis,
         )
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            //        modifier = Modifier.fillMaxWidth()
+//            modifier = Modifier
+//                //            .border(
+//                //                BorderStroke(2.dp, SolidColor(Color.Red)),
+//                //                shape = RoundedCornerShape(10.dp)
+//                //            )
+//                /* TODO unify this so it can be reused */
+//                .clip(shape = RoundedCornerShape(5.dp))
+//                .background(
+////                    Color.Blue,
+//                    ColorGreyGreen60
+//                )
+//                .padding(horizontal = 5.dp)
+//
+//        ) {
+//            Icon(
+//                imageVector = Icons.Filled.AccessTime,
+//                contentDescription = "Event time",
+////                tint = ColorGreyGreen10,
+//                tint = ColorGreyBlue60,
+//                modifier = Modifier
+//                    .size(20.dp)
+//                    .padding(end = 5.dp)
+//            )
+//            Text(
+//                featuredEvent.time,
+//                fontSize = 12.sp,
+//                color = ColorGreyGreen10
+//            )
+//        }
     }
+    Spacer(Modifier.height(15.dp))
+    EventsSectionTotalPeriodCount(
+        count = eventsCount,
+        color = ColorBlue60,
+        onNavigateToPeriodEvents = onNavigateToTodayEvents,
+    )
 }

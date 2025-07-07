@@ -9,6 +9,10 @@ import androidx.compose.ui.unit.dp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenDayState
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenState
+import com.imkaem.android.upuli.events.presentation.widgets.EventsContent
+import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
+import com.imkaem.android.upuli.ui.theme.ColorGrey60
+import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
 
 @Composable
 fun EventsScreenContent(
@@ -26,6 +30,22 @@ fun EventsScreenContent(
     ) {
         EventsScreenTodayContent(
             todayEventsState = eventsState.todayEventsState,
+//            todayEventsState = EventsScreenDayState(
+//                featuredEvent = EventModel(
+//                    id = 0,
+//                    title = "Tomorrow's Featured Event",
+//                    description = "This is a placeholder for tomorrow's featured event.",
+//                    date = "05.07.2025",
+//                    location = "Tomorrow's Location that is very loooong",
+////                    location = "Tomorrow's Location",
+//                    time = "10:00 AM",
+//                    url = "https://example.com/tomorrow-event",
+//                    imageUrl = "https://example.com/tomorrow-event-image.jpg",
+//                    isBookmarked = false,
+//                ),
+//                dayEventsCount = 5 // Placeholder count
+//            ),
+//            todayEventsState = null,
             onNavigateToEvent = onNavigateToEvent,
             onNavigateToTodayEvents = onNavigateToTodayEvents,
         )
@@ -46,15 +66,32 @@ fun EventsScreenContent(
 //                ),
 //                dayEventsCount = 5 // Placeholder count
 //            ),
+//            tomorrowEventsState = null,
             onNavigateToEvent = onNavigateToEvent,
             onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
         )
         Spacer(Modifier.height(10.dp))
-        EventsScreenUpcomingContent(
-            eventsState.allUpcomingEvents,
-            onNavigateToEvent,
-            onToggleEventIsBookmarked,
+        EventsContent(
+            events = eventsState.allUpcomingEvents,
+//            events = emptyList(),
+            onNavigateToEvent = onNavigateToEvent,
+            onToggleEventIsBookmarked = onToggleEventIsBookmarked,
+            title = {
+                EventsContentTitle(
+                    title = "SVI NADOLAZEĆI DOGAĐAJI",
+                    markerColor = ColorGreyGreen60,
+                    textColor = ColorGrey60,
+                    bottomSpacing = 5.dp,
+                )
+            },
+//            modifier = Modifier.padding(top = 10.dp)
+
         )
+//        EventsScreenUpcomingContent(
+//            eventsState.allUpcomingEvents,
+//            onNavigateToEvent,
+//            onToggleEventIsBookmarked,
+//        )
     }
 
 }

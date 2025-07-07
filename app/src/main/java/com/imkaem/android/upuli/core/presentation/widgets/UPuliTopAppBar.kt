@@ -9,7 +9,14 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarColors
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import com.imkaem.android.upuli.ui.theme.ColorGreyGreen100
+import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
+import com.imkaem.android.upuli.ui.theme.ColorGreyPink60
+import com.imkaem.android.upuli.ui.theme.ColorWhite
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
@@ -19,6 +26,12 @@ fun UPuliTopAppBar(
     title: String = "",
 ) {
     CenterAlignedTopAppBar(
+//        colors = TopAppBarColors(
+//            containerColor = Color.Yellow,
+//        ),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = ColorGreyGreen100,
+        ),
         title = {
             Text(title)
         },
@@ -33,7 +46,8 @@ fun UPuliTopAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = "Back to previous screen"
+                        contentDescription = "Back to previous screen",
+                        tint = ColorWhite,
                     )
                 }
             }
@@ -58,6 +72,7 @@ fun UPuliTopAppBar(
                 ) {
                     Icon(
                         imageVector = Icons.Filled.Bookmarks,
+                        tint = ColorGreyPink100,
                         contentDescription = "Favorites",
                     )
                 }

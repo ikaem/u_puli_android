@@ -25,6 +25,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.presentation.widgets.EventBriefMetadataContainer
+import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
+import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
 import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -36,7 +39,6 @@ fun EventBriefItem(
     onToggleEventIsBookmarked: (id: Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
-
 
 
     /* TODO this should be done in view model - all UI stuff should be already preparred - maybe as an */
@@ -60,6 +62,7 @@ fun EventBriefItem(
                 text = event.title,
 //                text = "event.title very long title that what is what is what is asd asd asd  ",
                 fontWeight = FontWeight.Bold,
+                color = ColorGreyGreen60,
                 fontSize = 14.sp,
 //                TODO maybe this does not need to be visible - maybe we can have one line?
                 overflow = TextOverflow.Ellipsis,
@@ -72,76 +75,40 @@ fun EventBriefItem(
                 modifier = Modifier.clickable {
 //                   onBookmark(event.id)
                     onToggleEventIsBookmarked(event.id)
-                }
+                }.padding(top = 2.dp)
             ) {
                 Icon(
-                    imageVector = when(event.isBookmarked) {
+                    imageVector = when (event.isBookmarked) {
                         true -> Icons.Filled.Bookmark
-                        false ->Icons.Filled.BookmarkBorder
+                        false -> Icons.Filled.BookmarkBorder
                     },
                     contentDescription = "Bookmark",
+                    tint = ColorGreyPink100,
+                    modifier = Modifier.size(20.dp)
                 )
             }
-            /* TODO not sure how to remove padding around it that i dont want*/
-//            IconButton(
-//                onClick = {},
-//                modifier = Modifier.padding(0.dp)
-//
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Filled.BookmarkBorder,
-//                    contentDescription = "Bookmark",
-//                )
-//            }
         }
         Spacer(modifier = Modifier.height(5.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Icon(
-                imageVector = Icons.Filled.LocationOn,
-                contentDescription = "Location",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp)
-                )
-            Text(
-                text = event.location,
-//                text = "event.location very long localtion very ver lomng long logn ",
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                /*TODO in this case weight is not even needed*/
-                fontSize = 14.sp,
-            )
-        }
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-        )  {
-            Icon(
-                imageVector = Icons.Filled.CalendarMonth,
-                contentDescription = "Date",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp)
-            )
-            Text(
+        EventBriefMetadataContainer(
+            text = event.location,
+            iconImageVector = Icons.Filled.LocationOn,
+            iconContentDescription = "Location",
+        )
+        Spacer(modifier = Modifier.height(3.dp))
+        Row {
+            EventBriefMetadataContainer(
                 text = event.date,
-                fontSize = 14.sp,
+                iconImageVector = Icons.Filled.CalendarMonth,
+                iconContentDescription = "Date",
             )
-            Spacer(modifier = Modifier.width(15.dp))
-            Icon(
-                imageVector = Icons.Filled.AccessTime,
-                contentDescription = "Time",
-                modifier = Modifier
-                    .size(20.dp)
-                    .padding(end = 5.dp)
-            )
-            Text(
+            Spacer(modifier = Modifier.width(3.dp))
+            EventBriefMetadataContainer(
                 text = event.time,
-                fontSize = 14.sp,
+                iconImageVector = Icons.Filled.AccessTime,
+                iconContentDescription = "Time",
             )
-
         }
+
     }
 
 //    }

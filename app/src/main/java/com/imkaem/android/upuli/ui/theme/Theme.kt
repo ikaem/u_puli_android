@@ -9,18 +9,27 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
     secondary = PurpleGrey80,
-    tertiary = Pink80
+    tertiary = Pink80,
+    /**/
+    background = ColorGreyGreen100
+//    primaryContainer = Color.Yellow,
+//    surfaceContainer = ColorGreyGreen100,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = Purple40,
     secondary = PurpleGrey40,
-    tertiary = Pink40
+    tertiary = Pink40,
+    /**/
+    background = ColorGreyGreen100
+//    primaryContainer = Color.Yellow,
+//    surfaceContainer = ColorGreyGreen10,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -41,6 +50,7 @@ fun UPuliTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
+        /* TODO for some reason, this makes it not apply babround color set on Siurface */
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
@@ -51,7 +61,9 @@ fun UPuliTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        /* BOOTSTRAPPED WITH THIS */
+//        colorScheme = colorScheme,
+        colorScheme = LightColorScheme,
         typography = Typography,
         content = content
     )

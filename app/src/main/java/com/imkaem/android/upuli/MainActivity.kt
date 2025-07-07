@@ -4,10 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -19,6 +22,7 @@ import com.imkaem.android.upuli.events.presentation.screens.TodayEventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.TomorrowEventsScreen
+import com.imkaem.android.upuli.ui.theme.ColorGreyGreen100
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +32,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             UPuliTheme {
                 Surface(
+                    /* TODO this is to avoid flashing default color (white) when we change screens */
+                    color = ColorGreyGreen100,
                     modifier = Modifier.fillMaxSize()
+                        /* TODO for some reason, this has no effect */
+//                        .background(Color.Yellow)
+
                 ) {
                     UPuliApp()
                 }
