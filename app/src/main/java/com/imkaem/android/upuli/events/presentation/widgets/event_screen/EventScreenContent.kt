@@ -19,6 +19,7 @@ import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Link
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -51,6 +52,7 @@ import java.util.Locale
 fun EventScreenContent(
     eventState: EventScreenState,
     onToggleEventIsBookmarked: (id: Int) -> Unit,
+    onNavigateToEventWebView: (id: Int) -> Unit,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
@@ -77,8 +79,8 @@ fun EventScreenContent(
         EventScreenEventContent(
             event = event,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
-
-            )
+            onNavigateToEventWebView = onNavigateToEventWebView,
+        )
     }
 }
 
@@ -87,6 +89,7 @@ fun EventScreenContent(
 private fun EventScreenEventContent(
     event: EventModel,
     onToggleEventIsBookmarked: (id: Int) -> Unit,
+    onNavigateToEventWebView: (id: Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
 
@@ -100,7 +103,7 @@ private fun EventScreenEventContent(
 
         /* TODO this might do with some widgets extraction */
         Column(
-            modifier = Modifier.padding(horizontal = 10.dp,)
+            modifier = Modifier.padding(horizontal = 10.dp)
         ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -134,6 +137,17 @@ private fun EventScreenEventContent(
                     )
                 }
             }
+            Spacer(Modifier.height(10.dp))
+            EventDetailsMetadataContainer(
+//            text = "event.location asd asd asf sdf sdg dsfg sd asd asdasdasfgasf sdfd sdf sd",
+                text = "Više detalja",
+                iconImageVector = Icons.Filled.Link,
+                iconContentDescription = "Event link",
+                modifier = Modifier.clickable {
+                    onNavigateToEventWebView(event.id)
+
+                }
+            )
             Spacer(Modifier.height(10.dp))
             EventDetailsMetadataContainer(
 //            text = "event.location asd asd asf sdf sdg dsfg sd asd asdasdasfgasf sdfd sdf sd",

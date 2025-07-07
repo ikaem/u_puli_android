@@ -4,8 +4,9 @@ import android.webkit.WebViewClient
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 
+/* TODO we should convert this to a widget instead, and reuse wherever webview is needed */
 @Composable
-fun EventWebView(
+fun WebViewContent(
     url: String,
 ) {
 
@@ -19,19 +20,26 @@ fun EventWebView(
     * */
 
     AndroidView(
-        factory = { it ->
-            WebView(it).apply {
+        factory = { context ->
+
+            WebView(context).apply {
+                /* TODO maybe not good to use this - will see */
+//                        settings.javaScriptEnabled = true
+//                        settings.loadWithOverviewMode = true // -> maybe should not set this
+//                        settings.useWideViewPort = true // not sure if this should be used
+//                        settings.setSupportZoom(true)
                 layoutParams = ViewGroup.LayoutParams(
                     ViewGroup.LayoutParams.MATCH_PARENT,
                     ViewGroup.LayoutParams.MATCH_PARENT
                 )
+
                 webViewClient = WebViewClient()
 
-                loadUrl(url)
+                /* TODO could this be moved above? */
             }
         },
-        update = { it ->
-            it.loadUrl(url)
+        update = { webView ->
+            webView.loadUrl(url)
         }
     )
 

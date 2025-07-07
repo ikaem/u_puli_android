@@ -20,6 +20,7 @@ import androidx.navigation.navArgument
 import com.imkaem.android.upuli.events.presentation.screens.BookmarkedEventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.TodayEventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventScreen
+import com.imkaem.android.upuli.events.presentation.screens.EventWebViewScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventsScreen
 import com.imkaem.android.upuli.events.presentation.screens.TomorrowEventsScreen
 import com.imkaem.android.upuli.ui.theme.ColorGreyGreen100
@@ -72,6 +73,14 @@ fun UPuliApp() {
         navController.navigate("tomorrow_events")
     }
 
+    fun onNavigateToEventWebView(id: Int) {
+        /* TODO eventually, we will do this */
+//        navController.navigate("events/$id/webview")
+
+        /* TODO this is only temp */
+        navController.navigate("event_webview")
+    }
+
     NavHost(
         startDestination = "events",
         navController = navController,
@@ -111,6 +120,9 @@ fun UPuliApp() {
                 onNavigateToBookmarks = {
                     onNavigateToBookmarks()
                 },
+                onNavigateToEventWebView = { id ->
+                    onNavigateToEventWebView(id)
+                },
             )
         }
 
@@ -129,6 +141,18 @@ fun UPuliApp() {
         ) {
             TomorrowEventsScreen(
                 onNavigateToEvent = ::navigateToEvent,
+                onNavigateBack = ::navigateBack,
+                onNavigateToBookmarks = ::onNavigateToBookmarks,
+            )
+        }
+
+        composable(
+            /* TODO eventually, we will do this */
+//            route = "events/{event_id}/webview",
+            /* TODO this is only temp */
+            route = "event_webview"
+        ) {
+            EventWebViewScreen(
                 onNavigateBack = ::navigateBack,
                 onNavigateToBookmarks = ::onNavigateToBookmarks,
             )

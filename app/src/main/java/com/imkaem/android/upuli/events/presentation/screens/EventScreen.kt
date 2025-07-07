@@ -16,6 +16,7 @@ import com.imkaem.android.upuli.events.presentation.view_models.EventScreenViewM
 fun EventScreen(
     onNavigateBack: () -> Unit,
     onNavigateToBookmarks: () -> Unit,
+    onNavigateToEventWebView: (id: Int) -> Unit,
 
     ) {
     val viewModel: EventScreenViewModel = viewModel()
@@ -34,6 +35,7 @@ fun EventScreen(
                 padding = padding,
                 eventState = eventState,
                 onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
+                onNavigateToEventWebView = onNavigateToEventWebView,
             )
         }
     )
@@ -44,6 +46,7 @@ fun EventScreen(
 fun EventScreenPreview() {
     EventScreen(
         onNavigateBack = { /* no-op */ },
-        onNavigateToBookmarks = { /* no-op */ }
+        onNavigateToBookmarks = { /* no-op */ },
+        onNavigateToEventWebView = { /* no-op */ }
     )
 }
