@@ -1,7 +1,6 @@
 package com.imkaem.android.upuli.events.data.remote
 
 import com.imkaem.android.upuli.events.data.api_service.UPuliApiService
-import com.imkaem.android.upuli.events.domain.models.EventModel
 
 /* TODO also, make an interface for this */
 /* TODO maybe would be good to place this in data_sources directory */
@@ -28,6 +27,7 @@ class EventsRemoteDataSource(
         return response.data?.event
     }
 
+    /* TODO this is not used */
     suspend fun getEventsByIds(
         ids: List<Int>
     ): List<EventRemoteEntity> {

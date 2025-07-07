@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScreenState
 import com.imkaem.android.upuli.events.presentation.view_models.TomorrowEventsScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContent
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
@@ -38,19 +37,8 @@ fun TomorrowEventsScreenContent(
                     textColor = ColorGrey60,
                     bottomSpacing = 5.dp,
                 )
-//                Text(
-//                    text = "SPREMLJENI DOGAĐAJI",
-//                    fontSize = 14.sp,
-//                    fontWeight = FontWeight.Bold,
-//                )
             },
         )
-
-//        TomorrowEventsScreenEventsContent(
-//            events = eventsState.events,
-//            onNavigateToEvent = onNavigateToEvent,
-//            onToggleEventIsBookmarked = onToggleEventIsBookmarked,
-//        )
     }
 
 }

@@ -7,13 +7,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenViewModel
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
-
-//import java.util.Date
 
 /* TODO: this is probably best to be called HomeScreen */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -41,9 +38,6 @@ fun EventsScreen(
             EventsScreenContent(
                 eventsState = eventsState,
                 onNavigateToEvent = onNavigateToEvent,
-//                onToggleEventIsBookmarked = { it ->
-//                    viewModel.onToggleEventIsBookmarked(it)
-//                },
                 onNavigateToTodayEvents = onNavigateToTodayEvents,
                 onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
                 onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,

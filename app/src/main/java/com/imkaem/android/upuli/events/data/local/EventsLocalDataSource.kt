@@ -1,6 +1,5 @@
 package com.imkaem.android.upuli.events.data.local
 
-import android.media.metrics.Event
 import com.imkaem.android.upuli.events.data.database.EventsDao
 import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
 
@@ -64,8 +63,6 @@ class EventsLocalDataSource(
 
     /* TODO: normally, i would use some custom wrapper that looks like entity, so if i every chnage lib, i can still depend on my on class */
     suspend fun updateEventIsBookmarked(
-//        eventId: Int,
-//        isBookmarked: Boolean,
         updateValue: UpdateEventLocalIsBookmarkedValue
     ) {
         val partial = EventLocalEntityPartialIsBookmarked(

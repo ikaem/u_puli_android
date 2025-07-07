@@ -3,12 +3,8 @@ package com.imkaem.android.upuli.events.domain.use_cases
 import com.imkaem.android.upuli.events.data.EventsRepository
 import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
-import com.imkaem.android.upuli.events.presentation.view_models.BookmarkedEventsScreenState
-import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenState
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 class GetUpcomingEventsUseCase(
     private val eventsRepository: EventsRepository,
@@ -31,9 +27,5 @@ class GetUpcomingEventsUseCase(
         )
 
         return events
-
-//        val events = eventsRepository.getDummyModelEvents(filter = filter)
-//
-//        return events
     }
 }

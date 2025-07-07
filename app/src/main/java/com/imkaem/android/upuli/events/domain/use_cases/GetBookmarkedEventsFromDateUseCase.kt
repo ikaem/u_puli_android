@@ -2,8 +2,6 @@ package com.imkaem.android.upuli.events.domain.use_cases
 
 import com.imkaem.android.upuli.events.data.EventsRepository
 import com.imkaem.android.upuli.events.domain.models.EventModel
-import java.time.LocalDate
-import java.time.ZoneId
 
 class GetBookmarkedEventsFromDateUseCase(
     private val eventsRepository: EventsRepository

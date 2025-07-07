@@ -4,9 +4,7 @@ import com.imkaem.android.upuli.events.data.EventsRepository
 import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 
 class GetTomorrowEventsUseCase(
     private val eventsRepository: EventsRepository,
@@ -31,9 +29,5 @@ class GetTomorrowEventsUseCase(
         )
 
         return events
-
-//        val events = eventsRepository.getDummyModelEvents(filter = filter)
-//
-//        return events
     }
 }
