@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -37,6 +38,7 @@ import com.imkaem.android.upuli.R
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.EventDetailsMetadataContainer
+import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.ui.theme.ColorGrey10
 import com.imkaem.android.upuli.ui.theme.ColorGrey5
 import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
@@ -53,8 +55,15 @@ fun EventScreenContent(
     modifier: Modifier = Modifier,
 ) {
 
-    val event = eventState.event
+    val isLoading = eventState.isLoading;
+    if (isLoading) {
+        LoadingIndicator(
+            modifier = Modifier.fillMaxSize()
+        )
+        return;
+    }
 
+    val event = eventState.event
     Column(
         modifier = modifier
             .padding(padding)

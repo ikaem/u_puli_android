@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.presentation.view_models.BookmarkedEventsScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContent
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
+import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.ui.theme.ColorBlue10
 import com.imkaem.android.upuli.ui.theme.ColorBlue60
 import com.imkaem.android.upuli.ui.theme.ColorGrey60
@@ -47,6 +48,14 @@ fun BookmarkedEventsScreenContent(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
+
+    val isLoading = eventsState.isLoading;
+    if (isLoading) {
+        LoadingIndicator(
+            modifier = Modifier.fillMaxSize()
+        )
+        return;
+    }
 
     Column(
         modifier = modifier.padding(padding),

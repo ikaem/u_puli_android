@@ -12,7 +12,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenViewModel
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
-/* TODO: this is probably best to be called HomeScreen */
+/* TODO this screen, all its widgets, view model, state, and so on, should be renamed to HomeScreen */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EventsScreen(
