@@ -75,10 +75,10 @@ fun UPuliApp() {
 
     fun onNavigateToEventWebView(id: Int) {
         /* TODO eventually, we will do this */
-//        navController.navigate("events/$id/webview")
+        navController.navigate("events/$id/webview")
 
         /* TODO this is only temp */
-        navController.navigate("event_webview")
+//        navController.navigate("event_webview")
     }
 
     NavHost(
@@ -147,10 +147,15 @@ fun UPuliApp() {
         }
 
         composable(
-            /* TODO eventually, we will do this */
-//            route = "events/{event_id}/webview",
+//            /* TODO eventually, we will do this */
+            route = "events/{event_id}/webview",
+            arguments = listOf(
+                navArgument("event_id") {
+                    type = NavType.IntType
+                }
+            )
             /* TODO this is only temp */
-            route = "event_webview"
+//            route = "event_webview"
         ) {
             EventWebViewScreen(
                 onNavigateBack = ::navigateBack,

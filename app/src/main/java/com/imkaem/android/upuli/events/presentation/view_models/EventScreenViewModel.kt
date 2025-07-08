@@ -72,11 +72,9 @@ class EventScreenViewModel(
     }
 
     private fun getEvent() {
-        /* TODO some error handler, and explicit IO dispatcher should be passed in */
-
-
         val id = stateHandle.get<Int>("event_id") ?: 0
 
+        /* TODO some error handler, and explicit IO dispatcher should be passed in */
         viewModelScope.launch {
 
             handleGetEvent(id)
