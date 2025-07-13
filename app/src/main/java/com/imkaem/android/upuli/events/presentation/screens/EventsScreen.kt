@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenViewModel
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
@@ -23,7 +24,8 @@ fun EventsScreen(
 ) {
 
     val viewModel: EventsScreenViewModel = viewModel()
-    val eventsState = viewModel.state.value
+    val eventsState = viewModel.state.collectAsStateWithLifecycle().value
+
 
     Scaffold(
         /* TODO not sure if this contributes to anything in this particular case */

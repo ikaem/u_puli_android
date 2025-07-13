@@ -2,6 +2,7 @@ package com.imkaem.android.upuli.events.data.local
 
 import com.imkaem.android.upuli.events.data.database.EventsDao
 import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
+import kotlinx.coroutines.flow.Flow
 
 class EventsLocalDataSource(
     private val dao: EventsDao
@@ -19,13 +20,14 @@ class EventsLocalDataSource(
         return dao.getAllBookmarked()
     }
 
-    suspend fun getAllBookmarkedFromInclusive(
-        fromMillisecondsInclusive: Long
-    ): List<EventLocalEntity> {
-        return dao.getAllBookmarkedFromInclusive(
-            fromMillisecondsInclusive = fromMillisecondsInclusive,
-        )
-    }
+    /* TODO not usred */
+//    suspend fun getAllBookmarkedFromInclusive(
+//        fromMillisecondsInclusive: Long
+//    ): List<EventLocalEntity> {
+//        return dao.getAllBookmarkedFromInclusive(
+//            fromMillisecondsInclusive = fromMillisecondsInclusive,
+//        )
+//    }
 
     suspend fun getAllFromInclusive(
         fromMillisecondsInclusive: Long,
@@ -85,4 +87,55 @@ class EventsLocalDataSource(
 
         dao.updateAllIsBookmarked(partials)
     }
+
+    fun getAllFromInclusiveFlow(
+        fromMillisecondsInclusive: Long,
+    ): Flow<List<EventLocalEntity>> {
+        return dao.getAllFromInclusiveFlow(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+    }
+
+    fun getAllFromInclusiveToExclusiveFlow(
+        fromMillisecondsInclusive: Long,
+        toMillisecondsExclusive: Long,
+    ): Flow<List<EventLocalEntity>> {
+        return dao.getAllFromInclusiveToExclusiveFlow(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+            toMillisecondsExclusive = toMillisecondsExclusive,
+        )
+    }
+
+    fun getAllToExclusiveFlow(
+        toMillisecondsExclusive: Long,
+    ): Flow<List<EventLocalEntity>> {
+        return dao.getAllToExclusiveFlow(
+            toMillisecondsExclusive = toMillisecondsExclusive,
+        )
+    }
+
+
+
+    fun getAllFlow(): Flow<List<EventLocalEntity>> {
+        return dao.getAllFlow()
+    }
+
+    fun getAllBookmarkedFromInclusiveFlow(
+        fromMillisecondsInclusive: Long,
+    ): Flow<List<EventLocalEntity>> {
+        return dao.getAllBookmarkedFromInclusiveFlow(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+    }
 }
+
+/*
+*     suspend fun getAllFromInclusive(
+        fromMillisecondsInclusive: Long,
+    ): List<EventLocalEntity> {
+        return dao.getAllFromInclusive(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+    }
+*
+* */

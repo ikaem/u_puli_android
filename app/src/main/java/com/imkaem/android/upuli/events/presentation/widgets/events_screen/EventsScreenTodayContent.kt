@@ -18,6 +18,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.domain.models.date
+import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenDayState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
 import com.imkaem.android.upuli.events.presentation.widgets.EventsSectionTotalPeriodCount
@@ -129,7 +131,7 @@ private fun EventsScreenTodayEventContent(
     Row {
         /* TODO this should be unified with the one above */
         TodayEventMetadataContainer(
-            text = featuredEvent.date,
+            text = featuredEvent.date(),
             iconImageVector = Icons.Filled.CalendarMonth,
             iconContentDescription = "Event date",
         )
@@ -169,7 +171,7 @@ private fun EventsScreenTodayEventContent(
 
         Spacer(Modifier.width(10.dp))
         TodayEventMetadataContainer(
-            text = featuredEvent.time,
+            text = featuredEvent.time(),
             iconImageVector = Icons.Filled.AccessTime,
             iconContentDescription = "Event time",
 //            modifier = Modifier.weight(1f, true),

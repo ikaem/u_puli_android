@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.imkaem.android.upuli.R
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.domain.models.date
+import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.view_models.EventScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.EventDetailsMetadataContainer
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
@@ -160,13 +162,13 @@ private fun EventScreenEventContent(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 EventDetailsMetadataContainer(
-                    text = event.date,
+                    text = event.date(),
                     iconImageVector = Icons.Filled.CalendarMonth,
                     iconContentDescription = "Event date",
                 )
                 Spacer(Modifier.width(5.dp))
                 EventDetailsMetadataContainer(
-                    text = event.time,
+                    text = event.time(),
                     iconImageVector = Icons.Filled.AccessTime,
                     iconContentDescription = "Event time",
                 )

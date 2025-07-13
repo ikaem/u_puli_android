@@ -1,49 +1,102 @@
 package com.imkaem.android.upuli.events.presentation.view_models
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/* TODO there is a bug her:
-* 1. we mark event as bookmarked,
-* 2. navigate to bookmarkes or any other screen
-* 3. remove bookmark from that event on that other screen
-* 4. go back to initial screen (events screen)
-* 5. the event is still marked as bookmarked
-* - so i guess we either need to:
-* 1. reload events on every screen that has events
-* 2. of maybe flow would fix this - it would immediately reload events when the event is bookmarked or unbookmarked
+/* TODO there is somethign with some intents here with view model
+* https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
 * */
 class EventsScreenViewModel : ViewModel() {
 
+    /* TODO lets use these examples for using flow
+    * https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
+    *https://saurabhjadhavblogs.com/compose-mvvm-roomdb-with-flow-and-di
+    * */
+
     /* TODO later, this will be provided by hilt probably */
     val loadEventsUseCase = DummyDI.loadEventsUseCase
-    val getTodayEventsUseCase = DummyDI.getTodayEventsUseCase
-    val getTomorrowEventsUseCase = DummyDI.getTomorrowEventsUseCase
-    val getUpcomingEventsUseCase = DummyDI.getUpcomingEventsUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
+    val getHomeScreenEventsFlowUseCase = DummyDI.getHomeScreenEventsFlowUseCase
 
-
-    private val _state = mutableStateOf<EventsScreenState>(generateInitialState())
-    val state: State<EventsScreenState>
+    private val _state = MutableStateFlow<EventsScreenState>(generateInitialState())
+    val state: StateFlow<EventsScreenState>
         get() = _state
 
 
     init {
-        getEvents()
+        handleGenerateState()
+    }
+
+
+    private fun handleGenerateState() {
+        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+        viewModelScope.launch {
+            /* first load remote events into database */
+            loadEvents()
+
+            /* then get all events from db and set into state */
+            getStateFromEventsFlow()
+        }
+    }
+
+
+    private suspend fun loadEvents() {
+        loadEventsUseCase()
+    }
+
+    private suspend fun getStateFromEventsFlow() {
+        getHomeScreenEventsFlowUseCase().collect { result ->
+            val todayFeaturedEvent = result.todayEvents.firstOrNull()
+            val todayEventsCount = result.todayEvents.size
+
+            val tomorrowFeaturedEvent = result.tomorrowEvents.firstOrNull()
+            val tomorrowEventsCount = result.tomorrowEvents.size
+
+            /* TODO lets keep here for now */
+            val existingAllEvents = _state.value.allUpcomingEvents
+            val newAllEvents = result.allUpcomingEvents
+
+
+            val newState = EventsScreenState(
+                todayEventsState = todayFeaturedEvent?.let {
+                    EventsScreenDayState(
+                        featuredEvent = it,
+                        dayEventsCount = todayEventsCount
+                    )
+                },
+                tomorrowEventsState = tomorrowFeaturedEvent?.let {
+                    EventsScreenDayState(
+                        featuredEvent = it,
+                        dayEventsCount = tomorrowEventsCount
+                    )
+                },
+                /* this approach would not allow pagination, as I only show new events
+                * so i have to create logic that will merge existing events with new ones, but take into consideration the bookmarked state of each event
+                *  */
+                allUpcomingEvents = result.allUpcomingEvents,
+                isLoading = false,
+                error = null,
+            )
+
+            _state.update {
+                newState
+            }
+        }
+
     }
 
     fun onToggleEventIsBookmarked(
         id: Int,
     ) {
 
-        val event = state.value.allUpcomingEvents.firstOrNull { it ->
+        val event = _state.value.allUpcomingEvents.firstOrNull { it ->
             it.id == id
         }
-
         if (event == null) {
             /* TODO maybe some error state, so a toast can be shown to indicate that the event was not found */
             return
@@ -55,104 +108,7 @@ class EventsScreenViewModel : ViewModel() {
                 id = event.id,
                 oldIsBookmarked = event.isBookmarked
             )
-
-            /* TODO maybe some flow here would be better - then we would only fetch all upcoming, and not today or tomorrow events (which dont have bookmark option on them */
-            /* i dont know, this needs to be worked out */
-            /* also, maybe it is overkill to load ALL events from db just because ONE SINGLE event got its isBookmarked field set */
-
-            /* reload fresh events from db */
-            handleGetEvents()
         }
-    }
-
-
-    private fun getEvents() {
-        /* TODO some error handler, and explicit IO dispatcher should be passed in */
-        /* TODO missing error handling */
-        viewModelScope.launch {
-
-            /* first load remote events into database */
-            /* TODO maybe naming for load events is bad - because it would be greate to call other function here loadEvents */
-            handleLoadEvents()
-
-            /* then get all events from db and set into state */
-            handleGetEvents()
-
-
-//            /* get today events */
-//            val todayEvents = getTodayEventsUseCase()
-//            val todayFeaturedEvent = todayEvents.firstOrNull()
-//            val todayEventsCount = todayEvents.size
-//
-//            /* get tomorrow events */
-//            val tomorrowEvents = getTomorrowEventsUseCase()
-//            val tomorrowFeaturedEvent = tomorrowEvents.firstOrNull()
-//            val tomorrowEventsCount = tomorrowEvents.size
-//
-//            /* get upcoming events */
-//            val upcomingEvents = getUpcomingEventsUseCase()
-//
-//
-//            val updatedState = _state.value.copy(
-//                todayEventsState = todayFeaturedEvent?.let {
-//                    EventsScreenDayState(
-//                        featuredEvent = it,
-//                        dayEventsCount = todayEventsCount
-//                    )
-//                },
-//                tomorrowEventsState = tomorrowFeaturedEvent?.let {
-//                    EventsScreenDayState(
-//                        featuredEvent = it,
-//                        dayEventsCount = tomorrowEventsCount
-//                    )
-//                },
-//                allUpcomingEvents = upcomingEvents,
-//                isLoading = false,
-//                error = null
-//            )
-//
-//            _state.value = updatedState
-        }
-    }
-
-    private suspend fun handleLoadEvents() {
-        loadEventsUseCase()
-    }
-
-    private suspend fun handleGetEvents() {
-        /* get today events */
-        val todayEvents = getTodayEventsUseCase()
-        val todayFeaturedEvent = todayEvents.firstOrNull()
-        val todayEventsCount = todayEvents.size
-
-        /* get tomorrow events */
-        val tomorrowEvents = getTomorrowEventsUseCase()
-        val tomorrowFeaturedEvent = tomorrowEvents.firstOrNull()
-        val tomorrowEventsCount = tomorrowEvents.size
-
-        /* get upcoming events */
-        val upcomingEvents = getUpcomingEventsUseCase()
-
-
-        val updatedState = _state.value.copy(
-            todayEventsState = todayFeaturedEvent?.let {
-                EventsScreenDayState(
-                    featuredEvent = it,
-                    dayEventsCount = todayEventsCount
-                )
-            },
-            tomorrowEventsState = tomorrowFeaturedEvent?.let {
-                EventsScreenDayState(
-                    featuredEvent = it,
-                    dayEventsCount = tomorrowEventsCount
-                )
-            },
-            allUpcomingEvents = upcomingEvents,
-            isLoading = false,
-            error = null
-        )
-
-        _state.value = updatedState
     }
 }
 

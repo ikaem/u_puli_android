@@ -23,6 +23,8 @@ import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
 @Composable
 fun EventsScreenContent(
     eventsState: EventsScreenState,
+    /* TODO test only for flow */
+//    flowedEvents: List<EventModel>,
     onNavigateToEvent: (Int) -> Unit,
     onNavigateToTodayEvents: () -> Unit,
     onNavigateToTomorrowEvents: () -> Unit,
@@ -90,6 +92,7 @@ fun EventsScreenContent(
         Spacer(Modifier.height(10.dp))
         EventsContent(
             events = eventsState.allUpcomingEvents,
+//            events = flowedEvents,
 //            events = emptyList(),
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
