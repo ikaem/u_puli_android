@@ -19,7 +19,7 @@ class EventScreenViewModel(
 ) : ViewModel() {
     /* TODO temp, will later be provided by hilt */
     val getEventUseCase = DummyDI.getEventUseCase
-    val loadEventsUseCase = DummyDI.loadEventUseCase
+    val loadEventUseCase = DummyDI.loadEventUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
 
     private val _state = mutableStateOf<EventScreenState>(generateInitialState())
@@ -27,21 +27,54 @@ class EventScreenViewModel(
         get() = _state
 
     init {
-        getEvent()
+//        getEvent()
+
+        handleGenerateState()
+    }
+
+    private fun handleGenerateState() {
+        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+        viewModelScope.launch {
+            val id = getIdFromNavArgs()
+
+            loadEvent(id)
+
+            getStateFromEvent(id)
+        }
+    }
+
+    private suspend fun getStateFromEvent(id: Int) {
+
+        val event = getEventUseCase(id)
+
+        val updatedState = _state.value.copy(
+            event = event,
+            isLoading = false,
+            error = null
+        )
+
+        _state.value = updatedState
+    }
+
+    private fun getIdFromNavArgs(): Int {
+
+            /* TODO this will need to be handled somewhere, to emit error */
+        val id = stateHandle.get<Int>("event_id")
+            ?: throw IllegalArgumentException("Event ID not found in navigation arguments")
+
+
+        return id
+
+    }
+
+    private suspend fun loadEvent(id: Int) {
+        loadEventUseCase(id)
     }
 
     fun onToggleEventIsBookmarked(
+        /* TODO this is not even needed argument */
         id: Int,
     ) {
-
-//        val event = state.value.allUpcomingEvents.firstOrNull { it ->
-//            it.id == id
-//        }
-
-//        if (event == null) {
-//            /* TODO maybe some error state, so a toast can be shown to indicate that the event was not found */
-//            return
-//        }
 
         val event = state.value.event
         if (event == null) {
@@ -60,7 +93,7 @@ class EventScreenViewModel(
             /* also, maybe it is overkill to load ALL events from db just because ONE SINGLE event got its isBookmarked field set */
 
             /* reload fresh events from db */
-            handleGetEvent(id = event.id)
+            getStateFromEvent(id = event.id)
         }
     }
 
@@ -71,40 +104,28 @@ class EventScreenViewModel(
 
     }
 
-    private fun getEvent() {
-        val id = stateHandle.get<Int>("event_id") ?: 0
-
-        /* TODO some error handler, and explicit IO dispatcher should be passed in */
-        viewModelScope.launch {
-
-            handleGetEvent(id)
-
-//            loadEventsUseCase(id)
-//            val event = getEventUseCase(id)
+//    private fun getEvent() {
+//        val id = stateHandle.get<Int>("event_id") ?: 0
 //
-//            val updatedState = _state.value.copy(
-//                event = event,
-//                isLoading = false,
-//                error = null
-//            )
+//        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+//        viewModelScope.launch {
 //
-//            _state.value = updatedState
-        }
-    }
+//            handleGetEvent(id)
+//        }
+//    }
 
-    private suspend fun handleGetEvent(id: Int) {
-
-        val event = getEventUseCase(id)
-
-        val updatedState = _state.value.copy(
-            event = event,
-            isLoading = false,
-            error = null
-        )
-
-        _state.value = updatedState
-
-    }
+//    private suspend fun handleGetEvent(id: Int) {
+//
+//        val event = getEventUseCase(id)
+//
+//        val updatedState = _state.value.copy(
+//            event = event,
+//            isLoading = false,
+//            error = null
+//        )
+//
+//        _state.value = updatedState
+//    }
 
     private fun generateInitialState(): EventScreenState {
         return EventScreenState(

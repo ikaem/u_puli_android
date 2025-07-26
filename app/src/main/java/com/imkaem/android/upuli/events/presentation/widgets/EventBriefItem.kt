@@ -25,6 +25,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.domain.models.date
+import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefMetadataContainer
 import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
 import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
@@ -97,13 +99,13 @@ fun EventBriefItem(
         Spacer(modifier = Modifier.height(3.dp))
         Row {
             EventBriefMetadataContainer(
-                text = event.date,
+                text = event.date(),
                 iconImageVector = Icons.Filled.CalendarMonth,
                 iconContentDescription = "Date",
             )
             Spacer(modifier = Modifier.width(3.dp))
             EventBriefMetadataContainer(
-                text = event.time,
+                text = event.time(),
                 iconImageVector = Icons.Filled.AccessTime,
                 iconContentDescription = "Time",
             )

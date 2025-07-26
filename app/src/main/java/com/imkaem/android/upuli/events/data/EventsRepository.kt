@@ -4,8 +4,13 @@ import com.imkaem.android.upuli.events.data.local.EventsLocalDataSource
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
 import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
+//import com.imkaem.android.upuli.events.domain.use_cases.GetHomeScreenEventsFlowResultValue
 import com.imkaem.android.upuli.events.utils.EventConverters
 import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import java.time.ZonedDateTime
 
 class EventsRepository(
     private val eventsRemoteDataSource: EventsRemoteDataSource,
@@ -40,6 +45,7 @@ class EventsRepository(
 
     }
 
+    /* TODO used in old logic without flows */
     suspend fun getBookmarkedEventsFromInclusive(
         fromMillisecondsInclusive: Long,
     ): List<EventModel> {
@@ -53,6 +59,100 @@ class EventsRepository(
 
         return models
     }
+
+    fun getBookmarkedEventsFromInclusiveFlow(
+        fromMillisecondsInclusive: Long
+    ): Flow<List<EventModel>> {
+
+        val entitiesFlow = eventsLocalDataSource.getAllBookmarkedFromInclusiveFlow(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+
+        val modelsFlow = entitiesFlow.map { entities ->
+            val models = entities.map { entity ->
+                EventConverters.modelFromLocalEntity(entity)
+            }
+
+            models
+        }
+
+        return modelsFlow
+    }
+
+
+    /* TODO also - this is different - above, we haad a single function - lets have mutliple here just for tesitng */
+    fun getEventsFlow(filter: GetEventsFilter): Flow<List<EventModel>> {
+
+        val fromInclusive = filter.fromDateMilliseconds;
+        val toExclusive = filter.toDateMilliseconds;
+
+        val isFromAndTo = fromInclusive != null && toExclusive != null
+        if (isFromAndTo) {
+            val entityFlow = eventsLocalDataSource.getAllFromInclusiveToExclusiveFlow(
+                fromMillisecondsInclusive = fromInclusive,
+                toMillisecondsExclusive = toExclusive
+            )
+
+            /* TODO we could create some helper function to convert these */
+            val modelFlow = entityFlow.map { entities ->
+                val models = entities.map { entity ->
+                    EventConverters.modelFromLocalEntity(entity)
+                }
+
+                models
+
+            }
+            return modelFlow
+        }
+
+        val isTo = toExclusive != null
+        if (isTo) {
+            val entityFlow = eventsLocalDataSource.getAllToExclusiveFlow(
+                toMillisecondsExclusive = toExclusive
+            )
+
+            val modelFlow = entityFlow.map { entities ->
+                val models = entities.map { entity ->
+                    EventConverters.modelFromLocalEntity(entity)
+                }
+
+                models
+            }
+            return modelFlow
+        }
+
+        val isFrom = fromInclusive != null
+        if (isFrom) {
+            val entityFlow = eventsLocalDataSource.getAllFromInclusiveFlow(
+                fromMillisecondsInclusive = fromInclusive
+            )
+
+            val modelFlow = entityFlow.map { entities ->
+
+                val models = entities.map { entity ->
+                    EventConverters.modelFromLocalEntity(entity)
+                }
+
+                /* TODO might not be good to return like this because map is used in both? */
+//                return@map models
+                models
+            }
+            return modelFlow
+        }
+
+        val allEntitiesFlow = eventsLocalDataSource.getAllFlow()
+        val allModelsFlow = allEntitiesFlow.map { entities ->
+            val models = entities.map { entity ->
+                EventConverters.modelFromLocalEntity(entity)
+            }
+//            return@map models
+            models
+        }
+
+        return allModelsFlow
+    }
+
+    /* ------- testing only end */
 
     /* TODO maybe too many functions here, will see */
     suspend fun getEvents(
@@ -109,7 +209,12 @@ class EventsRepository(
     }
 
     /* TODO this is not needed - we dont want to fetch event, because it will overwrite existing event that might be bookmarked */
+
+    /* TODO - or - we should update tghis event to bookmarked, if it is bookmarked, once we load it - lets do that too.. */
     suspend fun loadEvent(id: Int): Unit {
+
+        val localEvent = eventsLocalDataSource.getOne(id)
+
         /* TODO this could potentially return nothing */
         val remoteEventEntity = eventsRemoteDataSource.getEvent(id)
             ?: return
@@ -119,6 +224,22 @@ class EventsRepository(
         eventsLocalDataSource.add(
             localEventEntity
         )
+
+
+        /* we are only doing this to update the even to bookmarked if it has already been bookmarked */
+        localEvent?.let { existingEvent ->
+
+            val value = UpdateEventLocalIsBookmarkedValue(
+                eventId = existingEvent.id,
+                isBookmarked = existingEvent.isBookmarked,
+            )
+
+            eventsLocalDataSource.updateEventIsBookmarked(
+                updateValue = value,
+            )
+        }
+
+
     }
 
     suspend fun getEvent(
@@ -143,6 +264,8 @@ class EventsRepository(
             )
         )
     }
+
+
 }
 
 

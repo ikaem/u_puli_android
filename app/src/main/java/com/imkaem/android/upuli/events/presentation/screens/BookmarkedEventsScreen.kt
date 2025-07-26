@@ -3,6 +3,7 @@ package com.imkaem.android.upuli.events.presentation.screens
 import UPuliTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.BookmarkedEventsScreenViewModel
 import com.imkaem.android.upuli.events.presentation.widgets.bookmarked_events_screen.BookmarkedEventsScreenContent
@@ -14,7 +15,12 @@ fun BookmarkedEventsScreen(
 ) {
 
     val viewModel: BookmarkedEventsScreenViewModel = viewModel()
-    val eventsState = viewModel.state.value
+    /* TODO old implementation when no flow */
+//    val eventsState = viewModel.state.value
+
+    val eventsState = viewModel.state.collectAsStateWithLifecycle().value
+
+
     /* TODO: not sure if this shoule maybe be part of state or somnething */
     val todayDateString = viewModel.fromDateString
 

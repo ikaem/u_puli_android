@@ -21,6 +21,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.domain.models.date
+import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenDayState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
 import com.imkaem.android.upuli.events.presentation.widgets.EventsSectionTotalPeriodCount
@@ -114,13 +116,13 @@ private fun EventsScreenTomorrowEventContent(
             horizontalArrangement = Arrangement.End,
         ) {
             TomorrowEventMetadataContainer(
-                text = featuredEvent.date,
+                text = featuredEvent.date(),
                 iconImageVector = Icons.Filled.CalendarMonth,
                 iconContentDescription = "Tomorrow event date",
             )
             Spacer(Modifier.width(10.dp))
             TomorrowEventMetadataContainer(
-                text = featuredEvent.time,
+                text = featuredEvent.time(),
                 iconImageVector = Icons.Filled.AccessTime,
                 iconContentDescription = "Tomorrow event time",
             )

@@ -7,6 +7,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScreenState
 import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScreenViewModel
@@ -24,7 +25,7 @@ fun TomorrowEventsScreen(
 ) {
 
     val viewModel: TomorrowEventsScreenViewModel = viewModel()
-    val eventsState = viewModel.state.value
+    val eventsState = viewModel.state.collectAsStateWithLifecycle().value
 
     Scaffold(
         topBar = {

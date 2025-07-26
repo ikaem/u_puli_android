@@ -9,8 +9,6 @@ import java.time.ZoneId
 class GetUpcomingEventsUseCase(
     private val eventsRepository: EventsRepository,
 ) {
-
-
     suspend operator fun invoke(): List<EventModel> {
         /* TODO iam really not sure about which zone i should use - maybe this? - ZoneOffset.UTC */
         val startOfDay = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
