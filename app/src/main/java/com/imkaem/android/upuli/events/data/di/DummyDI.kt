@@ -6,6 +6,7 @@ import com.imkaem.android.upuli.events.data.api_service.EventsRetrofitInstance
 import com.imkaem.android.upuli.events.data.database.EventsRoomInstance
 import com.imkaem.android.upuli.events.data.local.EventsLocalDataSource
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
+import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateFlowUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetHomeScreenEventsFlowUseCase
@@ -58,6 +59,10 @@ object DummyDI {
         eventsRepository = EVENTS_REPOSITORY
     )
     val getTomorrowEventsFlowUseCase = GetTomorrowEventsFlowUseCase(
+        eventsRepository = EVENTS_REPOSITORY
+    )
+
+    val getBookmarkedEventsFromDateFlowUseCase = GetBookmarkedEventsFromDateFlowUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )
 

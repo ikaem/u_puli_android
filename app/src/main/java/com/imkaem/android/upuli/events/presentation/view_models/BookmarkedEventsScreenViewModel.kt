@@ -5,6 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.ZoneId
@@ -13,35 +16,62 @@ import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 class BookmarkedEventsScreenViewModel : ViewModel() {
-    val getBookmarkedEventsFromTodayUseCase = DummyDI.getBookmarkedEventsFromDateUseCase
+//    val getBookmarkedEventsFromTodayUseCase = DummyDI.getBookmarkedEventsFromDateUseCase
+
+    val getBookmarkedEventsFromDateFlowUseCase = DummyDI.getBookmarkedEventsFromDateFlowUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
 
 
     /* TODO not sure if this should be here */
     /* TODO this should eventually be converted to state object */
     private val todayDate: ZonedDateTime = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+
+    /* TODO not sure what is this supposed to be used for */
     val dateFormatter: DateTimeFormatter =
         DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    /* */
-
-
     val fromDateString: String
         get() =
             todayDate.format(dateFormatter)
 
-    private val _state = mutableStateOf(
+
+    private val _state = MutableStateFlow<BookmarkedEventsScreenState>(
         BookmarkedEventsScreenState(
             bookmarkedEvents = emptyList(),
             isLoading = true,
             error = null,
-//            fromDateString = "" // This can be dynamic based on the current date
+            /* TODO maybe in future we hold here state about todays date, or some other filed? */
+            /* TODO, or we have another view model? i dont know... */
         )
     )
-    val state: State<BookmarkedEventsScreenState>
+
+    val state: StateFlow<BookmarkedEventsScreenState>
         get() = _state
 
     init {
-        getEvents()
+        handleGenerateState()
+    }
+
+
+    private fun handleGenerateState() {
+        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+        viewModelScope.launch {
+            getStateFromEventsFlow()
+        }
+    }
+
+
+    private suspend fun getStateFromEventsFlow() {
+        getBookmarkedEventsFromDateFlowUseCase(
+            startOfDateInMilliseconds = todayDate.toInstant().toEpochMilli()
+        ).collect { events ->
+            val newState = BookmarkedEventsScreenState(
+                bookmarkedEvents = events,
+                isLoading = false,
+                error = null,
+            )
+
+            _state.update { newState }
+        }
     }
 
     /* TODO we should make a view model out of this maybe? - but how to trigger events refetch then:
@@ -72,36 +102,55 @@ class BookmarkedEventsScreenViewModel : ViewModel() {
             /* also, maybe it is overkill to load ALL events from db just because ONE SINGLE event got its isBookmarked field set */
 
             /* reload fresh events from db */
-            handleGetEvents()
+//            handleGetEvents()
         }
     }
 
-    private fun getEvents() {
-        /* TODO some error handler, and explicit IO dispatcher should be passed in */
-        /* TODO missing error handling */
-        viewModelScope.launch {
-//            handleLoadEvents()
+    /* TODO old implementation when no flow */
 
-            handleGetEvents()
-        }
-    }
+//
+//    private val _state = mutableStateOf(
+//        BookmarkedEventsScreenState(
+//            bookmarkedEvents = emptyList(),
+//            isLoading = true,
+//            error = null,
+////            fromDateString = "" // This can be dynamic based on the current date
+//        )
+//    )
+//    val state: State<BookmarkedEventsScreenState>
+//        get() = _state
+
+//    init {
+//        getEvents()
+//    }
 
 
-    private suspend fun handleLoadEvents() {
-        /* no implementation yet */
-    }
-
-    private suspend fun handleGetEvents() {
-        val bookmarkedEvents = getBookmarkedEventsFromTodayUseCase(
-            startOfDateInMilliseconds = todayDate.toInstant().toEpochMilli()
-        )
-
-        val updatedState = _state.value.copy(
-            bookmarkedEvents = bookmarkedEvents,
-            isLoading = false,
-            error = null
-        )
-
-        _state.value = updatedState
-    }
+//    private fun getEvents() {
+//        /* TODO some error handler, and explicit IO dispatcher should be passed in */
+//        /* TODO missing error handling */
+//        viewModelScope.launch {
+////            handleLoadEvents()
+//
+//            handleGetEvents()
+//        }
+//    }
+//
+//
+//    private suspend fun handleLoadEvents() {
+//        /* no implementation yet */
+//    }
+//
+//    private suspend fun handleGetEvents() {
+//        val bookmarkedEvents = getBookmarkedEventsFromTodayUseCase(
+//            startOfDateInMilliseconds = todayDate.toInstant().toEpochMilli()
+//        )
+//
+//        val updatedState = _state.value.copy(
+//            bookmarkedEvents = bookmarkedEvents,
+//            isLoading = false,
+//            error = null
+//        )
+//
+//        _state.value = updatedState
+//    }
 }

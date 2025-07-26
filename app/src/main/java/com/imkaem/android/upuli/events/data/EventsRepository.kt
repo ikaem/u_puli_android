@@ -45,56 +45,41 @@ class EventsRepository(
 
     }
 
-    /* TODO not used */
-//    suspend fun getBookmarkedEventsFromInclusive(
-//        fromMillisecondsInclusive: Long,
-//    ): List<EventModel> {
-//
-//        val localEntities = eventsLocalDataSource.getAllBookmarkedFromInclusive(
-//            fromMillisecondsInclusive = fromMillisecondsInclusive
-//        )
-//        val models = localEntities.map { it ->
-//            EventConverters.modelFromLocalEntity(it)
-//        }
-//
-//        return models
-//    }
+    /* TODO used in old logic without flows */
+    suspend fun getBookmarkedEventsFromInclusive(
+        fromMillisecondsInclusive: Long,
+    ): List<EventModel> {
 
-    /* ------- testing only start ------- */
+        val localEntities = eventsLocalDataSource.getAllBookmarkedFromInclusive(
+            fromMillisecondsInclusive = fromMillisecondsInclusive
+        )
+        val models = localEntities.map { it ->
+            EventConverters.modelFromLocalEntity(it)
+        }
 
-//    fun getHomeScreenEventsFlow(
-////        todayDate: ZonedDateTime,
-//
-////        todayInMilliseconds: Long,
-////        tomorrowInMilliseconds: Long,
-//        /* TODO evenutally, we will pass a page here, maybe? */
-//    ): Flow<GetHomeScreenEventsFlowResultValue> {
-//
-//        val tomorrow
-//
-//        val entityFlow = eventsLocalDataSource.getAllFromInclusiveFlow(
-//            fromMillisecondsInclusive = todayInMilliseconds
-//        );
-//
-//        val resultFlow = entityFlow.map { events ->
-//            val todayEvents = events.filter { event ->
-//                val isToday = event.dateInMilliseconds >= todayInMilliseconds &&
-//                        event.dateInMilliseconds < tomorrowInMilliseconds
-//
-//                return@filter isToday
-//            }
-//
-//            val
-//
-//
-//
-//
-//        }
-//
-//    }
+        return models
+    }
+
+    fun getBookmarkedEventsFromInclusiveFlow(
+        fromMillisecondsInclusive: Long
+    ): Flow<List<EventModel>> {
+
+        val entitiesFlow = eventsLocalDataSource.getAllBookmarkedFromInclusiveFlow(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+
+        val modelsFlow = entitiesFlow.map { entities ->
+            val models = entities.map { entity ->
+                EventConverters.modelFromLocalEntity(entity)
+            }
+
+            models
+        }
+
+        return modelsFlow
+    }
 
 
-    /* TODO temp - testing only */
     /* TODO also - this is different - above, we haad a single function - lets have mutliple here just for tesitng */
     fun getEventsFlow(filter: GetEventsFilter): Flow<List<EventModel>> {
 
@@ -108,6 +93,7 @@ class EventsRepository(
                 toMillisecondsExclusive = toExclusive
             )
 
+            /* TODO we could create some helper function to convert these */
             val modelFlow = entityFlow.map { entities ->
                 val models = entities.map { entity ->
                     EventConverters.modelFromLocalEntity(entity)
@@ -120,7 +106,7 @@ class EventsRepository(
         }
 
         val isTo = toExclusive != null
-        if(isTo) {
+        if (isTo) {
             val entityFlow = eventsLocalDataSource.getAllToExclusiveFlow(
                 toMillisecondsExclusive = toExclusive
             )
@@ -136,7 +122,7 @@ class EventsRepository(
         }
 
         val isFrom = fromInclusive != null
-        if(isFrom) {
+        if (isFrom) {
             val entityFlow = eventsLocalDataSource.getAllFromInclusiveFlow(
                 fromMillisecondsInclusive = fromInclusive
             )
@@ -223,6 +209,8 @@ class EventsRepository(
     }
 
     /* TODO this is not needed - we dont want to fetch event, because it will overwrite existing event that might be bookmarked */
+
+    /* TODO - or - we should update tghis event to bookmarked, if it is bookmarked, once we load it - lets do that too.. */
     suspend fun loadEvent(id: Int): Unit {
         /* TODO this could potentially return nothing */
         val remoteEventEntity = eventsRemoteDataSource.getEvent(id)

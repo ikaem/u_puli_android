@@ -20,14 +20,14 @@ class EventsLocalDataSource(
         return dao.getAllBookmarked()
     }
 
-    /* TODO not usred */
-//    suspend fun getAllBookmarkedFromInclusive(
-//        fromMillisecondsInclusive: Long
-//    ): List<EventLocalEntity> {
-//        return dao.getAllBookmarkedFromInclusive(
-//            fromMillisecondsInclusive = fromMillisecondsInclusive,
-//        )
-//    }
+    /* TODO used in old logic without flows */
+    suspend fun getAllBookmarkedFromInclusive(
+        fromMillisecondsInclusive: Long
+    ): List<EventLocalEntity> {
+        return dao.getAllBookmarkedFromInclusive(
+            fromMillisecondsInclusive = fromMillisecondsInclusive,
+        )
+    }
 
     suspend fun getAllFromInclusive(
         fromMillisecondsInclusive: Long,
@@ -120,6 +120,7 @@ class EventsLocalDataSource(
         return dao.getAllFlow()
     }
 
+    /* TODO it seems for now we dont need any other date limits for bookmarked - we only ever show all available from now */
     fun getAllBookmarkedFromInclusiveFlow(
         fromMillisecondsInclusive: Long,
     ): Flow<List<EventLocalEntity>> {
