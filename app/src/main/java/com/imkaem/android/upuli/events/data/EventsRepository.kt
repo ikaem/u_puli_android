@@ -212,6 +212,9 @@ class EventsRepository(
 
     /* TODO - or - we should update tghis event to bookmarked, if it is bookmarked, once we load it - lets do that too.. */
     suspend fun loadEvent(id: Int): Unit {
+
+        val localEvent = eventsLocalDataSource.getOne(id)
+
         /* TODO this could potentially return nothing */
         val remoteEventEntity = eventsRemoteDataSource.getEvent(id)
             ?: return
@@ -221,6 +224,22 @@ class EventsRepository(
         eventsLocalDataSource.add(
             localEventEntity
         )
+
+
+        /* we are only doing this to update the even to bookmarked if it has already been bookmarked */
+        localEvent?.let { existingEvent ->
+
+            val value = UpdateEventLocalIsBookmarkedValue(
+                eventId = existingEvent.id,
+                isBookmarked = existingEvent.isBookmarked,
+            )
+
+            eventsLocalDataSource.updateEventIsBookmarked(
+                updateValue = value,
+            )
+        }
+
+
     }
 
     suspend fun getEvent(
