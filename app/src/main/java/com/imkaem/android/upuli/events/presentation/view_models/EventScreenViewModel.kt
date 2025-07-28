@@ -7,6 +7,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val TAG = "EventViewModel"
@@ -18,12 +21,17 @@ class EventScreenViewModel(
 
 ) : ViewModel() {
     /* TODO temp, will later be provided by hilt */
-    val getEventUseCase = DummyDI.getEventUseCase
+//    val getEventUseCase = DummyDI.getEventUseCase
+
+    val getEventFlowUseCase = DummyDI.getEventFlowUseCase
     val loadEventUseCase = DummyDI.loadEventUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
 
-    private val _state = mutableStateOf<EventScreenState>(generateInitialState())
-    val state: State<EventScreenState>
+    private val _state = MutableStateFlow(
+        generateInitialState()
+    )
+
+    val state: StateFlow<EventScreenState>
         get() = _state
 
     init {
@@ -39,26 +47,38 @@ class EventScreenViewModel(
 
             loadEvent(id)
 
-            getStateFromEvent(id)
+            getStateFromEventFlow(id)
         }
     }
 
-    private suspend fun getStateFromEvent(id: Int) {
+    private suspend fun getStateFromEventFlow(id: Int) {
+        getEventFlowUseCase(id).collect { event ->
 
-        val event = getEventUseCase(id)
+            val newState = EventScreenState(
+                event = event,
+                isLoading = false,
+                error = null,
+            )
 
-        val updatedState = _state.value.copy(
-            event = event,
-            isLoading = false,
-            error = null
-        )
+            _state.update {
+                newState
+            }
+        }
 
-        _state.value = updatedState
+//        val event = getEventUseCase(id)
+//
+//        val updatedState = _state.value.copy(
+//            event = event,
+//            isLoading = false,
+//            error = null
+//        )
+//
+//        _state.value = updatedState
     }
 
     private fun getIdFromNavArgs(): Int {
 
-            /* TODO this will need to be handled somewhere, to emit error */
+        /* TODO this will need to be handled somewhere, to emit error */
         val id = stateHandle.get<Int>("event_id")
             ?: throw IllegalArgumentException("Event ID not found in navigation arguments")
 
@@ -93,7 +113,7 @@ class EventScreenViewModel(
             /* also, maybe it is overkill to load ALL events from db just because ONE SINGLE event got its isBookmarked field set */
 
             /* reload fresh events from db */
-            getStateFromEvent(id = event.id)
+//            getStateFromEvent(id = event.id)
         }
     }
 

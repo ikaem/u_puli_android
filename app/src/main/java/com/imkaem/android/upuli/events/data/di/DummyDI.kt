@@ -8,6 +8,7 @@ import com.imkaem.android.upuli.events.data.local.EventsLocalDataSource
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
 import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateFlowUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateUseCase
+import com.imkaem.android.upuli.events.domain.use_cases.GetEventFlowUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetHomeScreenEventsFlowUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.GetTodayEventsFlowUseCase
@@ -39,9 +40,6 @@ private val EVENTS_REPOSITORY = EventsRepository(
 )
 
 object DummyDI {
-    val getEventUseCase = GetEventUseCase(
-        eventsRepository = EVENTS_REPOSITORY
-    )
     val loadEventsUseCase = LoadEventsUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )
@@ -62,11 +60,19 @@ object DummyDI {
         eventsRepository = EVENTS_REPOSITORY
     )
 
+    val getEventFlowUseCase = GetEventFlowUseCase(
+        eventsRepository = EVENTS_REPOSITORY,
+    )
+
     val getBookmarkedEventsFromDateFlowUseCase = GetBookmarkedEventsFromDateFlowUseCase(
+        eventsRepository = EVENTS_REPOSITORY
+    )
+    val getEventUseCase = GetEventUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )
 
     /* NOT USED */
+
     val getBookmarkedEventsFromDateUseCase = GetBookmarkedEventsFromDateUseCase(
         eventsRepository = EVENTS_REPOSITORY
     )

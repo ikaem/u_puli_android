@@ -33,7 +33,7 @@ fun EventsSectionTotalPeriodCount(
         }
     ) {
         Text(
-            "Ukupno $count događaja danas",
+            "Ukupno $count događaja",
             fontSize = 12.sp,
 //            color = ColorBlue60,
             color = color,

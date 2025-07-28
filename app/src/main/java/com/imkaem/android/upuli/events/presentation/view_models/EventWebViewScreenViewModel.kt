@@ -13,6 +13,7 @@ class EventWebViewScreenViewModel(
     private val stateHandle: SavedStateHandle,
 ) : ViewModel() {
 
+    /* TODO we will use regular get event here, because there is no good justification to use flow */
     val getEventUseCase = DummyDI.getEventUseCase
 
     private val _state = mutableStateOf<EventWebViewScreenState>(EventWebViewScreenState.initial())

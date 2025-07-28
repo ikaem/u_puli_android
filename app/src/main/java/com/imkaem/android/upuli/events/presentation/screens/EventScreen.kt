@@ -8,6 +8,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.imkaem.android.upuli.events.presentation.view_models.EventScreenViewModel
 
@@ -20,7 +21,7 @@ fun EventScreen(
 
     ) {
     val viewModel: EventScreenViewModel = viewModel()
-    val eventState = viewModel.state.value
+    val eventState = viewModel.state.collectAsStateWithLifecycle().value
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),

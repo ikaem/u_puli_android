@@ -115,6 +115,10 @@ class EventsLocalDataSource(
     }
 
 
+    fun getOneFlow(id: Int): Flow<EventLocalEntity?> {
+        return dao.getOneFlow(id);
+    }
+
 
     fun getAllFlow(): Flow<List<EventLocalEntity>> {
         return dao.getAllFlow()

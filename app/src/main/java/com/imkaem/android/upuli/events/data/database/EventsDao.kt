@@ -22,11 +22,6 @@ interface EventsDao {
     suspend fun getAllFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
 
 
-
-
-    @Query("SELECT * FROM events WHERE id = :id")
-    suspend fun getOne(id: Int): EventLocalEntity?
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAll(events: List<EventLocalEntity>)
 
@@ -70,12 +65,18 @@ interface EventsDao {
     fun getAllBookmarkedFromInclusiveFlow(fromMillisecondsInclusive: Long): Flow<List<EventLocalEntity>>
 
 
+    @Query("SELECT * FROM events where id = :id")
+    fun getOneFlow(id: Int): Flow<EventLocalEntity?>
     /* NOT USED */
+
+    @Query("SELECT * FROM events WHERE id = :id")
+    suspend fun getOne(id: Int): EventLocalEntity?
 
     @Query("SELECT * FROM events WHERE date_in_milliseconds < :toMillisecondsExclusive ORDER BY date_in_milliseconds ASC")
     suspend fun getAllToExclusive(
         toMillisecondsExclusive: Long
     ): List<EventLocalEntity>
+
     @Query("SELECT * FROM events WHERE is_bookmarked = 1 AND date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
     suspend fun getAllBookmarkedFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
 

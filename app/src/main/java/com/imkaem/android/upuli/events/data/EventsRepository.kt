@@ -79,6 +79,23 @@ class EventsRepository(
         return modelsFlow
     }
 
+    fun getEventFlow(id: Int): Flow<EventModel?> {
+        val entityFlow = eventsLocalDataSource.getOneFlow(id)
+
+        val modelFlow = entityFlow.map { entity ->
+
+            if (entity == null) {
+                return@map null
+            }
+
+            val model = EventConverters.modelFromLocalEntity(entity)
+
+            model
+        }
+
+        return modelFlow
+    }
+
 
     /* TODO also - this is different - above, we haad a single function - lets have mutliple here just for tesitng */
     fun getEventsFlow(filter: GetEventsFilter): Flow<List<EventModel>> {

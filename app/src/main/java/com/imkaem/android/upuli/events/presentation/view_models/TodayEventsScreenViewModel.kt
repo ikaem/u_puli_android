@@ -37,7 +37,7 @@ class TodayEventsScreenViewModel : ViewModel() {
         )
     )
     val state: StateFlow<TodayEventsScreenState>
-        get() = state;
+        get() = _state;
 
 
     init {
