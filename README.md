@@ -1,4 +1,7 @@
-# release docs
+# U Puli android app
+Simple app to show events happening in Pula, Croatia.
+
+## release resources
 1. general
 - https://developer.android.com/studio/publish
 2. versioning
