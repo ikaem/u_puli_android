@@ -1,6 +1,15 @@
 # U Puli android app
 Simple app to show events happening in Pula, Croatia.
 
+## View model specific
+1. somethign with some intents here with view model
+- https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
+
+## flow usage
+1. examples
+- https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
+- https://saurabhjadhavblogs.com/compose-mvvm-roomdb-with-flow-and-di
+
 ## release resources
 1. general
 - https://developer.android.com/studio/publish

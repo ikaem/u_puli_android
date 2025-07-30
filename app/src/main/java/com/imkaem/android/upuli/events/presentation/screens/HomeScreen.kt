@@ -1,6 +1,6 @@
 package com.imkaem.android.upuli.events.presentation.screens
 
-import EventsScreenContent
+import HomeScreenContent
 import UPuliTopAppBar
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -10,20 +10,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenViewModel
+import com.imkaem.android.upuli.events.presentation.view_models.HomeScreenViewModel
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
 /* TODO this screen, all its widgets, view model, state, and so on, should be renamed to HomeScreen */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EventsScreen(
+fun HomeScreen(
     onNavigateToEvent: (id: Int) -> Unit,
     onNavigateToBookmarks: () -> Unit,
     onNavigateToTodayEvents: () -> Unit,
     onNavigateToTomorrowEvents: () -> Unit,
 ) {
 
-    val viewModel: EventsScreenViewModel = viewModel()
+    val viewModel: HomeScreenViewModel = viewModel()
     val eventsState = viewModel.state.collectAsStateWithLifecycle().value
 
 
@@ -37,7 +37,7 @@ fun EventsScreen(
             )
         },
         content = { padding ->
-            EventsScreenContent(
+            HomeScreenContent(
                 eventsState = eventsState,
                 onNavigateToEvent = onNavigateToEvent,
                 onNavigateToTodayEvents = onNavigateToTodayEvents,
@@ -51,9 +51,9 @@ fun EventsScreen(
 
 @Composable
 @Preview(showBackground = true)
-fun EventsScreenPreview() {
+fun HomeScreenPreview() {
     UPuliTheme {
-        EventsScreen(
+        HomeScreen(
             onNavigateToEvent = {  /* no-op */ },
             onNavigateToTodayEvents = { /* no-op */ },
             onNavigateToBookmarks = { /* no-op */ },

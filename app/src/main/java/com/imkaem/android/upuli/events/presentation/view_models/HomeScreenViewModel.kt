@@ -8,23 +8,14 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-/* TODO there is somethign with some intents here with view model
-* https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
-* */
-class EventsScreenViewModel : ViewModel() {
 
-    /* TODO lets use these examples for using flow
-    * https://medium.com/@ramadan123sayed/room-database-with-image-handling-in-android-using-ksp-hilt-jetpack-compose-and-coroutines-2209ad53a482
-    *https://saurabhjadhavblogs.com/compose-mvvm-roomdb-with-flow-and-di
-    * */
-
-    /* TODO later, this will be provided by hilt probably */
+class HomeScreenViewModel : ViewModel() {
     val loadEventsUseCase = DummyDI.loadEventsUseCase
     val updateEventIsBookmarkedUseCase = DummyDI.updateEventIsBookmarkedUseCase
     val getHomeScreenEventsFlowUseCase = DummyDI.getHomeScreenEventsFlowUseCase
 
-    private val _state = MutableStateFlow<EventsScreenState>(generateInitialState())
-    val state: StateFlow<EventsScreenState>
+    private val _state = MutableStateFlow<HomeScreenState>(generateInitialState())
+    val state: StateFlow<HomeScreenState>
         get() = _state
 
 
@@ -62,15 +53,15 @@ class EventsScreenViewModel : ViewModel() {
             val newAllEvents = result.allUpcomingEvents
 
 
-            val newState = EventsScreenState(
+            val newState = HomeScreenState(
                 todayEventsState = todayFeaturedEvent?.let {
-                    EventsScreenDayState(
+                    HomeScreenDayState(
                         featuredEvent = it,
                         dayEventsCount = todayEventsCount
                     )
                 },
                 tomorrowEventsState = tomorrowFeaturedEvent?.let {
-                    EventsScreenDayState(
+                    HomeScreenDayState(
                         featuredEvent = it,
                         dayEventsCount = tomorrowEventsCount
                     )
@@ -112,9 +103,9 @@ class EventsScreenViewModel : ViewModel() {
     }
 }
 
-private fun generateInitialState(): EventsScreenState {
+private fun generateInitialState(): HomeScreenState {
     val state = (
-            EventsScreenState(
+            HomeScreenState(
                 todayEventsState = null,
                 tomorrowEventsState = null,
                 allUpcomingEvents = emptyList(),

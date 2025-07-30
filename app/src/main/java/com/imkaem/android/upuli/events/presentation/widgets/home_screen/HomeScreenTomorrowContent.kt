@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.domain.models.date
 import com.imkaem.android.upuli.events.domain.models.time
-import com.imkaem.android.upuli.events.presentation.view_models.EventsScreenDayState
+import com.imkaem.android.upuli.events.presentation.view_models.HomeScreenDayState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
 import com.imkaem.android.upuli.events.presentation.widgets.EventsSectionTotalPeriodCount
 import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContent
@@ -35,8 +35,8 @@ import com.imkaem.android.upuli.ui.theme.ColorGreyPink60
 import com.imkaem.android.upuli.ui.theme.ColorWhite
 
 @Composable
-fun EventsScreenTomorrowContent(
-    tomorrowEventsState: EventsScreenDayState?,
+fun HomeScreenTomorrowContent(
+    tomorrowEventsState: HomeScreenDayState?,
     onNavigateToEvent: (Int) -> Unit,
     onNavigateToTomorrowEvents: () -> Unit,
     modifier: Modifier = Modifier,
@@ -48,24 +48,18 @@ fun EventsScreenTomorrowContent(
 
 
     ) {
-//        Text(
-//            "SUTRA",
-//            fontSize = 14.sp,
-//            fontWeight = FontWeight.Bold,
-//        )
         EventsContentTitle(
             title = "SUTRA",
             markerColor = ColorGreyPink100,
         )
         Spacer(Modifier.height(5.dp))
         if (tomorrowEventsState == null) {
-//            EventsScreenTomorrowNoEventContent()
             NoEventsContent(
                 colorVariant = NoEventsContentColorVariant.DARK,
             )
             return
         }
-        EventsScreenTomorrowEventContent(
+        HomeScreenTomorrowEventContent(
             featuredEvent = tomorrowEventsState.featuredEvent,
             eventsCount = tomorrowEventsState.dayEventsCount,
             onNavigateToEvent = onNavigateToEvent,
@@ -76,26 +70,14 @@ fun EventsScreenTomorrowContent(
 }
 
 @Composable
-private fun EventsScreenTomorrowEventContent(
+private fun HomeScreenTomorrowEventContent(
     featuredEvent: EventModel,
     eventsCount: Int,
     onNavigateToEvent: (Int) -> Unit,
     onNavigateToTomorrowEvents: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
-
-
-    /* TODO this should be moved to view model logic */
-//    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-//    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.getDefault())
-//
-//    val dateString = dateFormatter.format(featuredEvent.date)
-//    val timeString = timeFormatter.format(featuredEvent.date)
-
     Row(
-//        modifier = modifier.fillMaxWidth().clickable {
-//            onNavigateToEvent(featuredEvent.id)
-//        },
         verticalAlignment = Alignment.CenterVertically,
     ) {
 
@@ -105,7 +87,6 @@ private fun EventsScreenTomorrowEventContent(
             iconContentDescription = "Location",
             modifier = Modifier
                 .weight(1f, true),
-//            textModifier = Modifier.weight(1f, true),
             textMaxLines = 1,
             textOverflow = TextOverflow.Ellipsis,
         )
@@ -144,21 +125,6 @@ private fun EventsScreenTomorrowEventContent(
         count = eventsCount,
         color = ColorGreyPink60,
         onNavigateToPeriodEvents = onNavigateToTomorrowEvents,
-//        modifier = Modifier.fillMaxWidth()
     )
 
 }
-
-//@Composable
-//private fun EventsScreenTomorrowNoEventContent() {
-//    Column(
-//        horizontalAlignment = Alignment.CenterHorizontally,
-//        modifier = Modifier.fillMaxWidth()
-//    ) {
-//        Text(
-//            "Nema događaja za sutra",
-//            fontSize = 16.sp,
-//            modifier = Modifier.padding(10.dp)
-//        )
-//    }
-//}

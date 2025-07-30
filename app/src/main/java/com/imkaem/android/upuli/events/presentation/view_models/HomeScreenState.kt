@@ -3,15 +3,15 @@ package com.imkaem.android.upuli.events.presentation.view_models
 import com.imkaem.android.upuli.events.domain.models.EventModel
 
 /* TODO not sure if this should be here */
-data class EventsScreenState(
-    val todayEventsState: EventsScreenDayState?,
-    val tomorrowEventsState: EventsScreenDayState?,
+data class HomeScreenState(
+    val todayEventsState: HomeScreenDayState?,
+    val tomorrowEventsState: HomeScreenDayState?,
     val allUpcomingEvents: List<EventModel>,
     val isLoading: Boolean,
     val error: String?,
 )
 
-data class EventsScreenDayState(
+data class HomeScreenDayState(
     val featuredEvent: EventModel,
     val dayEventsCount: Int,
 )
