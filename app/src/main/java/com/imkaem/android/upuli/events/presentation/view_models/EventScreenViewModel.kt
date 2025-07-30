@@ -120,7 +120,7 @@ class EventScreenViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        Log.d(TAG, "onCleared: ViewModel cleared")
+//        Log.d(TAG, "onCleared: ViewModel cleared")
 
     }
 
