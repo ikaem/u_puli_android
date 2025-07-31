@@ -24,9 +24,67 @@ fun HomeScreen(
 ) {
 
     val viewModel: HomeScreenViewModel = viewModel()
-    val eventsState = viewModel.state.collectAsStateWithLifecycle().value
+    val screenState = viewModel.state.collectAsStateWithLifecycle().value
+
+    /* TODO not sure if this should have its own view model? */
+//    val selectedTabIndex = remember {
+//        mutableIntStateOf(0)
+//    }
+//
+//    Scaffold(
+//        topBar = {
+//            UPuliTopAppBar(
+//                onNavigateToBookmarks = onNavigateToBookmarks,
+//            )
+//        },
+//
+//    ) { paddingValues ->
+//
+//        Column(
+//            modifier = Modifier.padding(paddingValues)
+//        ) {
+//            TabRow(
+//                selectedTabIndex = selectedTabIndex.intValue,
+//
+//                ) {
+//
+//                Tab(
+//                    selected = selectedTabIndex.intValue == 0,
+//                    onClick = {
+//                        selectedTabIndex.intValue = 0
+//                    },
+//                    text = {
+//                        Text("Uskoro")
+//                    }
+//                )
+//
+//                Tab(
+//                    selected = selectedTabIndex.intValue == 1,
+//                    onClick = {
+//                        selectedTabIndex.intValue = 1
+//                    },
+//                    text = {
+//                        Text("Svi događaji")
+//                    }
+//                )
+//            }
+//
+//            selectedTabIndex.let { it ->
+//                when (it.intValue) {
+//                    0 -> {
+//                        Text("Uskoro", modifier = Modifier.padding(16.dp))
+//                    }
+//                    else ->
+//                        Text("Svi događaji", modifier = Modifier.padding(16.dp))
+//                }
+//
+//
+//            }
+//        }
+//    }
 
 
+    /* TOOD real content */
     Scaffold(
         /* TODO not sure if this contributes to anything in this particular case */
 //        containerColor = Color.Yellow,
@@ -38,11 +96,12 @@ fun HomeScreen(
         },
         content = { padding ->
             HomeScreenContent(
-                eventsState = eventsState,
+                screenState = screenState,
                 onNavigateToEvent = onNavigateToEvent,
                 onNavigateToTodayEvents = onNavigateToTodayEvents,
                 onNavigateToTomorrowEvents = onNavigateToTomorrowEvents,
                 onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
+                onSelectTab = viewModel::onSelectTab,
                 padding = padding,
             )
         }

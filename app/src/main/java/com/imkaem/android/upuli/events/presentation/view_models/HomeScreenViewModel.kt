@@ -53,7 +53,7 @@ class HomeScreenViewModel : ViewModel() {
             val newAllEvents = result.allUpcomingEvents
 
 
-            val newState = HomeScreenState(
+            val newState = _state.value.copy(
                 todayEventsState = todayFeaturedEvent?.let {
                     HomeScreenDayState(
                         featuredEvent = it,
@@ -66,13 +66,33 @@ class HomeScreenViewModel : ViewModel() {
                         dayEventsCount = tomorrowEventsCount
                     )
                 },
-                /* this approach would not allow pagination, as I only show new events
-                * so i have to create logic that will merge existing events with new ones, but take into consideration the bookmarked state of each event
-                *  */
-                allUpcomingEvents = result.allUpcomingEvents,
+                allUpcomingEvents = existingAllEvents + newAllEvents,
                 isLoading = false,
                 error = null,
             )
+
+
+//            val newState = HomeScreenState(
+//                todayEventsState = todayFeaturedEvent?.let {
+//                    HomeScreenDayState(
+//                        featuredEvent = it,
+//                        dayEventsCount = todayEventsCount
+//                    )
+//                },
+//                tomorrowEventsState = tomorrowFeaturedEvent?.let {
+//                    HomeScreenDayState(
+//                        featuredEvent = it,
+//                        dayEventsCount = tomorrowEventsCount
+//                    )
+//                },
+//                /* this approach would not allow pagination, as I only show new events
+//                * so i have to create logic that will merge existing events with new ones, but take into consideration the bookmarked state of each event
+//                *  */
+//                allUpcomingEvents = result.allUpcomingEvents,
+//                isLoading = false,
+//                error = null,
+//                selectedTabIndex = 0,
+//            )
 
             _state.update {
                 newState
@@ -101,6 +121,10 @@ class HomeScreenViewModel : ViewModel() {
             )
         }
     }
+
+    fun onSelectTab(index: Int) {
+        _state.update { it.copy(selectedTabIndex = index) }
+    }
 }
 
 private fun generateInitialState(): HomeScreenState {
@@ -111,6 +135,7 @@ private fun generateInitialState(): HomeScreenState {
                 allUpcomingEvents = emptyList(),
                 isLoading = true,
                 error = null,
+                selectedTabIndex = 0,
             )
             )
 

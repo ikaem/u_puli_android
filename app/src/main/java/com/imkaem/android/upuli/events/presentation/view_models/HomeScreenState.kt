@@ -9,6 +9,7 @@ data class HomeScreenState(
     val allUpcomingEvents: List<EventModel>,
     val isLoading: Boolean,
     val error: String?,
+    val selectedTabIndex: Int,
 )
 
 data class HomeScreenDayState(
