@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
             UPuliTheme {
                 Surface(
                     /* TODO this is to avoid flashing default color (white) when we change screens */
-                    color = ColorGreyGreen100,
+//                    color = ColorGreyGreen100,
                     modifier = Modifier.fillMaxSize()
                         /* TODO for some reason, this has no effect */
 //                        .background(Color.Yellow)

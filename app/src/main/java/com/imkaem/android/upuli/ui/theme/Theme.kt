@@ -17,7 +17,7 @@ private val DarkColorScheme = darkColorScheme(
     secondary = PurpleGrey80,
     tertiary = Pink80,
     /**/
-    background = ColorGreyGreen100
+//    background = ColorGreyGreen100
 //    primaryContainer = Color.Yellow,
 //    surfaceContainer = ColorGreyGreen100,
 )
@@ -27,7 +27,7 @@ private val LightColorScheme = lightColorScheme(
     secondary = PurpleGrey40,
     tertiary = Pink40,
     /**/
-    background = ColorGreyGreen100
+//    background = ColorGreyGreen100
 //    primaryContainer = Color.Yellow,
 //    surfaceContainer = ColorGreyGreen10,
 
@@ -62,8 +62,8 @@ fun UPuliTheme(
 
     MaterialTheme(
         /* BOOTSTRAPPED WITH THIS */
-//        colorScheme = colorScheme,
-        colorScheme = LightColorScheme,
+        colorScheme = colorScheme,
+//        colorScheme = LightColorScheme,
         typography = Typography,
         content = content
     )
