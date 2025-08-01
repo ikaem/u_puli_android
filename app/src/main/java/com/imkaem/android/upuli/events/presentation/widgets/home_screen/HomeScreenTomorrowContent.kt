@@ -26,7 +26,7 @@ import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.view_models.HomeScreenDayState
 import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
 import com.imkaem.android.upuli.events.presentation.widgets.EventsSectionTotalPeriodCount
-import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContent
+import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContentDeprecated
 import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContentColorVariant
 import com.imkaem.android.upuli.events.presentation.widgets.TomorrowEventMetadataContainer
 import com.imkaem.android.upuli.ui.theme.ColorBlue60
@@ -54,7 +54,7 @@ fun HomeScreenTomorrowContent(
         )
         Spacer(Modifier.height(5.dp))
         if (tomorrowEventsState == null) {
-            NoEventsContent(
+            NoEventsContentDeprecated(
                 colorVariant = NoEventsContentColorVariant.DARK,
             )
             return

@@ -34,6 +34,9 @@ import java.text.SimpleDateFormat
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+
+/* TODO deprecated, replaced by EventBrief*/
+
 @Composable
 fun EventBriefItem(
     event: EventModel,

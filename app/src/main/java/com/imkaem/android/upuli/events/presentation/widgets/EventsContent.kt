@@ -3,17 +3,12 @@ package com.imkaem.android.upuli.events.presentation.widgets
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.ui.theme.ColorGrey5
-import com.imkaem.android.upuli.ui.theme.ColorWhite
 
 /* TODO check to reuse this in today events screen, tomorrow events screen, and bookmarked events screen */
 
@@ -34,7 +29,7 @@ fun EventsContent(
     ) {
         title()
         if (events.isEmpty()) {
-            NoEventsContent(
+            NoEventsContentDeprecated(
                 modifier = Modifier.fillMaxSize(),
                 colorVariant = NoEventsContentColorVariant.DARK,
             )

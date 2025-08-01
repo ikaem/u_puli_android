@@ -15,4 +15,5 @@ data class HomeScreenState(
 data class HomeScreenDayState(
     val featuredEvent: EventModel,
     val dayEventsCount: Int,
+    val allEventsString: String,
 )

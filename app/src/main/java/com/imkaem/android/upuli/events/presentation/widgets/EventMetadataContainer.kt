@@ -29,7 +29,7 @@ import com.imkaem.android.upuli.ui.theme.ColorGreyGreen30
 import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
 
 /* TODO not sure if MetadataContainer is the best name */
-
+/* TODO this is deprecated - use EventMetadata*/
 @Composable
 fun EventDetailsMetadataContainer(
     text: String,

@@ -17,16 +17,10 @@ import com.imkaem.android.upuli.ui.theme.ColorWhite
 fun UPuliTopAppBar(
     onNavigateBack: (() -> Unit)? = null,
     onNavigateToBookmarks: (() -> Unit)? = null,
-    title: String = "",
 ) {
     CenterAlignedTopAppBar(
-        /* TODO make these colors come from theme */
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = ColorGreyGreen100,
-        ),
-        title = {
-            Text(title)
-        },
+
+        title = {},
         navigationIcon = {
             if (onNavigateBack == null) {
                 null
@@ -39,7 +33,6 @@ fun UPuliTopAppBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = "Back to previous screen",
-                        tint = ColorWhite,
                     )
                 }
             }
@@ -55,24 +48,10 @@ fun UPuliTopAppBar(
                     Icon(
                         imageVector = Icons.Filled.Bookmarks,
                         tint = ColorGreyPink100,
-                        contentDescription = "Favorites",
+                        contentDescription = "Bookmarks Icon",
                     )
                 }
-
             }
-            /* TODO temp nothing here, since no settings yet ... */
-//            IconButton(
-//                onClick = {
-//
-//                }
-//            ) {
-//                Icon(
-//                    imageVector = Icons.Filled.Settings,
-//                    contentDescription = "Settings",
-//                )
-//            }
-
-
         }
     )
 }

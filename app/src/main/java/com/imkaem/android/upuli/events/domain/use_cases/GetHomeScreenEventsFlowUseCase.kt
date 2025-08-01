@@ -15,18 +15,16 @@ class GetHomeScreenEventsFlowUseCase(
 
     operator fun invoke(
         /* TODO eventu aly, we will get page here i guess? */
+        today: LocalDate,
+        tomorrow: LocalDate,
     ): Flow<GetHomeScreenEventsFlowUseCaseResultValue> {
-
-        /* TODO iam really not sure about which zone i should use - maybe this? - ZoneOffset.UTC */
-        /* TODAY STUFF */
-        val startOfToday = LocalDate.now().atStartOfDay(ZoneId.systemDefault())
+        val startOfToday = today.atStartOfDay(ZoneId.systemDefault())
         val startOfTodayInMilliseconds = startOfToday.toInstant().toEpochMilli()
 
-
-        val startOfTomorrow = LocalDate.now().plusDays(1).atStartOfDay(ZoneId.systemDefault())
+        val startOfTomorrow = tomorrow.atStartOfDay(ZoneId.systemDefault())
         val startOfTomorrowInMilliseconds = startOfTomorrow.toInstant().toEpochMilli()
 
-        val startOfDayAfterTomorrow = LocalDate.now().plusDays(2).atStartOfDay(ZoneId.systemDefault())
+        val startOfDayAfterTomorrow = today.plusDays(2).atStartOfDay(ZoneId.systemDefault())
         val startOfDayAfterTomorrowInMilliseconds = startOfDayAfterTomorrow.toInstant().toEpochMilli()
 
         val filter = GetEventsFilter(
@@ -37,7 +35,6 @@ class GetHomeScreenEventsFlowUseCase(
         val allUpcomingEventsFlow: Flow<List<EventModel>> = eventsRepository.getEventsFlow(filter = filter)
 
         val resultFlow: Flow<GetHomeScreenEventsFlowUseCaseResultValue> = allUpcomingEventsFlow.map { events ->
-
             val todayEvents = mutableListOf<EventModel>();
             val tomorrowEvents = mutableListOf<EventModel>();
 

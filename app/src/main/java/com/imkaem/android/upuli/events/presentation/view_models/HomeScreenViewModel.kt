@@ -7,6 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 
 class HomeScreenViewModel : ViewModel() {
@@ -17,6 +20,17 @@ class HomeScreenViewModel : ViewModel() {
     private val _state = MutableStateFlow<HomeScreenState>(generateInitialState())
     val state: StateFlow<HomeScreenState>
         get() = _state
+
+
+    /* TODO i guess this is temp */
+    private val today = LocalDate.now()
+    private val tomorrow = today.plusDays(1)
+
+    private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+    val todayString: String
+        get() = today.format(dateFormatter)
+    val tomorrowString: String
+        get() = tomorrow.format(dateFormatter)
 
 
     init {
@@ -41,12 +55,25 @@ class HomeScreenViewModel : ViewModel() {
     }
 
     private suspend fun getStateFromEventsFlow() {
-        getHomeScreenEventsFlowUseCase().collect { result ->
+        getHomeScreenEventsFlowUseCase(
+            today = today,
+            tomorrow = tomorrow,
+        ).collect { result ->
             val todayFeaturedEvent = result.todayEvents.firstOrNull()
             val todayEventsCount = result.todayEvents.size
+//            val todayAllEventsString = result.todayEvents.joinToString(
+//                separator = "  |  ",
+//            )
+            val todayAllEventsString = result.todayEvents.joinToString(
+                separator = "  |  ",
+            ) { it.title }
 
             val tomorrowFeaturedEvent = result.tomorrowEvents.firstOrNull()
             val tomorrowEventsCount = result.tomorrowEvents.size
+            /* TODO make this automatic somehow */
+            val tomorrowAllEventsString = result.tomorrowEvents.joinToString(
+                separator = "  |  ",
+            ) { it.title }
 
             /* TODO lets keep here for now */
             val existingAllEvents = _state.value.allUpcomingEvents
@@ -57,42 +84,21 @@ class HomeScreenViewModel : ViewModel() {
                 todayEventsState = todayFeaturedEvent?.let {
                     HomeScreenDayState(
                         featuredEvent = it,
-                        dayEventsCount = todayEventsCount
+                        dayEventsCount = todayEventsCount,
+                        allEventsString = todayAllEventsString,
                     )
                 },
                 tomorrowEventsState = tomorrowFeaturedEvent?.let {
                     HomeScreenDayState(
                         featuredEvent = it,
-                        dayEventsCount = tomorrowEventsCount
+                        dayEventsCount = tomorrowEventsCount,
+                        allEventsString = tomorrowAllEventsString,
                     )
                 },
-                allUpcomingEvents = existingAllEvents + newAllEvents,
+                allUpcomingEvents = newAllEvents,
                 isLoading = false,
                 error = null,
             )
-
-
-//            val newState = HomeScreenState(
-//                todayEventsState = todayFeaturedEvent?.let {
-//                    HomeScreenDayState(
-//                        featuredEvent = it,
-//                        dayEventsCount = todayEventsCount
-//                    )
-//                },
-//                tomorrowEventsState = tomorrowFeaturedEvent?.let {
-//                    HomeScreenDayState(
-//                        featuredEvent = it,
-//                        dayEventsCount = tomorrowEventsCount
-//                    )
-//                },
-//                /* this approach would not allow pagination, as I only show new events
-//                * so i have to create logic that will merge existing events with new ones, but take into consideration the bookmarked state of each event
-//                *  */
-//                allUpcomingEvents = result.allUpcomingEvents,
-//                isLoading = false,
-//                error = null,
-//                selectedTabIndex = 0,
-//            )
 
             _state.update {
                 newState

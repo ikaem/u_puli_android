@@ -15,9 +15,14 @@ val Pink40 = Color(0xFF7D5260)
 val ColorGreenDark = Color(0xFF426D51)
 val ColorGreenLight = Color(0xFFE0EAE4)
 
-val ColorDarkText = Color(0xFF272727)
-val ColorLightText = Color(0xFF9D9D9D)
-val ColorWhiteText = Color(0xFFFAFAFA)
+val ColorYellowDark = Color(0xFFFAB400)
+val ColorYellowLight = Color(0xFFFDE9C9)
+
+val ColorBrownDark = Color(0xFF3D352D)
+
+val ColorTextDark = Color(0xFF272727)
+val ColorTextLight = Color(0xFF9D9D9D)
+val ColorTextWhite = Color(0xFFFAFAFA)
 
 /* new colors - DEPRECATED */
 val ColorGreyGreen100 = Color(0xFF232E32)

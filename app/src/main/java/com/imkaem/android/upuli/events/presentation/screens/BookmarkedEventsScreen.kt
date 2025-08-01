@@ -32,7 +32,7 @@ fun BookmarkedEventsScreen(
         }
     ) { it ->
 
-        /* TODO all these things kida repeat - in bunch of screens - all this can be unified  */
+
         BookmarkedEventsScreenContent(
             eventsState = eventsState,
             fromDateString = todayDateString,

@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.imkaem.android.upuli.events.domain.models.EventModel
 
+/* TODO deprecated */
 @Composable
 fun EventBriefItems(
     events: List<EventModel>,
