@@ -71,18 +71,6 @@ object DummyDI {
         eventsRepository = EVENTS_REPOSITORY
     )
 
-    /* NOT USED */
 
-    val getBookmarkedEventsFromDateUseCase = GetBookmarkedEventsFromDateUseCase(
-        eventsRepository = EVENTS_REPOSITORY
-    )
-    val getTomorrowEventsUseCase = GetTomorrowEventsUseCase(
-        eventsRepository = EVENTS_REPOSITORY
-    )
-    val getUpcomingEventsUseCase = GetUpcomingEventsUseCase(
-        eventsRepository = EVENTS_REPOSITORY
-    )
-    val getTodayEventsUseCase = GetTodayEventsUseCase(
-        eventsRepository = EVENTS_REPOSITORY
-    )
+
 }

@@ -13,13 +13,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScreenState
-import com.imkaem.android.upuli.events.presentation.widgets.EventsContent
-import com.imkaem.android.upuli.events.presentation.widgets.EventsContentTitle
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
-import com.imkaem.android.upuli.events.presentation.widgets.home_screen.EventBriefs
-import com.imkaem.android.upuli.ui.theme.ColorGrey60
-import com.imkaem.android.upuli.ui.theme.ColorGreyGreen60
+import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
 
 @Composable
 fun TodayEventsScreenContent(

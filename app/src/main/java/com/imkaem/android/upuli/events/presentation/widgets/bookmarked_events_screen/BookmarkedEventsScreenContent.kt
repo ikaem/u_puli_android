@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.imkaem.android.upuli.events.presentation.view_models.BookmarkedEventsScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
-import com.imkaem.android.upuli.events.presentation.widgets.home_screen.EventBriefs
+import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
 
 @Composable
 fun BookmarkedEventsScreenContent(

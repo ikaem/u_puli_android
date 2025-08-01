@@ -29,32 +29,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
-import com.imkaem.android.upuli.R
-import com.imkaem.android.upuli.events.domain.models.EventModel
 import com.imkaem.android.upuli.events.domain.models.date
 import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.view_models.EventScreenState
 import com.imkaem.android.upuli.events.presentation.widgets.ColoredLabel
-import com.imkaem.android.upuli.events.presentation.widgets.EventDetailsMetadataContainer
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContent
 import com.imkaem.android.upuli.events.utils.constants.UIElementColorVariant
-import com.imkaem.android.upuli.ui.theme.ColorGrey10
-import com.imkaem.android.upuli.ui.theme.ColorGrey5
 import com.imkaem.android.upuli.ui.theme.ColorGreyPink100
 import com.imkaem.android.upuli.ui.theme.ColorTextDark
 import com.imkaem.android.upuli.ui.theme.ColorWhite
 import com.imkaem.android.upuli.ui.theme.ColorYellowLight
-import java.nio.file.WatchEvent
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun EventScreenContent(

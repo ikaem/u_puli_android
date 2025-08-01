@@ -18,40 +18,6 @@ import com.imkaem.android.upuli.ui.theme.ColorGreenDark
 import com.imkaem.android.upuli.ui.theme.ColorTextWhite
 import com.imkaem.android.upuli.ui.theme.ColorYellowDark
 
-//@Composable
-//fun EventMetadataLabelGreen(
-//    text: String,
-//    iconImageVector: ImageVector,
-//    contentDescription: String,
-//    modifier: Modifier = Modifier,
-//) {
-//    EventMetadataLabel(
-//        text = text,
-//        iconImageVector = iconImageVector,
-//        labelColor = ColorGreenDark,
-//        contentColor = ColorTextWhite,
-//        contentDescription = contentDescription,
-//        modifier = modifier,
-//    )
-//}
-//
-//@Composable
-//fun EventMetadataLabelYellow(
-//    text: String,
-//    iconImageVector: ImageVector,
-//    contentDescription: String,
-//    modifier: Modifier = Modifier,
-//) {
-//    EventMetadataLabel(
-//        text = text,
-//        iconImageVector = iconImageVector,
-//        labelColor = ColorYellowDark,
-//        contentColor = ColorTextDark,
-//        contentDescription = contentDescription,
-//        modifier = modifier,
-//    )
-//}
-
 
 /*TODO maybe should creat some wrapper composables for location, date, and time? */
 @Composable

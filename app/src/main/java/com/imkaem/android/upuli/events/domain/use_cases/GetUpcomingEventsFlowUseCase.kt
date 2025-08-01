@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import java.time.ZoneId
 
+// TODO lets leave this here for now, for reference
 class GetUpcomingEventsFlowUseCase(
     private val eventsRepository: EventsRepository
 ) {
