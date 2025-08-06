@@ -1,11 +1,14 @@
 package com.imkaem.android.upuli.events.domain.use_cases
 
+import androidx.compose.ui.geometry.Offset
 import com.imkaem.android.upuli.events.data.EventsRepository
 import com.imkaem.android.upuli.events.domain.GetEventsFilter
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import java.time.Instant
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZoneOffset
 
@@ -15,20 +18,27 @@ class GetHomeScreenEventsFlowUseCase(
 
     operator fun invoke(
         /* TODO eventu aly, we will get page here i guess? */
-        today: LocalDate,
-        tomorrow: LocalDate,
+//        today: LocalDate,
+//        tomorrow: LocalDate,
+        today: LocalDateTime,
+        tomorrow: LocalDateTime,
     ): Flow<GetHomeScreenEventsFlowUseCaseResultValue> {
-        val startOfToday = today.atStartOfDay(ZoneId.systemDefault())
-        val startOfTodayInMilliseconds = startOfToday.toInstant().toEpochMilli()
+//        val startOfToday = today.atStartOfDay(ZoneId.systemDefault())
+//        val startOfTodayInMilliseconds = startOfToday.toInstant().toEpochMilli()
 
-        val startOfTomorrow = tomorrow.atStartOfDay(ZoneId.systemDefault())
-        val startOfTomorrowInMilliseconds = startOfTomorrow.toInstant().toEpochMilli()
+//        val startOfTomorrow = tomorrow.atStartOfDay(ZoneId.systemDefault())
+//        val startOfTomorrowInMilliseconds = startOfTomorrow.toInstant().toEpochMilli()
+//
+//        val startOfDayAfterTomorrow = today.plusDays(2).atStartOfDay(ZoneId.systemDefault())
+//        val startOfDayAfterTomorrowInMilliseconds = startOfDayAfterTomorrow.toInstant().toEpochMilli()
 
-        val startOfDayAfterTomorrow = today.plusDays(2).atStartOfDay(ZoneId.systemDefault())
-        val startOfDayAfterTomorrowInMilliseconds = startOfDayAfterTomorrow.toInstant().toEpochMilli()
+        val todayInMilliseconds = today.toInstant(ZoneOffset.UTC).toEpochMilli()
+        /* we want to make sure we use start of day tomorrow */
+        val tomorrowInMilliseconds = tomorrow.toLocalDate().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
+        val dayAfterTomorrowInMilliseconds = tomorrow.plusDays(1).toLocalDate().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
 
         val filter = GetEventsFilter(
-            fromDateMilliseconds = startOfTodayInMilliseconds,
+            fromDateMilliseconds = todayInMilliseconds,
             toDateMilliseconds = null // No end date, we want all upcoming events
         )
 
@@ -42,8 +52,8 @@ class GetHomeScreenEventsFlowUseCase(
                 /* TODO this is probalbly long when converting zones and so on - but lets keep it like this for now */
                 val eventDateInMilliseconds = it.dateTime.toInstant(ZoneOffset.UTC).toEpochMilli()
 
-                val isToday = eventDateInMilliseconds >= startOfTodayInMilliseconds && eventDateInMilliseconds < startOfTomorrowInMilliseconds
-                val isTomorrow = eventDateInMilliseconds >= startOfTomorrowInMilliseconds && eventDateInMilliseconds < startOfDayAfterTomorrowInMilliseconds
+                val isToday = eventDateInMilliseconds >= todayInMilliseconds && eventDateInMilliseconds < tomorrowInMilliseconds
+                val isTomorrow = eventDateInMilliseconds >= tomorrowInMilliseconds && eventDateInMilliseconds < dayAfterTomorrowInMilliseconds
 
                 if (isToday) {
                     todayEvents.add(it)

@@ -1,5 +1,6 @@
 package com.imkaem.android.upuli.events.presentation.view_models
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.events.data.di.DummyDI
@@ -8,6 +9,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
@@ -23,7 +27,17 @@ class HomeScreenViewModel : ViewModel() {
 
 
     /* TODO i guess this is temp */
-    private val today = LocalDate.now()
+    /*TODO today should be in utc, but we will do it in use case because here we need this timezone to be able to show correct date on screen */
+//    private val today = LocalDate.now()
+//    private val today = LocalDate.now(ZoneId.systemDefault())
+//    private val today = LocalDate.now(ZoneOffset.UTC)
+//    private val today = LocalDate.now()
+//    private val tomorrow = today.plusDays(1)
+
+
+    private val today = LocalDateTime.now()
+
+    private val todayUTC = LocalDateTime.now(ZoneOffset.UTC)
     private val tomorrow = today.plusDays(1)
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
@@ -55,6 +69,7 @@ class HomeScreenViewModel : ViewModel() {
     }
 
     private suspend fun getStateFromEventsFlow() {
+        Log.d("HomeScreenViewModel", todayUTC.toString())
         getHomeScreenEventsFlowUseCase(
             today = today,
             tomorrow = tomorrow,
