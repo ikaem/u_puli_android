@@ -2,6 +2,7 @@ package com.imkaem.android.upuli.events.presentation.widgets.home_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.filled.CalendarMonth
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -122,6 +124,20 @@ fun SoonEventsCard(
             )
             return@Column
         }
+
+        /* we could wrap everything in Elevated card to achieve shadow
+        * https://stackoverflow.com/a/79062345/9661910
+        * */
+
+        /*or we can use zindex
+        * https://stackoverflow.com/a/73025691/9661910
+        * */
+
+        /*or use surface
+        * https://stackoverflow.com/a/71959615/9661910
+        *
+        * */
+
 
         Column(
             modifier = Modifier
@@ -241,7 +257,6 @@ fun SoonEventsCard(
                     overflow = TextOverflow.Ellipsis,
                 )
             }
-
         }
     }
 

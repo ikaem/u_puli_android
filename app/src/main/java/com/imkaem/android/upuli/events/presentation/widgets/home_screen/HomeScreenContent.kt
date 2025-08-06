@@ -3,6 +3,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.NotificationsActive
 import androidx.compose.material.icons.filled.NotificationsPaused
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -51,7 +54,8 @@ fun HomeScreenContent(
                 top = padding.calculateTopPadding(),
                 start = 10.dp,
                 end = 10.dp,
-                bottom = padding.calculateBottomPadding(),
+//                bottom = padding.calculateBottomPadding(),
+//                bottom = 10.dp,
             )
             .fillMaxWidth()
     ) {
@@ -164,6 +168,7 @@ fun HomeScreenContent(
                         onNavigateToEvent = onNavigateToEvent,
                         onToggleEventIsBookmarked = onToggleEventIsBookmarked,
                     )
+//                    Spacer(Modifier.height(NavigationBarDefaults.windowInsets.asPaddingValues().calculateBottomPadding()))
                 }
             }
 
