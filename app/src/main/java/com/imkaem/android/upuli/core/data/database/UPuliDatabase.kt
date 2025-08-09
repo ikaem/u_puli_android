@@ -14,6 +14,7 @@ import com.imkaem.android.upuli.events.data.local.EventLocalEntity
 )
 abstract class UPuliDatabase : RoomDatabase() {
     abstract val dao: EventsDao
+    /* TODO i guess if there is need to any other dao, that is it */
 }
 
 /* migrations - maybe at some point move to a different file */

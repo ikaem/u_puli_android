@@ -2,6 +2,7 @@ package com.imkaem.android.upuli.core.data.api_service
 
 import com.imkaem.android.upuli.events.data.remote.EventResponseRemoteEntity
 import com.imkaem.android.upuli.events.data.remote.EventsResponseRemoteEntity
+import com.imkaem.android.upuli.search.data.remote.SearchResponseRemoteEntity
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -19,4 +20,10 @@ interface UPuliApiService {
         /* TODO is there a way to pass list of ids, and then to have retrofit handle parsing to appropriate string */
         @Query("ids") ids: String
     ): EventsResponseRemoteEntity
+
+    @GET("search")
+    suspend fun search(
+        @Query("query") query: String,
+    ): SearchResponseRemoteEntity
+//    ): Any
 }
