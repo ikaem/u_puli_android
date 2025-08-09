@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 * https://medium.com/@andbyte18/clean-architecture-in-android-with-mvvm-hilt-retrofit-jetpack-compose-a27f8a817d20
 * https://medium.com/@desiappdev24/fetching-data-using-retrofit-in-jetpack-compose-a-complete-guide-97f4c2101cb7
 * */
-object EventsRetrofitInstance {
+object UPuliRetrofitInstance {
     /* this is a singleton instance */
     private const val BASE_URL = "https://u-puli-api.onrender.com/"
 

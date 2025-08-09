@@ -1,4 +1,7 @@
-package com.imkaem.android.upuli.events.presentation.screens
+package com.imkaem.android.upuli.search.presentation.screens
+
+/* NOTE: Idea here is that in future, we can search many things */
+
 
 import UPuliTopAppBar
 import androidx.compose.foundation.layout.Column
@@ -14,17 +17,19 @@ import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScree
 import com.imkaem.android.upuli.events.presentation.view_models.TomorrowEventsScreenViewModel
 import com.imkaem.android.upuli.events.presentation.widgets.today_events_screen.TodayEventsScreenContent
 import com.imkaem.android.upuli.events.presentation.widgets.tomorrow_events_screen.TomorrowEventsScreenContent
+import com.imkaem.android.upuli.search.presentation.view_models.SearchScreenViewModel
+import com.imkaem.android.upuli.search.presentation.widgets.search_screen.SearchScreenContent
 
 
 // TODO not sure if this should be unified with tomorrowevents screen, or not - not sure...
 @Composable
-fun TomorrowEventsScreen(
+fun SearchScreen(
     onNavigateToEvent: (id: Int) -> Unit,
     onNavigateBack: () -> Unit,
     onNavigateToBookmarks: () -> Unit,
 ) {
 
-    val viewModel: TomorrowEventsScreenViewModel = viewModel()
+    val viewModel: SearchScreenViewModel = viewModel()
     val eventsState = viewModel.state.collectAsStateWithLifecycle().value
 
     Scaffold(
@@ -36,9 +41,11 @@ fun TomorrowEventsScreen(
         }
     ) { it ->
 
-        TomorrowEventsScreenContent(
+        SearchScreenContent(
             eventsState = eventsState,
             onNavigateToEvent = onNavigateToEvent,
+            onChangeSearchQuery = viewModel::onChangeSearchQuery,
+            onSubmitSearchQuery = viewModel::onSubmitSearchQuery,
             onToggleEventIsBookmarked = viewModel::onToggleEventIsBookmarked,
             padding = it,
         )

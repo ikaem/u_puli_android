@@ -36,6 +36,7 @@ import com.imkaem.android.upuli.events.presentation.screens.EventScreen
 import com.imkaem.android.upuli.events.presentation.screens.EventWebViewScreen
 import com.imkaem.android.upuli.events.presentation.screens.HomeScreen
 import com.imkaem.android.upuli.events.presentation.screens.TomorrowEventsScreen
+import com.imkaem.android.upuli.search.presentation.screens.SearchScreen
 import com.imkaem.android.upuli.ui.theme.ColorGreyGreen100
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
@@ -247,14 +248,19 @@ fun UPuliApp() {
                 composable(
                     route = "search",
                 ) {
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                    ) {
-                        Text(
-                            text = "Search screen",
-                            modifier = Modifier.fillMaxSize(),
-                        )
-                    }
+                    SearchScreen(
+                        onNavigateToEvent = ::navigateToEvent,
+                        onNavigateBack = ::navigateBack,
+                        onNavigateToBookmarks = ::onNavigateToBookmarks
+                    )
+//                    Box(
+//                        modifier = Modifier.fillMaxSize(),
+//                    ) {
+//                        Text(
+//                            text = "Search screen",
+//                            modifier = Modifier.fillMaxSize(),
+//                        )
+//                    }
                 }
             }
         }
