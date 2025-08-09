@@ -1,4 +1,4 @@
-package com.imkaem.android.upuli.events.data.api_service
+package com.imkaem.android.upuli.core.data.api_service
 
 import com.imkaem.android.upuli.events.data.remote.EventResponseRemoteEntity
 import com.imkaem.android.upuli.events.data.remote.EventsResponseRemoteEntity

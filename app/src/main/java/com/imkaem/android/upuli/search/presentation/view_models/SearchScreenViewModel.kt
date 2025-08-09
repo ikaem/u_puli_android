@@ -3,7 +3,7 @@ package com.imkaem.android.upuli.search.presentation.view_models
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.imkaem.android.upuli.events.data.di.DummyDI
+import com.imkaem.android.upuli.core.utils.di.DummyDI
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

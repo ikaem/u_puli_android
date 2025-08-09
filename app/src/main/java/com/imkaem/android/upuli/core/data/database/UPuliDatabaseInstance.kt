@@ -1,18 +1,17 @@
-package com.imkaem.android.upuli.events.data.database
+package com.imkaem.android.upuli.core.data.database
 
 import android.content.Context
-import android.provider.CalendarContract
 import androidx.room.Room
-import androidx.room.RoomDatabase
+import com.imkaem.android.upuli.events.data.database.EventsDao
 
-object EventsRoomInstance {
+object UPuliDatabaseInstance {
 
     private const val DATABASE_NAME = "events_database"
 
     fun dao(context: Context): EventsDao {
         val db = Room.databaseBuilder(
             context,
-            EventsDatabase::class.java,
+            UPuliDatabase::class.java,
             DATABASE_NAME,
         )
             .addMigrations(

@@ -1,9 +1,9 @@
-package com.imkaem.android.upuli.events.data.di
+package com.imkaem.android.upuli.core.utils.di
 
 import com.imkaem.android.upuli.UPuliApplication
 import com.imkaem.android.upuli.events.data.EventsRepository
-import com.imkaem.android.upuli.events.data.api_service.UPuliRetrofitInstance
-import com.imkaem.android.upuli.events.data.database.EventsRoomInstance
+import com.imkaem.android.upuli.core.data.api_service.UPuliRetrofitInstance
+import com.imkaem.android.upuli.core.data.database.UPuliDatabaseInstance
 import com.imkaem.android.upuli.events.data.local.EventsLocalDataSource
 import com.imkaem.android.upuli.events.data.remote.EventsRemoteDataSource
 import com.imkaem.android.upuli.events.domain.use_cases.GetBookmarkedEventsFromDateFlowUseCase
@@ -19,7 +19,7 @@ import com.imkaem.android.upuli.events.domain.use_cases.UpdateEventIsBookmarkedU
 
 private val EVENTS_API_SERVICE = UPuliRetrofitInstance.api
 
-private val EVENTS_DAO = EventsRoomInstance.dao(
+private val EVENTS_DAO = UPuliDatabaseInstance.dao(
     context = UPuliApplication.getApplicationContext()
 )
 

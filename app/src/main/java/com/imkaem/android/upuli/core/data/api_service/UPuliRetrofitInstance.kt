@@ -1,4 +1,4 @@
-package com.imkaem.android.upuli.events.data.api_service
+package com.imkaem.android.upuli.core.data.api_service
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

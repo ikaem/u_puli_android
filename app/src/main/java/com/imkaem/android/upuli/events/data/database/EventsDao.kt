@@ -9,6 +9,7 @@ import com.imkaem.android.upuli.events.data.local.EventLocalEntity
 import com.imkaem.android.upuli.events.data.local.EventLocalEntityPartialIsBookmarked
 import kotlinx.coroutines.flow.Flow
 
+/*TODO this should be called UPuliDao maybe, or at least database should be called UPuliDatabase, and then it should have another dao possibly?*/
 @Dao
 interface EventsDao {
 
