@@ -107,6 +107,6 @@ fun SearchField(
                 contentDescription = "Search"
             )
         },
-        placeholder = { Text("Search...") },
+        placeholder = { Text("Što tražimo?") },
     )
 }

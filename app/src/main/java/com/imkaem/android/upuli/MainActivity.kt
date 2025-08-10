@@ -70,13 +70,13 @@ enum class NavigationBarDestination(
 ) {
     HOME(
         route = "home",
-        label = "Home",
+        label = "Početna",
         icon = Icons.Filled.Home,
         contentDescription = "Home"
     ),
     SEARCH(
         route = "search",
-        label = "Search",
+        label = "Pretraga",
         icon = Icons.Filled.Search, // TODO replace with search icon
         contentDescription = "Search"
     ),
