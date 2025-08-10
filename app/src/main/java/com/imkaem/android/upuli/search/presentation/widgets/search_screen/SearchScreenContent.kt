@@ -30,14 +30,6 @@ fun SearchScreenContent(
     modifier: Modifier = Modifier,
 ) {
 
-    val isLoading = eventsState.isLoading;
-    if (isLoading) {
-        LoadingIndicator(
-            modifier = Modifier.fillMaxSize()
-        )
-        return;
-    }
-
     Column(
         modifier = modifier
             .padding(
@@ -63,15 +55,10 @@ fun SearchScreenContent(
         )
         Spacer(Modifier.height(20.dp))
 
-        if(eventsState.isLoading) {
-            LoadingIndicator(
-                modifier = Modifier.fillMaxSize()
-            )
-            return@Column
-        }
 
         EventBriefs(
             events = eventsState.events,
+            isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
         )

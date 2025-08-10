@@ -19,6 +19,7 @@ interface EventsDao {
     suspend fun getAll(): List<EventLocalEntity>
 
 
+
     @Query("SELECT * FROM events WHERE date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
     suspend fun getAllFromInclusive(fromMillisecondsInclusive: Long): List<EventLocalEntity>
 
@@ -56,6 +57,10 @@ interface EventsDao {
 
     @Query("SELECT * FROM events ORDER BY date_in_milliseconds ASC")
     fun getAllFlow(): Flow<List<EventLocalEntity>>
+
+
+    @Query("SELECT * FROM events WHERE id in (:ids) ORDER BY date_in_milliseconds ASC")
+    fun getAllByIdsFlow(ids: List<Int>): Flow<List<EventLocalEntity>>
 
     /* NOTE: This is only used to ensure that bookmarked events are not overwritten when fetch new events from remote. Hence, no need for this to be a flow */
     @Query("SELECT * FROM events WHERE is_bookmarked = 1 ORDER BY date_in_milliseconds ASC")

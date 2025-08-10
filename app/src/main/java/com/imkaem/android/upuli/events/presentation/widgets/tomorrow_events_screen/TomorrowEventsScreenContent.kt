@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmarks
+import androidx.compose.material.icons.filled.NotificationsPaused
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -26,13 +27,13 @@ fun TomorrowEventsScreenContent(
     modifier: Modifier = Modifier,
 ) {
 
-    val isLoading = eventsState.isLoading;
-    if (isLoading) {
-        LoadingIndicator(
-            modifier = Modifier.fillMaxSize()
-        )
-        return;
-    }
+//    val isLoading = eventsState.isLoading;
+//    if (isLoading) {
+//        LoadingIndicator(
+//            modifier = Modifier.fillMaxSize()
+//        )
+//        return;
+//    }
 
     Column(
         modifier = modifier
@@ -47,13 +48,14 @@ fun TomorrowEventsScreenContent(
 
         Spacer(Modifier.height(10.dp))
         ListScreenTitle(
-            icon = Icons.Filled.Bookmarks,
+            icon = Icons.Filled.NotificationsPaused,
             title = "SUTRAŠNJI DOGAĐAJI",
         )
         Spacer(Modifier.height(20.dp))
 
         EventBriefs(
             events = eventsState.events,
+            isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
         )

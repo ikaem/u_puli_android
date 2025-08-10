@@ -79,13 +79,14 @@ fun SearchField(
 //https://medium.com/@a.poplawski96/implement-modern-search-functionality-on-android-with-compose-mvvm-clean-architecture-junit5-898fb30d9792
 // also useful for keyboard action
 //    https://canopas.com/keyboard-handling-in-jetpack-compose-all-you-need-to-know-3e6fddd30d9a
+//    https://medium.com/@a.poplawski96/implement-modern-search-functionality-on-android-with-compose-mvvm-clean-architecture-junit5-61cbbee963ba
 
     TextField(
         value = searchQuery,
         enabled = !isLoading,
-        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions (
-            onDone = {
+            onSearch = {
                 onSubmitSearchQuery()
             }
         ),

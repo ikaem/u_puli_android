@@ -36,7 +36,7 @@ class EventsRepository(
         val values = bookmarkedEvents.map { it ->
             UpdateEventLocalIsBookmarkedValue(
                 eventId = it.id,
-                isBookmarked = true,
+                isBookmarked = it.isBookmarked,
             )
         }
         eventsLocalDataSource.updateEventsIsBookmarked(

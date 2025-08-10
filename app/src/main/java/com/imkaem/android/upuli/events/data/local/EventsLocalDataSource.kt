@@ -1,6 +1,7 @@
 package com.imkaem.android.upuli.events.data.local
 
 import com.imkaem.android.upuli.events.data.database.EventsDao
+import com.imkaem.android.upuli.events.data.remote.EventRemoteEntity
 import com.imkaem.android.upuli.events.utils.values.UpdateEventLocalIsBookmarkedValue
 import kotlinx.coroutines.flow.Flow
 
@@ -122,6 +123,10 @@ class EventsLocalDataSource(
 
     fun getAllFlow(): Flow<List<EventLocalEntity>> {
         return dao.getAllFlow()
+    }
+
+    fun getAllByIdsFlow(ids: List<Int>): Flow<List<EventLocalEntity>> {
+        return dao.getAllByIdsFlow(ids)
     }
 
     /* TODO it seems for now we dont need any other date limits for bookmarked - we only ever show all available from now */

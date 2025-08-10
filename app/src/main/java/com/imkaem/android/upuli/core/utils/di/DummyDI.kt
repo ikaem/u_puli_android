@@ -16,8 +16,9 @@ import com.imkaem.android.upuli.events.domain.use_cases.LoadEventUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.LoadEventsUseCase
 import com.imkaem.android.upuli.events.domain.use_cases.UpdateEventIsBookmarkedUseCase
 import com.imkaem.android.upuli.search.data.remote.SearchRemoteDataSource
-import com.imkaem.android.upuli.search.data.remote.SearchRepository
-import com.imkaem.android.upuli.search.domain.use_cases.SearchUseCase
+import com.imkaem.android.upuli.search.data.SearchRepository
+import com.imkaem.android.upuli.search.domain.use_cases.GetSearchResultsFlowUseCase
+import com.imkaem.android.upuli.search.domain.use_cases.LoadSearchResultsUseCase
 
 
 private val API_SERVICE = UPuliRetrofitInstance.api
@@ -43,7 +44,8 @@ private val SEARCH_REMOTE_DATA_SOURCE = SearchRemoteDataSource(
     apiService = API_SERVICE
 )
 private val SEARCH_REPOSITORY = SearchRepository(
-    searchRemoteDataSource = SEARCH_REMOTE_DATA_SOURCE
+    searchRemoteDataSource = SEARCH_REMOTE_DATA_SOURCE,
+    eventsLocalDataSource =  EVENTS_LOCAL_DATA_SOURCE,
 )
 
 
@@ -82,8 +84,10 @@ object DummyDI {
     )
 
     /* search */
-    val searchUseCase = SearchUseCase(
+    val loadSearchResultsUseCase = LoadSearchResultsUseCase(
         searchRepository = SEARCH_REPOSITORY
     )
-
+    val getSearchResultsFlowUseCase = GetSearchResultsFlowUseCase(
+        searchRepository = SEARCH_REPOSITORY
+    )
 }

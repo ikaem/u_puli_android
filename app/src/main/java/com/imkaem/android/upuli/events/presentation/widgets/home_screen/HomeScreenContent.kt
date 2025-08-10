@@ -176,6 +176,7 @@ fun HomeScreenContent(
 
                 EventBriefs(
                     events = screenState.allUpcomingEvents,
+                    isLoading = false,
                     onNavigateToEvent = onNavigateToEvent,
                     onToggleEventIsBookmarked = onToggleEventIsBookmarked,
                 )
