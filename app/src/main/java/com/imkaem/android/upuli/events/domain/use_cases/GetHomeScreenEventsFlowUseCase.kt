@@ -32,7 +32,8 @@ class GetHomeScreenEventsFlowUseCase(
 //        val startOfDayAfterTomorrow = today.plusDays(2).atStartOfDay(ZoneId.systemDefault())
 //        val startOfDayAfterTomorrowInMilliseconds = startOfDayAfterTomorrow.toInstant().toEpochMilli()
 
-        val todayInMilliseconds = today.toInstant(ZoneOffset.UTC).toEpochMilli()
+//        val todayInMilliseconds = today.toInstant(ZoneOffset.UTC).toEpochMilli()
+        val todayInMilliseconds = today.toLocalDate().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
         /* we want to make sure we use start of day tomorrow */
         val tomorrowInMilliseconds = tomorrow.toLocalDate().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
         val dayAfterTomorrowInMilliseconds = tomorrow.plusDays(1).toLocalDate().atStartOfDay().toInstant(ZoneOffset.UTC).toEpochMilli()
