@@ -9,6 +9,7 @@ import com.imkaem.android.upuli.events.data.local.EventLocalEntity
 import com.imkaem.android.upuli.events.data.local.EventLocalEntityPartialIsBookmarked
 import kotlinx.coroutines.flow.Flow
 
+/*TODO this should be called UPuliDao maybe, or at least database should be called UPuliDatabase, and then it should have another dao possibly?*/
 @Dao
 interface EventsDao {
 
@@ -16,6 +17,7 @@ interface EventsDao {
     /* TODO in future, some pagination will need to be done */
     @Query("SELECT * FROM events ORDER BY date_in_milliseconds ASC")
     suspend fun getAll(): List<EventLocalEntity>
+
 
 
     @Query("SELECT * FROM events WHERE date_in_milliseconds >= :fromMillisecondsInclusive ORDER BY date_in_milliseconds ASC")
@@ -55,6 +57,10 @@ interface EventsDao {
 
     @Query("SELECT * FROM events ORDER BY date_in_milliseconds ASC")
     fun getAllFlow(): Flow<List<EventLocalEntity>>
+
+
+    @Query("SELECT * FROM events WHERE id in (:ids) ORDER BY date_in_milliseconds ASC")
+    fun getAllByIdsFlow(ids: List<Int>): Flow<List<EventLocalEntity>>
 
     /* NOTE: This is only used to ensure that bookmarked events are not overwritten when fetch new events from remote. Hence, no need for this to be a flow */
     @Query("SELECT * FROM events WHERE is_bookmarked = 1 ORDER BY date_in_milliseconds ASC")

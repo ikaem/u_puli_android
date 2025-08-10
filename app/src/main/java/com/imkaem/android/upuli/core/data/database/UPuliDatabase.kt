@@ -1,9 +1,10 @@
-package com.imkaem.android.upuli.events.data.database
+package com.imkaem.android.upuli.core.data.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.imkaem.android.upuli.events.data.database.EventsDao
 import com.imkaem.android.upuli.events.data.local.EventLocalEntity
 
 @Database(
@@ -11,8 +12,9 @@ import com.imkaem.android.upuli.events.data.local.EventLocalEntity
     version = 3,
     exportSchema = true,
 )
-abstract class EventsDatabase : RoomDatabase() {
+abstract class UPuliDatabase : RoomDatabase() {
     abstract val dao: EventsDao
+    /* TODO i guess if there is need to any other dao, that is it */
 }
 
 /* migrations - maybe at some point move to a different file */

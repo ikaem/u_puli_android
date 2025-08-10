@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -5,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.viewinterop.AndroidView
 
 /* TODO we should convert this to a widget instead, and reuse wherever webview is needed */
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun WebViewContent(
     url: String,
@@ -24,7 +26,8 @@ fun WebViewContent(
 
             WebView(context).apply {
                 /* TODO maybe not good to use this - will see */
-//                        settings.javaScriptEnabled = true
+                /* TODDO required for ink*/
+                        settings.javaScriptEnabled = true
 //                        settings.loadWithOverviewMode = true // -> maybe should not set this
 //                        settings.useWideViewPort = true // not sure if this should be used
 //                        settings.setSupportZoom(true)

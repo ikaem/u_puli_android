@@ -1,4 +1,4 @@
-package com.imkaem.android.upuli.events.presentation.widgets.tomorrow_events_screen
+package com.imkaem.android.upuli.search.presentation.widgets.search_screen
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,32 +8,27 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmarks
-import androidx.compose.material.icons.filled.NotificationsPaused
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.imkaem.android.upuli.events.presentation.view_models.TomorrowEventsScreenState
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
+import com.imkaem.android.upuli.search.presentation.widgets.SearchField
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
-import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
+import com.imkaem.android.upuli.search.presentation.view_models.SearchScreenState
 
 @Composable
-fun TomorrowEventsScreenContent(
-    eventsState: TomorrowEventsScreenState,
+fun SearchScreenContent(
+    eventsState: SearchScreenState,
     onNavigateToEvent: (Int) -> Unit,
+    onChangeSearchQuery: (String) -> Unit,
+    onSubmitSearchQuery: () -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-
-//    val isLoading = eventsState.isLoading;
-//    if (isLoading) {
-//        LoadingIndicator(
-//            modifier = Modifier.fillMaxSize()
-//        )
-//        return;
-//    }
 
     Column(
         modifier = modifier
@@ -48,10 +43,18 @@ fun TomorrowEventsScreenContent(
 
         Spacer(Modifier.height(10.dp))
         ListScreenTitle(
-            icon = Icons.Filled.NotificationsPaused,
-            title = "SUTRAŠNJI DOGAĐAJI",
+            icon = Icons.Filled.Search,
+            title = "PRETRAŽIVANJE",
         )
         Spacer(Modifier.height(20.dp))
+        SearchField(
+            searchQuery = eventsState.searchQuery,
+            onChangeSearchQuery = onChangeSearchQuery,
+            isLoading = eventsState.isLoading,
+            onSubmitSearchQuery = onSubmitSearchQuery,
+        )
+        Spacer(Modifier.height(20.dp))
+
 
         EventBriefs(
             events = eventsState.events,

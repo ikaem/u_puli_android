@@ -1,12 +1,11 @@
 package com.imkaem.android.upuli.events.presentation.view_models
 
-import android.media.metrics.Event
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.imkaem.android.upuli.events.data.di.DummyDI
+import com.imkaem.android.upuli.core.utils.di.DummyDI
 import kotlinx.coroutines.launch
 
 class EventWebViewScreenViewModel(

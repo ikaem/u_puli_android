@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.CalendarMonth
@@ -120,7 +121,7 @@ fun EventBrief(
                 ColoredLabel(
                     text = event.time(),
                     colorVariant = UIElementColorVariant.GREEN,
-                    iconImageVector = Icons.Filled.NotificationsActive,
+                    iconImageVector = Icons.Filled.AccessTime,
                     contentDescription = "Event time",
                 )
             }

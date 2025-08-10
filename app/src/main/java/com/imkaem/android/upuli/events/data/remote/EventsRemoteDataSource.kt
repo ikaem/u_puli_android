@@ -1,6 +1,6 @@
 package com.imkaem.android.upuli.events.data.remote
 
-import com.imkaem.android.upuli.events.data.api_service.UPuliApiService
+import com.imkaem.android.upuli.core.data.api_service.UPuliApiService
 
 /* TODO also, make an interface for this */
 /* TODO maybe would be good to place this in data_sources directory */

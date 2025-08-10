@@ -28,13 +28,13 @@ fun BookmarkedEventsScreenContent(
     modifier: Modifier = Modifier,
 ) {
 
-    val isLoading = eventsState.isLoading;
-    if (isLoading) {
-        LoadingIndicator(
-            modifier = Modifier.fillMaxSize()
-        )
-        return;
-    }
+//    val isLoading = eventsState.isLoading;
+//    if (isLoading) {
+//        LoadingIndicator(
+//            modifier = Modifier.fillMaxSize()
+//        )
+//        return;
+//    }
 
     Column(
         modifier = modifier
@@ -56,6 +56,7 @@ fun BookmarkedEventsScreenContent(
 
         EventBriefs(
             events = eventsState.bookmarkedEvents,
+            isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
         )

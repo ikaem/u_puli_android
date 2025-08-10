@@ -15,10 +15,18 @@ import com.imkaem.android.upuli.ui.theme.ColorYellowLight
 @Composable
 fun EventBriefs(
     events: List<EventModel>,
+    isLoading: Boolean,
     onNavigateToEvent: (Int) -> Unit,
     onToggleEventIsBookmarked: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
+
+    if(isLoading) {
+        LoadingIndicator(
+            modifier = Modifier.fillMaxSize()
+        )
+        return
+    }
 
     if (events.isEmpty()) {
         NoEventsContent(
@@ -26,6 +34,8 @@ fun EventBriefs(
         )
         return
     }
+
+
 
     // TODO this should be replaced with a list of events
     LazyColumn(
