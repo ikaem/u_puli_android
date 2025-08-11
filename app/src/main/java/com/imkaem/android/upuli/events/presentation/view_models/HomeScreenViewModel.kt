@@ -35,7 +35,7 @@ class HomeScreenViewModel : ViewModel() {
 
     private val today = LocalDateTime.now()
 
-    private val todayUTC = LocalDateTime.now(ZoneOffset.UTC)
+//    private val todayUTC = LocalDateTime.now(ZoneOffset.UTC)
     private val tomorrow = today.plusDays(1)
 
     private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
@@ -67,7 +67,7 @@ class HomeScreenViewModel : ViewModel() {
     }
 
     private suspend fun getStateFromEventsFlow() {
-        Log.d("HomeScreenViewModel", todayUTC.toString())
+//        Log.d("HomeScreenViewModel", todayUTC.toString())
         getHomeScreenEventsFlowUseCase(
             today = today,
             tomorrow = tomorrow,
