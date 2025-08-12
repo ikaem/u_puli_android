@@ -1,8 +1,11 @@
 package com.imkaem.android.upuli.search.presentation.widgets
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -16,6 +19,7 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
@@ -35,7 +39,7 @@ fun SearchField(
     onSubmitSearchQuery: () -> Unit,
 ) {
 
-/*sources: */
+    /*sources: */
 //https://medium.com/@a.poplawski96/implement-modern-search-functionality-on-android-with-compose-mvvm-clean-architecture-junit5-898fb30d9792
 // also useful for keyboard action
 //    https://canopas.com/keyboard-handling-in-jetpack-compose-all-you-need-to-know-3e6fddd30d9a
@@ -45,13 +49,16 @@ fun SearchField(
         value = searchQuery,
         enabled = !isLoading,
         keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions (
+        keyboardActions = KeyboardActions(
             onSearch = {
                 onSubmitSearchQuery()
             }
         ),
         onValueChange = onChangeSearchQuery,
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            /* only because we want square border */
+            .border(BorderStroke(width = 1.dp, ColorBlueLight)),
         colors = TextFieldDefaults.colors(
             unfocusedContainerColor = ColorBlueLight,
             focusedContainerColor = ColorBlueLight,
