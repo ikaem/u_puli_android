@@ -24,28 +24,9 @@ val ColorTextDark = Color(0xFF272727)
 val ColorTextLight = Color(0xFF9D9D9D)
 val ColorTextWhite = Color(0xFFFAFAFA)
 
-/* new colors - DEPRECATED */
-val ColorGreyGreen100 = Color(0xFF232E32)
-val ColorGreyGreen60 = Color(0xFF3B4A4E)
-val ColorGreyGreen30 = Color(0xFF596565)
-val ColorGreyGreen10 = Color(0xFFB7C2C4)
-
-val ColorGreyBlue60 = Color(0XFF547784)
-val ColorGreyBlue30 = Color(0xFF82858F)
-val ColorGreyBlue10 = Color(0xFFF0EFF7)
-
 val ColorWhite = Color(0xFFFFFFFF)
-
-val ColorGrey5 = Color(0xFFEBEEEF)
-val ColorGrey10 = Color(0xFFE2E7EF)
-val ColorGrey30 = Color(0xFFAEB3B6)
-val ColorGrey60 = Color(0xFF666B70)
-val ColorGrey100 = Color(0xFF36393A)
-
-val ColorBlue60 = Color(0xFF3DAFDB)
-val ColorBlue10 = Color(0xFF88C2DA)
+val ColorBlueLight = Color(0xFFAABBC3)
 
 
 val ColorGreyPink100 = Color(0xFF963D4E)
-val ColorGreyPink60 = Color(0xFF8C5F6B)
 

@@ -21,15 +21,3 @@ data class EventModel(
     val description: String,
     val isBookmarked: Boolean,
 )
-
-
-/* TODO move to extension folders, or something */
-fun EventModel.date(): String {
-    val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.")
-    return dateTime.format(dateFormatter)
-}
-
-fun EventModel.time(): String {
-    val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
-    return dateTime.format(timeFormatter)
-}

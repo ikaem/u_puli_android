@@ -17,6 +17,7 @@ import com.imkaem.android.upuli.events.presentation.view_models.TodayEventsScree
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 
 @Composable
 fun TodayEventsScreenContent(
@@ -26,15 +27,6 @@ fun TodayEventsScreenContent(
     padding: PaddingValues,
     modifier: Modifier = Modifier,
 ) {
-
-//    val isLoading = eventsState.isLoading;
-//    if (isLoading) {
-//        LoadingIndicator(
-//            modifier = Modifier.fillMaxSize()
-//        )
-//        return;
-//    }
-
     Column(
         modifier = modifier
             .padding(
@@ -54,7 +46,10 @@ fun TodayEventsScreenContent(
         Spacer(Modifier.height(20.dp))
 
         EventBriefs(
-            events = eventsState.events,
+            eventsMap = eventsState.events.groupBy {
+                it.dateTime.toYearMonth()
+            },
+            shouldShowMonthHeaders = false,
             isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,

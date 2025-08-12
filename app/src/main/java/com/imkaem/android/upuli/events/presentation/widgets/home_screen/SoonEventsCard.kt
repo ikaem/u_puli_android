@@ -39,11 +39,11 @@ import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.imkaem.android.upuli.R
 import com.imkaem.android.upuli.events.domain.models.EventModel
-import com.imkaem.android.upuli.events.domain.models.date
-import com.imkaem.android.upuli.events.domain.models.time
 import com.imkaem.android.upuli.events.presentation.widgets.ColoredLabel
 import com.imkaem.android.upuli.events.presentation.widgets.NoEventsContent
 import com.imkaem.android.upuli.events.utils.constants.UIElementColorVariant
+import com.imkaem.android.upuli.events.utils.extensions.date
+import com.imkaem.android.upuli.events.utils.extensions.time
 import com.imkaem.android.upuli.ui.theme.ColorTextDark
 import com.imkaem.android.upuli.ui.theme.ColorGreenDark
 import com.imkaem.android.upuli.ui.theme.ColorGreenLight

@@ -17,6 +17,7 @@ import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
 import com.imkaem.android.upuli.search.presentation.widgets.SearchField
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 import com.imkaem.android.upuli.search.presentation.view_models.SearchScreenState
 
 @Composable
@@ -57,7 +58,11 @@ fun SearchScreenContent(
 
 
         EventBriefs(
-            events = eventsState.events,
+//            events = eventsState.events,
+            eventsMap = eventsState.events.groupBy {
+                it.dateTime.toYearMonth()
+            },
+            shouldShowMonthHeaders = true,
             isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,

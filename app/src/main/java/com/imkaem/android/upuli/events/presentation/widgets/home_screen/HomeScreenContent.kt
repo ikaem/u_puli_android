@@ -30,6 +30,7 @@ import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
 import com.imkaem.android.upuli.events.presentation.widgets.home_screen.SoonEventsCard
 import com.imkaem.android.upuli.events.utils.constants.UIElementColorVariant
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 import com.imkaem.android.upuli.ui.theme.ColorBrownDark
 import com.imkaem.android.upuli.ui.theme.ColorTextDark
 import com.imkaem.android.upuli.ui.theme.ColorTextWhite
@@ -168,14 +169,17 @@ fun HomeScreenContent(
                         onNavigateToEvent = onNavigateToEvent,
                         onToggleEventIsBookmarked = onToggleEventIsBookmarked,
                     )
-//                    Spacer(Modifier.height(NavigationBarDefaults.windowInsets.asPaddingValues().calculateBottomPadding()))
                 }
             }
 
             1 -> {
 
                 EventBriefs(
-                    events = screenState.allUpcomingEvents,
+                    /* TODO this, and everywhere where event briefs is used, shoul be prepared in view model i think is better */
+                    eventsMap = screenState.allUpcomingEvents.groupBy {
+                        it.dateTime.toYearMonth()
+                    },
+                    shouldShowMonthHeaders = true,
                     isLoading = false,
                     onNavigateToEvent = onNavigateToEvent,
                     onToggleEventIsBookmarked = onToggleEventIsBookmarked,
