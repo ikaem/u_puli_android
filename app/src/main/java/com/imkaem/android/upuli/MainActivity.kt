@@ -37,7 +37,6 @@ import com.imkaem.android.upuli.events.presentation.screens.EventWebViewScreen
 import com.imkaem.android.upuli.events.presentation.screens.HomeScreen
 import com.imkaem.android.upuli.events.presentation.screens.TomorrowEventsScreen
 import com.imkaem.android.upuli.search.presentation.screens.SearchScreen
-import com.imkaem.android.upuli.ui.theme.ColorGreyGreen100
 import com.imkaem.android.upuli.ui.theme.UPuliTheme
 
 class MainActivity : ComponentActivity() {
@@ -149,7 +148,7 @@ fun UPuliApp() {
                                 contentDescription = destination.contentDescription
                             )
                         },
-                        label = { Text(destination.label)}
+//                        label = { Text(destination.label)}
                     )
 
                 }

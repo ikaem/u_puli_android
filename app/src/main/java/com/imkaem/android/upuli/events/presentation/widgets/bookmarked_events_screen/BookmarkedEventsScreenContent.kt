@@ -16,6 +16,7 @@ import com.imkaem.android.upuli.events.presentation.view_models.BookmarkedEvents
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 
 @Composable
 fun BookmarkedEventsScreenContent(
@@ -55,7 +56,11 @@ fun BookmarkedEventsScreenContent(
         Spacer(Modifier.height(20.dp))
 
         EventBriefs(
-            events = eventsState.bookmarkedEvents,
+            /* TODO this should come prepared */
+            eventsMap = eventsState.bookmarkedEvents.groupBy {
+                it.dateTime.toYearMonth()
+            },
+            shouldShowMonthHeaders = true,
             isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,

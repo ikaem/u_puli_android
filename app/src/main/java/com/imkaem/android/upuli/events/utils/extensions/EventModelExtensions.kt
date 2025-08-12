@@ -1,4 +1,4 @@
-package com.imkaem.android.upuli.events.utils
+package com.imkaem.android.upuli.events.utils.extensions
 
 import com.imkaem.android.upuli.events.domain.models.EventModel
 import java.time.format.DateTimeFormatter

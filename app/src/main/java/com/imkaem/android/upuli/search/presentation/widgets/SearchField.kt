@@ -20,6 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
+import com.imkaem.android.upuli.ui.theme.ColorBlueLight
+import com.imkaem.android.upuli.ui.theme.ColorTextDark
+import com.imkaem.android.upuli.ui.theme.ColorWhite
 import com.imkaem.android.upuli.ui.theme.ColorYellowDark
 import com.imkaem.android.upuli.ui.theme.ColorYellowLight
 
@@ -32,49 +35,6 @@ fun SearchField(
     onSubmitSearchQuery: () -> Unit,
 ) {
 
-//    Text("Hekll")
-//    SearchBar(
-//        query = searchQuery,
-//        onQueryChange = onChangeSearchQuery,
-//        onSearch = {},
-//        placeholder = {
-//            Text("Search")
-//        },
-//        leadingIcon = {
-//            Icon(
-//                imageVector = Icons.Filled.Search,
-//                contentDescription = "Search icon"
-//            )
-//        },
-//        modifier = Modifier.padding(),
-//        content = {},
-//        active = TODO(),
-//        onActiveChange = TODO(),
-//        enabled = TODO(),
-//        trailingIcon = TODO(),
-//        shape = TODO(),
-//        colors = TODO(),
-//        tonalElevation = TODO(),
-//        shadowElevation = TODO(),
-//        windowInsets = TODO(),
-//        interactionSource = TODO()
-//    )
-
-//    SearchBar(
-//        query = searchQuery,
-//        onQueryChange = onChangeSearchQuery,
-//        onSearch = {},
-//        placeholder = {
-//            Text("Search")
-//        },
-//        leadingIcon = {
-//            Icon(
-//                imageVector = Icons.Filled.Search,
-//                contentDescription = "Search icon"
-//            )
-//        },
-//        content = {}
-//    )
 /*sources: */
 //https://medium.com/@a.poplawski96/implement-modern-search-functionality-on-android-with-compose-mvvm-clean-architecture-junit5-898fb30d9792
 // also useful for keyboard action
@@ -93,20 +53,20 @@ fun SearchField(
         onValueChange = onChangeSearchQuery,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(
-            unfocusedContainerColor = ColorYellowLight,
-            focusedContainerColor = ColorYellowLight,
+            unfocusedContainerColor = ColorBlueLight,
+            focusedContainerColor = ColorBlueLight,
             unfocusedIndicatorColor = Color.Transparent,
             focusedIndicatorColor = Color.Transparent,
         ),
         trailingIcon = {
             Icon(
                 imageVector = Icons.Filled.Search,
-                tint = ColorYellowDark,
+                tint = ColorTextDark,
                 modifier = Modifier
                     .size(24.dp),
                 contentDescription = "Search"
             )
         },
-        placeholder = { Text("Što tražimo?") },
+        placeholder = { Text("Što tražimo?", color = ColorTextDark) },
     )
 }

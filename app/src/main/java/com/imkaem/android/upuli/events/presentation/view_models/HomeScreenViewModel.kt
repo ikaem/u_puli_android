@@ -4,6 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.imkaem.android.upuli.core.utils.di.DummyDI
+import com.imkaem.android.upuli.events.domain.models.EventModel
+import com.imkaem.android.upuli.events.utils.extensions.croDateFormat
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -35,14 +38,17 @@ class HomeScreenViewModel : ViewModel() {
 
     private val today = LocalDateTime.now()
 
-//    private val todayUTC = LocalDateTime.now(ZoneOffset.UTC)
+    //    private val todayUTC = LocalDateTime.now(ZoneOffset.UTC)
     private val tomorrow = today.plusDays(1)
 
-    private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
-    val todayString: String
-        get() = today.format(dateFormatter)
-    val tomorrowString: String
-        get() = tomorrow.format(dateFormatter)
+    val todayString = today.croDateFormat()
+    val tomorrowString = tomorrow.croDateFormat()
+
+//    private val dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.", Locale.getDefault())
+//    val todayString: String
+//        get() = today.format(dateFormatter)
+//    val tomorrowString: String
+//        get() = tomorrow.format(dateFormatter)
 
 
     init {
@@ -144,7 +150,9 @@ class HomeScreenViewModel : ViewModel() {
     fun onSelectTab(index: Int) {
         _state.update { it.copy(selectedTabIndex = index) }
     }
+
 }
+
 
 private fun generateInitialState(): HomeScreenState {
     val state = (

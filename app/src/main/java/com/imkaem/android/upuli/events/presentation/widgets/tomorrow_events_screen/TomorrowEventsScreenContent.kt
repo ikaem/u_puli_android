@@ -17,6 +17,7 @@ import com.imkaem.android.upuli.events.presentation.view_models.TomorrowEventsSc
 import com.imkaem.android.upuli.events.presentation.widgets.ListScreenTitle
 import com.imkaem.android.upuli.events.presentation.widgets.LoadingIndicator
 import com.imkaem.android.upuli.events.presentation.widgets.EventBriefs
+import com.imkaem.android.upuli.events.utils.extensions.toYearMonth
 
 @Composable
 fun TomorrowEventsScreenContent(
@@ -54,7 +55,11 @@ fun TomorrowEventsScreenContent(
         Spacer(Modifier.height(20.dp))
 
         EventBriefs(
-            events = eventsState.events,
+//            events = eventsState.events,
+            eventsMap = eventsState.events.groupBy {
+                it.dateTime.toYearMonth()
+            },
+            shouldShowMonthHeaders = false,
             isLoading = eventsState.isLoading,
             onNavigateToEvent = onNavigateToEvent,
             onToggleEventIsBookmarked = onToggleEventIsBookmarked,
